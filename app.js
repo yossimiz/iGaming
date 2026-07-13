@@ -1,4 +1,10 @@
+    
 document.addEventListener("DOMContentLoaded", () => {
+    const dataUrl = "./data.json"; 
+    const loadingElement = document.getElementById("loading");
+    const tableElement = document.getElementById("casino-table");
+    const tableBody = document.getElementById("table-body");
+
     // מנגנון אימות גיל רגולטורי
     const ageGate = document.getElementById("age-gate");
     const ageAccept = document.getElementById("age-accept");
@@ -18,14 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.href = "https://google.com"; // זריקת משתמש קטין מחוץ לאתר
     });
 
-    // ... כאן ממשיך שאר קוד ה-fetch והמיון שכבר כתבנו בשלב הקודם ...
-
-document.addEventListener("DOMContentLoaded", () => {
-    const dataUrl = "./data.json"; 
-    const loadingElement = document.getElementById("loading");
-    const tableElement = document.getElementById("casino-table");
-    const tableBody = document.getElementById("table-body");
-
+        // ... כאן ממשיך שאר קוד ה-fetch והמיון שכבר כתבנו בשלב הקודם ...
     fetch(dataUrl)
         .then(response => {
             if (!response.ok) throw new Error("Network response was not ok");
