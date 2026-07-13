@@ -67,11 +67,11 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 3. פונקציית סינון הנתונים המרכזית
+    // 3. פונקציית סינון הנתונים ועדכון המבזקים העליונים
     function filterAndProcessData() {
         if (displayCountry) displayCountry.innerText = userCountry;
         
-        // הגדרת המשחק החם לפי המדינה
+        // עדכון המשחק החם
         let hotGameText = "Sweet Bonanza (Pragmatic Play) 🍬";
         if (userCountry === "UK") {
             hotGameText = "Big Bass Bonanza (Pragmatic Play) 🎣";
@@ -86,19 +86,17 @@ document.addEventListener("DOMContentLoaded", () => {
             hotGameElement.innerText = hotGameText;
         }
 
-        // סינון המותגים מתוך ה-JSON לפי המדינה שנבחרה
+        // סינון לפי מדינה
         filteredData = casinoData.filter(item => {
             if (!item.allowed_countries) return false; 
             return item.allowed_countries.includes(userCountry);
         });
 
-        // עדכון כפתור הקישור הישיר למשחק החם (הריבוע השמאלי)
+        // עדכון כפתור משחק חם (שמאלי)
         const hotGameAction = document.getElementById("hot-game-action");
         const hotGameLink = document.getElementById("hot-game-link");
-        
         if (hotGameAction && hotGameLink) {
             if (filteredData.length > 0) {
-                // תיקון קריטי: שליפת הלינק מתוך האיבר הראשון במערך המסונן [0]
                 hotGameLink.href = filteredData[0].affiliate_link;
                 hotGameAction.style.display = "block";
             } else {
@@ -106,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
 
-        // עדכון דינמי של הכרטיס הימני הירוק (הבונוס המוביל) + כפתור גישה
+        // עדכון כפתור בונוס מוביל (ימני)
         const bestCasinoElement = document.getElementById("best-bonus-casino");
         const bestBonusElement = document.getElementById("best-bonus-text");
         const bestBonusAction = document.getElementById("best-bonus-action");
@@ -114,13 +112,9 @@ document.addEventListener("DOMContentLoaded", () => {
         
         if (bestCasinoElement && bestBonusElement && bestBonusAction && bestBonusLink) {
             if (filteredData.length > 0) {
-                // מיון למציאת המותג עם ה-RTP הגבוה ביותר
                 const topCasino = [...filteredData].sort((a, b) => parseFloat(b.rtp_score) - parseFloat(a.rtp_score));
-                
                 bestCasinoElement.innerText = topCasino[0].casino_name + " 🏆";
                 bestBonusElement.innerText = topCasino[0].bonus_text;
-                
-                // תיקון קריטי: שליפת הלינק מתוך האיבר הממוין הראשון [0]
                 bestBonusLink.href = topCasino[0].affiliate_link;
                 bestBonusAction.style.display = "block";
             } else {
@@ -136,18 +130,25 @@ document.addEventListener("DOMContentLoaded", () => {
         renderTable(filteredData);
     }
 
-    // 4. מנוע טעינת הנתונים מה-JSON וזיהוי ה-IP
-    fetch("https://ipapi.co")
-        .then(res => res.json())
-        .then(geo => {
-            if (geo && geo.country_code) {
-                userCountry = geo.country_code.toUpperCase();
-                if (userCountry === "GB") userCountry = "UK";
+    // 4. מנוע זיהוי ה-IP המקצועי של Cloudflare - חסין לחוסמי פרסומות (CORS Safe)
+    fetch("https://1.1.1")
+        .then(res => res.text())
+        .then(text => {
+            // חילוץ מתמטי בטוח של המדינה מתוך שורת ה-loc=XX
+            const lines = text.split("\n");
+            for (let i = 0; i < lines.length; i++) {
+                if (lines[i].indexOf("loc=") === 0) {
+                    userCountry = lines[i].split("=")[1].trim().toUpperCase();
+                    break;
+                }
             }
+            if (userCountry === "GB") userCountry = "UK";
+            console.log("Cloudflare Engine Detected Geo:", userCountry);
             return fetch(dataUrl);
         })
-        .catch(() => {
-            userCountry = "UNKNOWN";
+        .catch(err => {
+            console.warn("Cloudflare Engine blocked, using backup view.", err);
+            userCountry = "UNKNOWN"; // גיבוי במקרה חירום מוחלט
             return fetch(dataUrl);
         })
         .then(response => response.json())
@@ -162,7 +163,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-    // 5. האזנה לשינויים (מיון ומדינה ידנית)
+    // 5. האזנה לבחירה ידנית
     if (countrySelect) {
         countrySelect.addEventListener("change", (e) => {
             const selected = e.target.value;
@@ -173,6 +174,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // 6. מנגנון מיון
     if (sortSelect) {
         sortSelect.addEventListener("change", (e) => {
             const value = e.target.value;
