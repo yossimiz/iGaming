@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     // הכתובת המלאה והמדויקת של קובץ הנתונים שלך בגיטהב
-    const dataUrl = "https://github.io"; 
+    const dataUrl = "data.json";
     
     const loadingElement = document.getElementById("loading");
     const tableElement = document.getElementById("casino-table");
