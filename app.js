@@ -15,7 +15,9 @@ document.addEventListener("DOMContentLoaded", () => {
     let filteredData = []; 
     let userCountry = "UNKNOWN";
 
-    // 1. מנגנון אימות גיל (18+)
+    // =========================================================
+    // 1. מנגנון אימות גיל (18+) - רץ עצמאי ומיידי ללא תלות בשרת
+    // =========================================================
     if (localStorage.getItem("age_verified") === "true") {
         if (ageGate) ageGate.style.display = "none";
     } else {
@@ -25,6 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (ageAccept) {
         ageAccept.addEventListener("click", (e) => {
             e.preventDefault();
+            e.stopPropagation(); // מונע מהאירוע להיתקע
             localStorage.setItem("age_verified", "true");
             if (ageGate) ageGate.style.display = "none";
         });
@@ -37,7 +40,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 2. פונקציה להזרקת הטבלה ל-HTML
+    // =========================================================
+    // 2. פונקציות הזרקה וסינון נתונים
+    // =========================================================
     function renderTable(data) {
         if (!tableBody) return;
         tableBody.innerHTML = "";
@@ -67,11 +72,10 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-      // 3. פונקציית סינון הנתונים ועדכון המידע החם (גרסה מתוקנת)
     function filterAndProcessData() {
         if (displayCountry) displayCountry.innerText = userCountry;
         
-        // תיקון: הגדרת הטקסט במשתנה מראש
+        // עדכון המשחק החם בכרטיס העליון
         let hotGameText = "Sweet Bonanza (Pragmatic Play) 🍬";
         if (userCountry === "UK") {
             hotGameText = "Big Bass Bonanza (Pragmatic Play) 🎣";
@@ -81,12 +85,12 @@ document.addEventListener("DOMContentLoaded", () => {
             hotGameText = "Book of Dead (Play'n GO) 📜";
         }
 
-        // עדכון בטוח של האלמנט על המסך
         const hotGameElement = document.getElementById("hot-game-title");
         if (hotGameElement) {
             hotGameElement.innerText = hotGameText;
         }
 
+        // סינון המותגים מתוך ה-JSON
         filteredData = casinoData.filter(item => {
             if (!item.allowed_countries) return false; 
             return item.allowed_countries.includes(userCountry);
@@ -98,21 +102,9 @@ document.addEventListener("DOMContentLoaded", () => {
         renderTable(filteredData);
     }
 
-
-        filteredData = casinoData.filter(item => {
-            if (!item.allowed_countries) return false; 
-            return item.allowed_countries.includes(userCountry);
-        });
-
-        if (loadingElement) loadingElement.style.display = "none";
-        if (tableElement) tableElement.style.display = "table";
-        
-        renderTable(filteredData);
-    }
-
-
-    // 4. מנוע טעינת הנתונים וזיהוי ה-IP המקביל
-    // נשתמש בשירות מהיר, ואם הוא נחסם - המערכת תעבור למצב ידני בצורה חלקה
+    // =========================================================
+    // 3. מנוע טעינת הנתונים מה-JSON וזיהוי ה-IP
+    // =========================================================
     fetch("https://ipapi.co")
         .then(res => res.json())
         .then(geo => {
@@ -123,7 +115,6 @@ document.addEventListener("DOMContentLoaded", () => {
             return fetch(dataUrl);
         })
         .catch(() => {
-            // אם יש חסימת דפדפן (CORS/AdBlock), נקבע מצב התחלתי ונמשיך לטעינת הנתונים
             userCountry = "UNKNOWN";
             return fetch(dataUrl);
         })
@@ -139,7 +130,9 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-    // 5. האזנה לשינוי ידני של מדינה ע"י הגולש (פתרון קסם לחוסמי פרסומות!)
+    // =========================================================
+    // 4. האזנה לשינויים (מיון ומדינה ידנית)
+    // =========================================================
     if (countrySelect) {
         countrySelect.addEventListener("change", (e) => {
             const selected = e.target.value;
@@ -150,7 +143,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 6. מנגנון מיון
     if (sortSelect) {
         sortSelect.addEventListener("change", (e) => {
             const value = e.target.value;
