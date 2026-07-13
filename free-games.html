@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Demo Slots - SlotMetric</title>
+    <style>
+        /* Base Premium Dark Theme */
+        body {
+            background-color: #0d1117;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+            color: #ffffff;
+            direction: ltr;
+        }
+
+        /* Top Navigation Bar */
+        .navbar {
+            background-color: #1a1f29;
+            border-bottom: 1px solid #2a3245;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 20px;
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-logo {
+            font-size: 22px;
+            font-weight: 800;
+            color: #ffffff;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+        }
+        .logo-highlight {
+            color: #00ff87;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .nav-item {
+            color: #b3c0d4;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+        .nav-item:hover, .nav-item.active {
+            color: #00ff87;
+        }
+        .free-games-btn {
+            background: linear-gradient(135deg, #00ff87 0%, #00d16c 100%);
+            color: #0d1117 !important;
+            padding: 8px 16px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(0, 255, 135, 0.2);
+        }
+
+        /* Free Games Section Styling */
+        .games-section {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .section-header h2 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        .section-header p {
+            color: #b3c0d4;
+            font-size: 16px;
+        }
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 30px;
+        }
+        .game-card {
+            background-color: #1a1f29;
+            border: 1px solid #2a3245;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .game-card:hover {
+            transform: translateY(-5px);
+            border-color: #00ff87;
+        }
+        .game-video-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%;
+            background-color: #000;
+        }
+        .game-video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .game-info {
+            padding: 20px;
+        }
+        .game-info h3 {
+            margin: 0 0 12px 0;
+            font-size: 18px;
+        }
+        .game-badges {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .badge {
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+        .badge.provider {
+            background-color: #2a3245;
+            color: #b3c0d4;
+        }
+        .badge.rtp {
+            background-color: rgba(0, 255, 135, 0.1);
+            color: #00ff87;
+            border: 1px solid rgba(0, 255, 135, 0.2);
+        }
+        .play-real-btn {
+            display: block;
+            text-align: center;
+            background: linear-gradient(135deg, #ff9900 0%, #ff5500 100%);
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 700;
+            padding: 12px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+        .play-real-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(255, 85, 0, 0.4);
+        }
+
+        @media (max-width: 480px) {
+            .nav-item:not(.free-games-btn) { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="index.html" class="nav-logo">Slot<span class="logo-highlight">Metric</span></a>
+        <div class="nav-links">
+          <a href="index.html" class="nav-item">Home</a>
+          <a href="free-games.html" class="nav-item active free-games-btn">Free Games</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Free Games Main Section -->
+    <section class="games-section">
+      <div class="section-header">
+        <h2>🎰 Free Play Demo Slots</h2>
+        <p>Test your strategies and check live metrics without risking real money.</p>
+      </div>
+
+      <div class="games-grid">
+        
+        <!-- Game 1: Gates of Olympus -->
+        <div class="game-card">
+          <div class="game-video-container">
+            <iframe src="https://pragmaticplay.net" allowfullscreen></iframe>
+          </div>
+          <div class="game-info">
+            <h3>Gates of Olympus</h3>
+            <div class="game-badges">
+              <span class="badge provider">Pragmatic Play</span>
+              <span class="badge rtp">RTP: 96.50%</span>
+            </div>
+            <a href="#affiliate-link" class="play-real-btn">🚀 Play for Real Money</a>
+          </div>
+        </div>
+
+        <!-- Game 2: Sweet Bonanza -->
+        <div class="game-card">
+          <div class="game-video-container">
+            <iframe src="https://pragmaticplay.net" allowfullscreen></iframe>
+          </div>
+          <div class="game-info">
+            <h3>Sweet Bonanza</h3>
+            <div class="game-badges">
+              <span class="badge provider">Pragmatic Play</span>
+              <span class="badge rtp">RTP: 96.48%</span>
+            </div>
+            <a href="#affiliate-link" class="play-real-btn">🚀 Play for Real Money</a>
+          </div>
+        </div>
+
+        <!-- Game 3: Book of Dead -->
+        <div class="game-card">
+          <div class="game-video-container">
+            <iframe src="https://playngo.com" allowfullscreen></iframe>
+          </div>
+          <div class="game-info">
+            <h3>Book of Dead</h3>
+            <div class="game-badges">
+              <span class="badge provider">Play'n GO</span>
+              <span class="badge rtp">RTP: 96.21%</span>
+            </div>
+            <a href="#affiliate-link" class="play-real-btn">🚀 Play for Real Money</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+</body>
+</html>
