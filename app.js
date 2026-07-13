@@ -65,30 +65,24 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 3. מנוע זיהוי ה-IP המקצועי באמצעות ה-JSON הרשמי של Cloudflare (ללא פירוק טקסט)
-    fetch("https://cloudflare.com")
+    // 3. מנוע זיהוי ה-IP הרשמי והנקי - קריאת JSON ישירה מ-ip-api.com
+    fetch("https://ip-api.com")
         .then(res => {
-            if (!res.ok) throw new Error("Cloudflare Trace Offline");
-            return res.text();
+            if (!res.ok) throw new Error("Geo API network error");
+            return res.json();
         })
-        .then(text => {
-            // הפיכת הטקסט של קלאודפלייר לאובייקט בצורה בטוחה
-            const lines = text.split("\n");
-            for (let line of lines) {
-                const parts = line.split("=");
-                if (parts[0] === "loc") {
-                    userCountry = parts[1].trim().toUpperCase();
-                    break;
-                }
+        .then(geo => {
+            // קריאה ישירה של השדה מה-JSON ללא פירוק טקסט
+            if (geo && geo.countryCode) {
+                userCountry = geo.countryCode.toUpperCase();
             }
-            
             if (userCountry === "GB") userCountry = "UK";
-            console.log("Cloudflare Geo-IP detected:", userCountry);
+            console.log("System Status - Country Detected:", userCountry);
             
             return fetch(dataUrl);
         })
         .catch(err => {
-            console.error("Geo Matrix Error, falling back to default.", err);
+            console.error("Geo Matrix Error, falling back to default view.", err);
             userCountry = "UNKNOWN"; 
             return fetch(dataUrl);
         })
@@ -99,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(data => {
             casinoData = data;
             
-            // סינון קפדני לפי המדינה של הגולש
+            // סינון הנתונים לפי המדינה שזוהתה בצורה נקייה
             filteredData = casinoData.filter(item => {
                 if (!item.allowed_countries) return false; 
                 return item.allowed_countries.includes(userCountry);
