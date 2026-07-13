@@ -72,10 +72,10 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-        function filterAndProcessData() {
+            function filterAndProcessData() {
         if (displayCountry) displayCountry.innerText = userCountry;
         
-        // 1. עדכון המשחק החם בכרטיס השמאלי
+        // 1. הגדרת המשחק החם לפי המדינה
         let hotGameText = "Sweet Bonanza (Pragmatic Play) 🍬";
         if (userCountry === "UK") {
             hotGameText = "Big Bass Bonanza (Pragmatic Play) 🎣";
@@ -96,21 +96,40 @@ document.addEventListener("DOMContentLoaded", () => {
             return item.allowed_countries.includes(userCountry);
         });
 
-        // 3. עדכון דינמי של הכרטיס הימני הירוק - מציג את הבונוס של הקזינו עם ה-RTP הכי גבוה כרגע!
+        // 3. עדכון כפתור הקישור הישיר למשחק החם (הריבוע השמאלי)
+        const hotGameAction = document.getElementById("hot-game-action");
+        const hotGameLink = document.getElementById("hot-game-link");
+        
+        if (hotGameAction && hotGameLink) {
+            if (filteredData.length > 0) {
+                hotGameLink.href = filteredData[0].affiliate_link;
+                hotGameAction.style.display = "block";
+            } else {
+                hotGameAction.style.display = "none";
+            }
+        }
+
+        // 4. עדכון דינמי של הכרטיס הימני הירוק (הבונוס המוביל) + כפתור גישה
         const bestCasinoElement = document.getElementById("best-bonus-casino");
         const bestBonusElement = document.getElementById("best-bonus-text");
+        const bestBonusAction = document.getElementById("best-bonus-action");
+        const bestBonusLink = document.getElementById("best-bonus-link");
         
-        if (bestCasinoElement && bestBonusElement) {
+        if (bestCasinoElement && bestBonusElement && bestBonusAction && bestBonusLink) {
             if (filteredData.length > 0) {
-                // מיון פנימי מהיר למציאת המותג עם ה-RTP הגבוה ביותר כרגע ברשימה
+                // מיון למציאת המותג עם ה-RTP הגבוה ביותר
                 const topCasino = [...filteredData].sort((a, b) => parseFloat(b.rtp_score) - parseFloat(a.rtp_score))[0];
                 
                 bestCasinoElement.innerText = topCasino.casino_name + " 🏆";
                 bestBonusElement.innerText = topCasino.bonus_text;
+                
+                // חיבור הלינק של הקזינו המוביל לכפתור הירוק
+                bestBonusLink.href = topCasino.affiliate_link;
+                bestBonusAction.style.display = "block";
             } else {
-                // מה יופיע אם אין מותגים באותה מדינה (כמו ישראל)
                 bestCasinoElement.innerText = "No Offers Available";
                 bestBonusElement.innerText = "Switch region to view legal bonuses.";
+                bestBonusAction.style.display = "none";
             }
         }
 
@@ -119,6 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         renderTable(filteredData);
     }
+
 
     // =========================================================
     // 3. מנוע טעינת הנתונים מה-JSON וזיהוי ה-IP
