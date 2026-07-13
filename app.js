@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let casinoData = []; 
     let filteredData = []; 
-    let userCountry = "UNKNOWN";
+    let userCountry = "CY"; // פתרון מנצח: קובעים את קפריסין כברירת מחדל התחלתית במקום UNKNOWN
 
     // 1. מנגנון אימות גיל (18+)
     if (localStorage.getItem("age_verified") === "true") {
@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (filteredData.length > 0) {
                 const topCasino = [...filteredData].sort((a, b) => parseFloat(b.rtp_score) - parseFloat(a.rtp_score));
                 
-                if (topCasino[0]) {
+                if (topCasino && topCasino[0]) {
                     bestCasinoElement.innerText = topCasino[0].casino_name + " 🏆";
                     bestBonusElement.innerText = topCasino[0].bonus_text;
                     bestBonusLink.href = topCasino[0].affiliate_link;
@@ -134,8 +134,8 @@ document.addEventListener("DOMContentLoaded", () => {
         renderTable(filteredData);
     }
 
-    // 4. מנוע זיהוי ה-IP של Cloudflare - גרסה חסינת תקלות (שליפה ישירה)
-    fetch("https://1.1.1")
+    // 4. מנוע זיהוי ה-IP - אם הדפדפן חוסם אותו, המערכת תציג קפריסין בצורה חלקה
+    fetch("https://cloudflare.com")
         .then(res => {
             if (!res.ok) throw new Error("Cloudflare Trace offline");
             return res.text();
@@ -144,7 +144,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const lines = text.split("\n");
             for (let i = 0; i < lines.length; i++) {
                 if (lines[i].substring(0, 4) === "loc=") {
-                    // גזירה ישירה של שתי האותיות של המדינה (החל מהתו ה-5 בשורה)
                     userCountry = lines[i].substring(4).trim().toUpperCase();
                     break;
                 }
@@ -154,8 +153,8 @@ document.addEventListener("DOMContentLoaded", () => {
             return fetch(dataUrl);
         })
         .catch(err => {
-            console.warn("Cloudflare Engine blocked, using backup view.", err);
-            userCountry = "UNKNOWN"; 
+            console.warn("Geo detection blocked. Defaulting to Cyprus (CY).", err);
+            userCountry = "CY"; // אם השירות נחסם בדפדפן שלך, האתר ייפתח אוטומטית על קפריסין!
             return fetch(dataUrl);
         })
         .then(response => response.json())
@@ -170,7 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-    // 5. האזנה לשינויים (מיון ומדינה ידנית)
+    // 5. האזנה לשינויים ידניים
     if (countrySelect) {
         countrySelect.addEventListener("change", (e) => {
             const selected = e.target.value;
