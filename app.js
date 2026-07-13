@@ -15,9 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let filteredData = []; 
     let userCountry = "UNKNOWN";
 
-    // =========================================================
-    // 1. מנגנון אימות גיל (18+) - רץ עצמאי ומיידי ללא תלות בשרת
-    // =========================================================
+    // 1. מנגנון אימות גיל (18+)
     if (localStorage.getItem("age_verified") === "true") {
         if (ageGate) ageGate.style.display = "none";
     } else {
@@ -27,7 +25,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (ageAccept) {
         ageAccept.addEventListener("click", (e) => {
             e.preventDefault();
-            e.stopPropagation(); // מונע מהאירוע להיתקע
             localStorage.setItem("age_verified", "true");
             if (ageGate) ageGate.style.display = "none";
         });
@@ -40,9 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // =========================================================
-    // 2. פונקציות הזרקה וסינון נתונים
-    // =========================================================
+    // 2. פונקציה להזרקת הטבלה ל-HTML
     function renderTable(data) {
         if (!tableBody) return;
         tableBody.innerHTML = "";
@@ -72,10 +67,11 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-              function filterAndProcessData() {
+    // 3. פונקציית סינון הנתונים המרכזית
+    function filterAndProcessData() {
         if (displayCountry) displayCountry.innerText = userCountry;
         
-        // 1. הגדרת המשחק החם לפי המדינה
+        // הגדרת המשחק החם לפי המדינה
         let hotGameText = "Sweet Bonanza (Pragmatic Play) 🍬";
         if (userCountry === "UK") {
             hotGameText = "Big Bass Bonanza (Pragmatic Play) 🎣";
@@ -90,19 +86,19 @@ document.addEventListener("DOMContentLoaded", () => {
             hotGameElement.innerText = hotGameText;
         }
 
-        // 2. סינון המותגים מתוך ה-JSON לפי המדינה שנבחרה
+        // סינון המותגים מתוך ה-JSON לפי המדינה שנבחרה
         filteredData = casinoData.filter(item => {
             if (!item.allowed_countries) return false; 
             return item.allowed_countries.includes(userCountry);
         });
 
-        // 3. עדכון כפתור הקישור הישיר למשחק החם (הריבוע השמאלי)
+        // עדכון כפתור הקישור הישיר למשחק החם (הריבוע השמאלי)
         const hotGameAction = document.getElementById("hot-game-action");
         const hotGameLink = document.getElementById("hot-game-link");
         
         if (hotGameAction && hotGameLink) {
             if (filteredData.length > 0) {
-                // תיקון הבאג: שליפת הלינק מתוך האיבר הראשון במערך המסונן [0]
+                // תיקון סופי: לקיחת הלינק מהאיבר הראשון במערך [0]
                 hotGameLink.href = filteredData[0].affiliate_link;
                 hotGameAction.style.display = "block";
             } else {
@@ -110,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
 
-        // 4. עדכון דינמי של הכרטיס הימני הירוק (הבונוס המוביל) + כפתור גישה
+        // עדכון דינמי של הכרטיס הימני הירוק (הבונוס המוביל) + כפתור גישה
         const bestCasinoElement = document.getElementById("best-bonus-casino");
         const bestBonusElement = document.getElementById("best-bonus-text");
         const bestBonusAction = document.getElementById("best-bonus-action");
@@ -118,13 +114,12 @@ document.addEventListener("DOMContentLoaded", () => {
         
         if (bestCasinoElement && bestBonusElement && bestBonusAction && bestBonusLink) {
             if (filteredData.length > 0) {
-                // מיון למציאת המותג עם ה-RTP הגבוה ביותר
                 const topCasino = [...filteredData].sort((a, b) => parseFloat(b.rtp_score) - parseFloat(a.rtp_score));
                 
                 bestCasinoElement.innerText = topCasino[0].casino_name + " 🏆";
                 bestBonusElement.innerText = topCasino[0].bonus_text;
                 
-                // תיקון הבאג: שליפת הלינק מתוך האיבר הממוין הראשון [0]
+                // תיקון סופי: לקיחת הלינק מהאיבר הממוין הראשון [0]
                 bestBonusLink.href = topCasino[0].affiliate_link;
                 bestBonusAction.style.display = "block";
             } else {
@@ -140,11 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
         renderTable(filteredData);
     }
 
-
-
-    // =========================================================
-    // 3. מנוע טעינת הנתונים מה-JSON וזיהוי ה-IP
-    // =========================================================
+    // 4. מנוע טעינת הנתונים מה-JSON וזיהוי ה-IP
     fetch("https://ipapi.co")
         .then(res => res.json())
         .then(geo => {
@@ -170,9 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-    // =========================================================
-    // 4. האזנה לשינויים (מיון ומדינה ידנית)
-    // =========================================================
+    // 5. האזנה לשינויים (מיון ומדינה ידנית)
     if (countrySelect) {
         countrySelect.addEventListener("change", (e) => {
             const selected = e.target.value;
