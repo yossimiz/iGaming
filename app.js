@@ -97,8 +97,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const hotGameLink = document.getElementById("hot-game-link");
         
         if (hotGameAction && hotGameLink) {
-            if (filteredData.length > 0) {
-                hotGameLink.href = filteredData.affiliate_link;
+            if (filteredData.length > 0 && filteredData[0]) {
+                hotGameLink.href = filteredData[0].affiliate_link;
                 hotGameAction.style.display = "block";
             } else {
                 hotGameAction.style.display = "none";
@@ -115,11 +115,12 @@ document.addEventListener("DOMContentLoaded", () => {
             if (filteredData.length > 0) {
                 const topCasino = [...filteredData].sort((a, b) => parseFloat(b.rtp_score) - parseFloat(a.rtp_score));
                 
-                bestCasinoElement.innerText = topCasino.casino_name + " 🏆";
-                bestBonusElement.innerText = topCasino.bonus_text;
-                
-                bestBonusLink.href = topCasino.affiliate_link;
-                bestBonusAction.style.display = "block";
+                if (topCasino[0]) {
+                    bestCasinoElement.innerText = topCasino[0].casino_name + " 🏆";
+                    bestBonusElement.innerText = topCasino[0].bonus_text;
+                    bestBonusLink.href = topCasino[0].affiliate_link;
+                    bestBonusAction.style.display = "block";
+                }
             } else {
                 bestCasinoElement.innerText = "No Offers Available";
                 bestBonusElement.innerText = "Switch region to view legal bonuses.";
@@ -133,7 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
         renderTable(filteredData);
     }
 
-    // 4. מנוע זיהוי ה-IP המתוקן של Cloudflare - חסין לחוסמי פרסומות
+    // 4. מנוע זיהוי ה-IP של Cloudflare - גרסה חסינת תקלות (שליפה ישירה)
     fetch("https://1.1.1")
         .then(res => {
             if (!res.ok) throw new Error("Cloudflare Trace offline");
@@ -142,12 +143,9 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(text => {
             const lines = text.split("\n");
             for (let i = 0; i < lines.length; i++) {
-                if (lines[i].indexOf("loc=") === 0) {
-                    // התיקון: חילוץ המחרוזת בצורה נכונה לפני ה-trim
-                    const parts = lines[i].split("=");
-                    if (parts && parts) {
-                        userCountry = parts.trim().toUpperCase();
-                    }
+                if (lines[i].substring(0, 4) === "loc=") {
+                    // גזירה ישירה של שתי האותיות של המדינה (החל מהתו ה-5 בשורה)
+                    userCountry = lines[i].substring(4).trim().toUpperCase();
                     break;
                 }
             }
