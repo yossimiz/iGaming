@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (ageReject) {
         ageReject.addEventListener("click", (e) => {
             e.preventDefault();
-            window.location.href = "https://google.com";
+            window.location.href = "https://www.google.com";
         });
     }
 
@@ -65,30 +65,23 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 3. מנוע זיהוי ה-IP המתוקן באמצעות Cloudflare
-    fetch("https://1.1.1")
+    // 3. מנוע זיהוי ה-IP המקצועי החדש - קריאת JSON נקייה מ-ip-api.com
+    fetch("https://ip-api.com")
         .then(res => {
-            if (!res.ok) throw new Error("Cloudflare trace offline");
-            return res.text();
+            if (!res.ok) throw new Error("Geo API network response failed");
+            return res.json();
         })
-        .then(text => {
-            const lines = text.split("\n");
-            const locLine = lines.find(line => line.startsWith("loc="));
-            if (locLine) {
-                // התיקון: חילוץ המחרוזת בצורה נכונה והפיכתה לאותיות גדולות
-                const countryValue = locLine.split("=")[1];
-                if (countryValue) {
-                    userCountry = countryValue.trim().toUpperCase();
-                }
-            }
+        .then(geo => {
+            // חילוץ נקי של קוד המדינה מתוך ה-JSON
+            userCountry = geo.countryCode ? geo.countryCode.toUpperCase() : "UK";
             if (userCountry === "GB") userCountry = "UK";
-            console.log("Cloudflare Geo-IP detected:", userCountry);
+            console.log("System Status - Country Detected:", userCountry);
             
             return fetch(dataUrl);
         })
         .catch(err => {
-            console.error("Geo API error, falling back to default view.", err);
-            userCountry = "UK"; // ברירת מחדל רק במקרה של חסימת רשת מוחלטת
+            console.error("Geo Matrix Error, falling back to default.", err);
+            userCountry = "UK"; // ברירת מחדל למקרה חירום מוחלט של קריסת שרת
             return fetch(dataUrl);
         })
         .then(response => {
@@ -98,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(data => {
             casinoData = data;
             
-            // סינון הנתונים לפי המדינה שזוהתה ב-Cloudflare
+            // סינון הנתונים לפי המדינה שזוהתה בצורה מדויקת
             filteredData = casinoData.filter(item => {
                 if (!item.allowed_countries) return true;
                 return item.allowed_countries.includes(userCountry);
