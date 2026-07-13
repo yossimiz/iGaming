@@ -206,4 +206,43 @@ document.addEventListener("DOMContentLoaded", () => {
             renderTable(sortedData);
         });
     }
+        // =========================================================
+    // 7. לוגיקה עבור המחשבון האינטראקטיבי
+    // =========================================================
+    const calcBudget = document.getElementById("calc-budget");
+    const calcRtp = document.getElementById("calc-rtp");
+    const calcResult = document.getElementById("calc-result");
+
+    function calculateReturns() {
+        if (!calcBudget || !calcRtp || !calcResult) return;
+        
+        const budget = parseFloat(calcBudget.value) || 0;
+        const rtp = parseFloat(calcRtp.value) || 0;
+        
+        // חישוב מתמטי של ההחזר התיאורטי
+        const estimatedReturn = (budget * (rtp / 100)).toFixed(2);
+        
+        // עדכון התוצאה על המסך עם אנימציית מספרים קלה
+        calcResult.innerText = "€" + estimatedReturn;
+    }
+
+    if (calcBudget) calcBudget.addEventListener("input", calculateReturns);
+    if (calcRtp) calcRtp.addEventListener("input", calculateReturns);
+
+    // נחבר את המחשבון ללוגיקת הסינון הקיימת שלנו
+    // בכל פעם שמדינה משתנה, נזין אוטומטית למחשבון את ה-RTP הגבוה ביותר שיש באותה מדינה
+    const originalFilter = window.triggerFilter;
+    window.triggerFilter = function() {
+        // מריץ קודם את פונקציית הסינון המקורית שבנינו
+        originalFilter();
+        
+        // מוצא את ה-RTP הכי גבוה במדינה הנוכחית ומציב אותו במחשבון
+        if (filteredData && filteredData.length > 0 && calcRtp) {
+            const topCasino = [...filteredData].sort((a, b) => parseFloat(b.rtp_score) - parseFloat(a.rtp_score))[0];
+            if (topCasino && topCasino.rtp_score) {
+                calcRtp.value = parseFloat(topCasino.rtp_score);
+                calculateReturns();
+            }
+        }
+    };
 });
