@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-            function filterAndProcessData() {
+              function filterAndProcessData() {
         if (displayCountry) displayCountry.innerText = userCountry;
         
         // 1. הגדרת המשחק החם לפי המדינה
@@ -102,6 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         if (hotGameAction && hotGameLink) {
             if (filteredData.length > 0) {
+                // תיקון הבאג: שליפת הלינק מתוך האיבר הראשון במערך המסונן [0]
                 hotGameLink.href = filteredData[0].affiliate_link;
                 hotGameAction.style.display = "block";
             } else {
@@ -118,13 +119,13 @@ document.addEventListener("DOMContentLoaded", () => {
         if (bestCasinoElement && bestBonusElement && bestBonusAction && bestBonusLink) {
             if (filteredData.length > 0) {
                 // מיון למציאת המותג עם ה-RTP הגבוה ביותר
-                const topCasino = [...filteredData].sort((a, b) => parseFloat(b.rtp_score) - parseFloat(a.rtp_score))[0];
+                const topCasino = [...filteredData].sort((a, b) => parseFloat(b.rtp_score) - parseFloat(a.rtp_score));
                 
-                bestCasinoElement.innerText = topCasino.casino_name + " 🏆";
-                bestBonusElement.innerText = topCasino.bonus_text;
+                bestCasinoElement.innerText = topCasino[0].casino_name + " 🏆";
+                bestBonusElement.innerText = topCasino[0].bonus_text;
                 
-                // חיבור הלינק של הקזינו המוביל לכפתור הירוק
-                bestBonusLink.href = topCasino.affiliate_link;
+                // תיקון הבאג: שליפת הלינק מתוך האיבר הממוין הראשון [0]
+                bestBonusLink.href = topCasino[0].affiliate_link;
                 bestBonusAction.style.display = "block";
             } else {
                 bestCasinoElement.innerText = "No Offers Available";
@@ -138,6 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         renderTable(filteredData);
     }
+
 
 
     // =========================================================
