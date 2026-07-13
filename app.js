@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let filteredData = []; 
     let userCountry = "UNKNOWN";
 
-    // 1. מנגנון אימות גיל (18+)
+    // 1. מנגנון אימות גיל
     if (localStorage.getItem("age_verified") === "true") {
         if (ageGate) ageGate.style.display = "none";
     } else {
@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (ageReject) {
         ageReject.addEventListener("click", (e) => {
             e.preventDefault();
-            window.location.href = "https://www.google.com";
+            window.location.href = "https://google.com";
         });
     }
 
@@ -65,23 +65,22 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 3. מנוע זיהוי ה-IP המקצועי החדש - קריאת JSON נקייה מ-ip-api.com
-    fetch("https://ip-api.com")
+    // 3. מנוע זיהוי ה-IP המאובטח (HTTPS)
+    fetch("https://ipapi.co") // חזרה ל-ipapi מוגן ב-HTTPS
         .then(res => {
-            if (!res.ok) throw new Error("Geo API network response failed");
+            if (!res.ok) throw new Error("Geo API failed");
             return res.json();
         })
         .then(geo => {
-            // חילוץ נקי של קוד המדינה מתוך ה-JSON
-            userCountry = geo.countryCode ? geo.countryCode.toUpperCase() : "UK";
+            userCountry = geo.country_code ? geo.country_code.toUpperCase() : "UNKNOWN";
             if (userCountry === "GB") userCountry = "UK";
             console.log("System Status - Country Detected:", userCountry);
             
             return fetch(dataUrl);
         })
         .catch(err => {
-            console.error("Geo Matrix Error, falling back to default.", err);
-            userCountry = "UK"; // ברירת מחדל למקרה חירום מוחלט של קריסת שרת
+            console.error("Geo Matrix Error, falling back to UNKNOWN.", err);
+            userCountry = "UNKNOWN"; // אם יש שגיאה, המדינה תהיה UNKNOWN כדי שלא תציג סתם את בריטניה
             return fetch(dataUrl);
         })
         .then(response => {
@@ -91,9 +90,9 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(data => {
             casinoData = data;
             
-            // סינון הנתונים לפי המדינה שזוהתה בצורה מדויקת
+            // סינון קפדני
             filteredData = casinoData.filter(item => {
-                if (!item.allowed_countries) return true;
+                if (!item.allowed_countries) return false; // שינוי ל-false כדי שאם אין מדינות ב-JSON הוא יסתיר הכל
                 return item.allowed_countries.includes(userCountry);
             });
 
