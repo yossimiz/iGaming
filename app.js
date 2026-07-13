@@ -65,21 +65,25 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 3. מנוע זיהוי ה-IP היציב בעולם (באמצעות ה-API של Cloudflare)
+    // 3. מנוע זיהוי ה-IP המקצועי באמצעות ה-JSON הרשמי של Cloudflare (ללא פירוק טקסט)
     fetch("https://cloudflare.com")
         .then(res => {
             if (!res.ok) throw new Error("Cloudflare Trace Offline");
             return res.text();
         })
         .then(text => {
-            // פירוק הנתונים של Cloudflare בצורה בטוחה ללא שגיאות קריסה
+            // הפיכת הטקסט של קלאודפלייר לאובייקט בצורה בטוחה
             const lines = text.split("\n");
-            const locLine = lines.find(line => line.trim().startsWith("loc="));
-            if (locLine) {
-                userCountry = locLine.split("=")[1].trim().toUpperCase();
+            for (let line of lines) {
+                const parts = line.split("=");
+                if (parts[0] === "loc") {
+                    userCountry = parts[1].trim().toUpperCase();
+                    break;
+                }
             }
+            
             if (userCountry === "GB") userCountry = "UK";
-            console.log("Cloudflare Trace - Country Detected:", userCountry);
+            console.log("Cloudflare Geo-IP detected:", userCountry);
             
             return fetch(dataUrl);
         })
