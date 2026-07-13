@@ -1,3 +1,24 @@
+// משתנים גלובליים כדי שפונקציית ה-Callback תוכל לגשת אליהם מחוץ ללולאה
+let casinoData = []; 
+let filteredData = []; 
+let userCountry = "UNKNOWN";
+
+// 1. פונקציית ה-Callback הרשמית בשיטה שלך (JSONP) - תרוץ אוטומטית ע"י שרת ה-IP
+window.processIP = function(data) {
+    if (data && data.countryCode) {
+        userCountry = data.countryCode.toUpperCase();
+        if (userCountry === "GB") userCountry = "UK";
+    } else {
+        userCountry = "UNKNOWN";
+    }
+    console.log("JSONP Engine Successfully Detected Geo:", userCountry);
+    
+    // הפעלת סינון האתר מיד עם קבלת המדינה מה-IP
+    if (typeof window.triggerFilter === "function") {
+        window.triggerFilter();
+    }
+};
+
 document.addEventListener("DOMContentLoaded", () => {
     const dataUrl = "data.json"; 
     const loadingElement = document.getElementById("loading");
@@ -11,11 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const ageAccept = document.getElementById("age-accept");
     const ageReject = document.getElementById("age-reject");
 
-    let casinoData = []; 
-    let filteredData = []; 
-    let userCountry = "UNKNOWN"; // מתחילים מניטרלי, ה-IP יחליף אותו מיד
-
-    // 1. מנגנון אימות גיל (18+)
+    // 2. מנגנון אימות גיל (18+)
     if (localStorage.getItem("age_verified") === "true") {
         if (ageGate) ageGate.style.display = "none";
     } else {
@@ -37,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 2. פונקציה להזרקת הטבלה ל-HTML
+    // 3. פונקציה להזרקת הטבלה ל-HTML
     function renderTable(data) {
         if (!tableBody) return;
         tableBody.innerHTML = "";
@@ -67,8 +84,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 3. פונקציית סינון הנתונים המרכזית
-    function filterAndProcessData() {
+    // 4. פונקציית סינון הנתונים והמבזקים העליונים
+    window.triggerFilter = function() {
         if (displayCountry) displayCountry.innerText = userCountry;
         
         // הגדרת המשחק החם לפי המדינה מה-IP
@@ -86,26 +103,25 @@ document.addEventListener("DOMContentLoaded", () => {
             hotGameElement.innerText = hotGameText;
         }
 
-        // סינון המותגים מתוך ה-JSON לפי המדינה שנבחרה
+        // סינון המותגים מתוך ה-JSON לפי המדינה שזוהתה
         filteredData = casinoData.filter(item => {
             if (!item.allowed_countries) return false; 
             return item.allowed_countries.includes(userCountry);
         });
 
-        // עדכון כפתור הקישור הישיר למשחק החם (הריבוע השמאלי)
+        // כפתור משחק חם (שמאלי)
         const hotGameAction = document.getElementById("hot-game-action");
         const hotGameLink = document.getElementById("hot-game-link");
-        
         if (hotGameAction && hotGameLink) {
-            if (filteredData.length > 0 && filteredData[0]) {
-                hotGameLink.href = filteredData[0].affiliate_link;
+            if (filteredData.length > 0) {
+                hotGameLink.href = filteredData[0].affiliate_link; // תיקון לוגי: שליפת הלינק מתוך האיבר הראשון
                 hotGameAction.style.display = "block";
             } else {
                 hotGameAction.style.display = "none";
             }
         }
 
-        // עדכון דינמי של הכרטיס הימני הירוק (הבונוס המוביל) + כפתור גישה
+        // כפתור בונוס מוביל (ימני)
         const bestCasinoElement = document.getElementById("best-bonus-casino");
         const bestBonusElement = document.getElementById("best-bonus-text");
         const bestBonusAction = document.getElementById("best-bonus-action");
@@ -114,13 +130,10 @@ document.addEventListener("DOMContentLoaded", () => {
         if (bestCasinoElement && bestBonusElement && bestBonusAction && bestBonusLink) {
             if (filteredData.length > 0) {
                 const topCasino = [...filteredData].sort((a, b) => parseFloat(b.rtp_score) - parseFloat(a.rtp_score));
-                
-                if (topCasino && topCasino[0]) {
-                    bestCasinoElement.innerText = topCasino[0].casino_name + " 🏆";
-                    bestBonusElement.innerText = topCasino[0].bonus_text;
-                    bestBonusLink.href = topCasino[0].affiliate_link;
-                    bestBonusAction.style.display = "block";
-                }
+                bestCasinoElement.innerText = topCasino[0].casino_name + " 🏆";
+                bestBonusElement.innerText = topCasino[0].bonus_text;
+                bestBonusLink.href = topCasino[0].affiliate_link;
+                bestBonusAction.style.display = "block";
             } else {
                 bestCasinoElement.innerText = "No Offers Available";
                 bestBonusElement.innerText = "Switch region to view legal bonuses.";
@@ -132,48 +145,33 @@ document.addEventListener("DOMContentLoaded", () => {
         if (tableElement) tableElement.style.display = "table";
         
         renderTable(filteredData);
-    }
+    };
 
-    // 4. מנוע זיהוי ה-IP הרשמי והמאובטח (FreeIPAPI JSON) - חסין CORS וחסין חוסמי פרסומות
-    fetch("https://freeipapi.com")
-        .then(res => {
-            if (!res.ok) throw new Error("Geo IP Service Offline");
-            return res.json();
-        })
-        .then(geo => {
-            // שליפה ישירה ומדויקת של קוד המדינה מתוך ה-JSON של ה-IP
-            if (geo && geo.countryCode) {
-                userCountry = geo.countryCode.toUpperCase();
-            }
-            if (userCountry === "GB") userCountry = "UK";
-            console.log("System Status - IP Country Detected:", userCountry);
-            
-            return fetch(dataUrl);
-        })
-        .catch(err => {
-            console.error("Geo Matrix Error, falling back to default.", err);
-            userCountry = "UNKNOWN"; // גיבוי רק למקרה של ניתוק אינטרנט מוחלט
-            return fetch(dataUrl);
-        })
+    // 5. טעינת נתוני ה-JSON של בתי הקזינו
+    fetch(dataUrl)
         .then(response => response.json())
         .then(data => {
             casinoData = data;
-            filterAndProcessData();
+            
+            // המימוש המדויק של השיטה שלך: יצירת תג סקריפט דינמי (JSONP) מאובטח ב-HTTPS
+            const script = document.createElement("script");
+            script.src = "https://ip-api.com"; // פנייה מאובטחת העוקפת חסימות CORS
+            document.body.appendChild(script);
         })
         .catch(error => {
-            console.error("Critical System Error:", error);
+            console.error("Critical System Error Loading JSON:", error);
             if (loadingElement) {
                 loadingElement.innerHTML = `<span style="color: #ef4444;">Failed to sync with live data matrix.</span>`;
             }
         });
 
-    // 5. האזנה לשינויים ידניים
+    // 6. האזנה לשינויים ידניים
     if (countrySelect) {
         countrySelect.addEventListener("change", (e) => {
             const selected = e.target.value;
             if (selected !== "AUTO") {
                 userCountry = selected;
-                filterAndProcessData();
+                window.triggerFilter();
             }
         });
     }
