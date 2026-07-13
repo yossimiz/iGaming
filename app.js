@@ -68,9 +68,24 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // 3. פונקציית סינון הנתונים המרכזית
+      // 3. פונקציית סינון הנתונים ועדכון המידע החם
     function filterAndProcessData() {
         if (displayCountry) displayCountry.innerText = userCountry;
         
+        // עדכון משחק חם דינמי בהתאם למיקום הגולש
+        const hotGameElement = document.getElementById("hot-game-title");
+        if (hotGameElement) {
+            if (userCountry === "UK") {
+                hotGameElement.innerText = "Big Bass Bonanza (Pragmatic Play) 🎣";
+            } else if (userCountry === "CY") {
+                hotGameElement.innerText = "Gates of Olympus (Pragmatic Play) ⚡";
+            } else if (userCountry === "DE") {
+                hotGameElement.innerText = "Book of Dead (Play'n GO) 📜";
+            } else {
+                hotGameElement.innerText = "Sweet Bonanza (Pragmatic Play) 🍬";
+            }
+        }
+
         filteredData = casinoData.filter(item => {
             if (!item.allowed_countries) return false; 
             return item.allowed_countries.includes(userCountry);
@@ -81,6 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         renderTable(filteredData);
     }
+
 
     // 4. מנוע טעינת הנתונים וזיהוי ה-IP המקביל
     // נשתמש בשירות מהיר, ואם הוא נחסם - המערכת תעבור למצב ידני בצורה חלקה
