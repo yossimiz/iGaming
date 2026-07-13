@@ -72,10 +72,10 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    function filterAndProcessData() {
+        function filterAndProcessData() {
         if (displayCountry) displayCountry.innerText = userCountry;
         
-        // עדכון המשחק החם בכרטיס העליון
+        // 1. עדכון המשחק החם בכרטיס השמאלי
         let hotGameText = "Sweet Bonanza (Pragmatic Play) 🍬";
         if (userCountry === "UK") {
             hotGameText = "Big Bass Bonanza (Pragmatic Play) 🎣";
@@ -90,11 +90,29 @@ document.addEventListener("DOMContentLoaded", () => {
             hotGameElement.innerText = hotGameText;
         }
 
-        // סינון המותגים מתוך ה-JSON
+        // 2. סינון המותגים מתוך ה-JSON לפי המדינה שנבחרה
         filteredData = casinoData.filter(item => {
             if (!item.allowed_countries) return false; 
             return item.allowed_countries.includes(userCountry);
         });
+
+        // 3. עדכון דינמי של הכרטיס הימני הירוק - מציג את הבונוס של הקזינו עם ה-RTP הכי גבוה כרגע!
+        const bestCasinoElement = document.getElementById("best-bonus-casino");
+        const bestBonusElement = document.getElementById("best-bonus-text");
+        
+        if (bestCasinoElement && bestBonusElement) {
+            if (filteredData.length > 0) {
+                // מיון פנימי מהיר למציאת המותג עם ה-RTP הגבוה ביותר כרגע ברשימה
+                const topCasino = [...filteredData].sort((a, b) => parseFloat(b.rtp_score) - parseFloat(a.rtp_score))[0];
+                
+                bestCasinoElement.innerText = topCasino.casino_name + " 🏆";
+                bestBonusElement.innerText = topCasino.bonus_text;
+            } else {
+                // מה יופיע אם אין מותגים באותה מדינה (כמו ישראל)
+                bestCasinoElement.innerText = "No Offers Available";
+                bestBonusElement.innerText = "Switch region to view legal bonuses.";
+            }
+        }
 
         if (loadingElement) loadingElement.style.display = "none";
         if (tableElement) tableElement.style.display = "table";
