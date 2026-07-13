@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const dataUrl = "./data.json"; 
+    const dataUrl = "https://github.io";
     const loadingElement = document.getElementById("loading");
     const tableElement = document.getElementById("casino-table");
     const tableBody = document.getElementById("table-body");
