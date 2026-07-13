@@ -67,24 +67,37 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 3. פונקציית סינון הנתונים המרכזית
-      // 3. פונקציית סינון הנתונים ועדכון המידע החם
+      // 3. פונקציית סינון הנתונים ועדכון המידע החם (גרסה מתוקנת)
     function filterAndProcessData() {
         if (displayCountry) displayCountry.innerText = userCountry;
         
-        // עדכון משחק חם דינמי בהתאם למיקום הגולש
+        // תיקון: הגדרת הטקסט במשתנה מראש
+        let hotGameText = "Sweet Bonanza (Pragmatic Play) 🍬";
+        if (userCountry === "UK") {
+            hotGameText = "Big Bass Bonanza (Pragmatic Play) 🎣";
+        } else if (userCountry === "CY") {
+            hotGameText = "Gates of Olympus (Pragmatic Play) ⚡";
+        } else if (userCountry === "DE") {
+            hotGameText = "Book of Dead (Play'n GO) 📜";
+        }
+
+        // עדכון בטוח של האלמנט על המסך
         const hotGameElement = document.getElementById("hot-game-title");
         if (hotGameElement) {
-            if (userCountry === "UK") {
-                hotGameElement.innerText = "Big Bass Bonanza (Pragmatic Play) 🎣";
-            } else if (userCountry === "CY") {
-                hotGameElement.innerText = "Gates of Olympus (Pragmatic Play) ⚡";
-            } else if (userCountry === "DE") {
-                hotGameElement.innerText = "Book of Dead (Play'n GO) 📜";
-            } else {
-                hotGameElement.innerText = "Sweet Bonanza (Pragmatic Play) 🍬";
-            }
+            hotGameElement.innerText = hotGameText;
         }
+
+        filteredData = casinoData.filter(item => {
+            if (!item.allowed_countries) return false; 
+            return item.allowed_countries.includes(userCountry);
+        });
+
+        if (loadingElement) loadingElement.style.display = "none";
+        if (tableElement) tableElement.style.display = "table";
+        
+        renderTable(filteredData);
+    }
+
 
         filteredData = casinoData.filter(item => {
             if (!item.allowed_countries) return false; 
