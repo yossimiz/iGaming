@@ -1,12 +1,12 @@
-// משתנים גלובליים כדי שפונקציית ה-Callback תוכל לגשת אליהם מחוץ ללולאה
+// משתנים גלובליים כדי שפונקציית ה-Callback תוכל לגשת אליהם מכל מקום
 let casinoData = []; 
 let filteredData = []; 
 let userCountry = "UNKNOWN";
 
-// 1. פונקציית ה-Callback הרשמית בשיטה שלך (JSONP) - תרוץ אוטומטית ע"י שרת ה-IP
+// 1. פונקציית ה-Callback הרשמית בשיטת ה-JSONP שלך
 window.processIP = function(data) {
-    if (data && data.countryCode) {
-        userCountry = data.countryCode.toUpperCase();
+    if (data && data.country) {
+        userCountry = data.country.toUpperCase();
         if (userCountry === "GB") userCountry = "UK";
     } else {
         userCountry = "UNKNOWN";
@@ -114,7 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const hotGameLink = document.getElementById("hot-game-link");
         if (hotGameAction && hotGameLink) {
             if (filteredData.length > 0) {
-                hotGameLink.href = filteredData[0].affiliate_link; // תיקון לוגי: שליפת הלינק מתוך האיבר הראשון
+                hotGameLink.href = filteredData[0].affiliate_link;
                 hotGameAction.style.display = "block";
             } else {
                 hotGameAction.style.display = "none";
@@ -153,9 +153,9 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(data => {
             casinoData = data;
             
-            // המימוש המדויק של השיטה שלך: יצירת תג סקריפט דינמי (JSONP) מאובטח ב-HTTPS
+            // יצירת תג סקריפט דינמי (JSONP) מאובטח וחינמי ב-HTTPS דרך ipinfo
             const script = document.createElement("script");
-            script.src = "https://ip-api.com"; // פנייה מאובטחת העוקפת חסימות CORS
+            script.src = "https://ipinfo.io"; 
             document.body.appendChild(script);
         })
         .catch(error => {
