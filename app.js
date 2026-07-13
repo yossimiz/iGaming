@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let casinoData = []; 
     let filteredData = []; 
-    let userCountry = "UNKNOWN"; // מתחילים ממצב ניטרלי
+    let userCountry = "UNKNOWN";
 
     // 1. מנגנון אימות גיל (18+)
     if (localStorage.getItem("age_verified") === "true") {
@@ -65,24 +65,30 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 3. מנוע זיהוי ה-IP המקצועי באמצעות Cloudflare (חסין חסימות)
+    // 3. מנוע זיהוי ה-IP המתוקן באמצעות Cloudflare
     fetch("https://1.1.1")
-        .then(res => res.text())
+        .then(res => {
+            if (!res.ok) throw new Error("Cloudflare trace offline");
+            return res.text();
+        })
         .then(text => {
-            // קריאת הנתונים מ-Cloudflare וחילוץ קוד המדינה (loc=XX)
             const lines = text.split("\n");
             const locLine = lines.find(line => line.startsWith("loc="));
             if (locLine) {
-                userCountry = locLine.split("=")[1].toUpperCase();
+                // התיקון: חילוץ המחרוזת בצורה נכונה והפיכתה לאותיות גדולות
+                const countryValue = locLine.split("=")[1];
+                if (countryValue) {
+                    userCountry = countryValue.trim().toUpperCase();
+                }
             }
             if (userCountry === "GB") userCountry = "UK";
             console.log("Cloudflare Geo-IP detected:", userCountry);
             
-            return fetch(dataUrl); // מעבר למשיכת קובץ הנתונים מהקזינו
+            return fetch(dataUrl);
         })
         .catch(err => {
-            console.error("Geo API error, falling back to default.", err);
-            userCountry = "UK"; // ברירת מחדל במקרה חירום קיצוני
+            console.error("Geo API error, falling back to default view.", err);
+            userCountry = "UK"; // ברירת מחדל רק במקרה של חסימת רשת מוחלטת
             return fetch(dataUrl);
         })
         .then(response => {
