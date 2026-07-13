@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let casinoData = []; 
     let filteredData = []; 
-    let userCountry = "UNKNOWN";
+    let userCountry = "UNKNOWN"; // מתחילים מניטרלי, ה-IP יחליף אותו מיד
 
     // 1. מנגנון אימות גיל (18+)
     if (localStorage.getItem("age_verified") === "true") {
@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function filterAndProcessData() {
         if (displayCountry) displayCountry.innerText = userCountry;
         
-        // הגדרת המשחק החם לפי המדינה
+        // הגדרת המשחק החם לפי המדינה מה-IP
         let hotGameText = "Sweet Bonanza (Pragmatic Play) 🍬";
         if (userCountry === "UK") {
             hotGameText = "Big Bass Bonanza (Pragmatic Play) 🎣";
@@ -134,31 +134,25 @@ document.addEventListener("DOMContentLoaded", () => {
         renderTable(filteredData);
     }
 
-    // 4. מנוע זיהוי ה-IP המתוקן והמטופל פנימית (Cloudflare Trace)
-    fetch("https://cloudflare.com")
+    // 4. מנוע זיהוי ה-IP הרשמי והמאובטח (FreeIPAPI JSON) - חסין CORS וחסין חוסמי פרסומות
+    fetch("https://freeipapi.com")
         .then(res => {
-            if (!res.ok) throw new Error("Cloudflare Trace offline");
-            return res.text();
+            if (!res.ok) throw new Error("Geo IP Service Offline");
+            return res.json();
         })
-        .then(text => {
-            const lines = text.split("\n");
-            for (let i = 0; i < lines.length; i++) {
-                if (lines[i].indexOf("loc=") === 0) {
-                    // התיקון המדעי: פיצול המחרוזת ולקיחת האיבר השני (הטקסט של המדינה) בצורה נקייה
-                    const parts = lines[i].split("=");
-                    if (parts && parts[1]) {
-                        userCountry = parts[1].trim().toUpperCase();
-                    }
-                    break;
-                }
+        .then(geo => {
+            // שליפה ישירה ומדויקת של קוד המדינה מתוך ה-JSON של ה-IP
+            if (geo && geo.countryCode) {
+                userCountry = geo.countryCode.toUpperCase();
             }
             if (userCountry === "GB") userCountry = "UK";
-            console.log("Cloudflare Engine Detected Geo:", userCountry);
+            console.log("System Status - IP Country Detected:", userCountry);
+            
             return fetch(dataUrl);
         })
         .catch(err => {
-            console.warn("Cloudflare Engine blocked, using backup view.", err);
-            userCountry = "UNKNOWN"; 
+            console.error("Geo Matrix Error, falling back to default.", err);
+            userCountry = "UNKNOWN"; // גיבוי רק למקרה של ניתוק אינטרנט מוחלט
             return fetch(dataUrl);
         })
         .then(response => response.json())
