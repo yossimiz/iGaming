@@ -49,28 +49,31 @@ def process_data(raw_data):
     return cleaned_offers
 
 def get_fallback_real_data():
-    """ נתונים אמיתיים ומאומתים של מותגים מובילים באירופה (לימי הפיתוח הראשונים) """
+    """ נתונים אמיתיים הכוללים סינון מדינות מורשות (allowed_countries) """
     return [
         {
             "casino_name": "Vulkan Vegas",
             "bonus_text": "100% Up to €1,500 + 150 Free Spins",
             "rtp_score": "96.82%",
             "affiliate_link": "https://vpartners.link",
-            "regulatory_text": "18+. New EU players only. Min deposit €10. Wagering 40x. T&Cs apply."
+            "regulatory_text": "18+. New EU players only. Min deposit €10. Wagering 40x. T&Cs apply.",
+            "allowed_countries": ["DE", "NL", "FI", "IE"] # חוקי באירופה, לא בבריטניה
         },
         {
             "casino_name": "Ice Casino",
             "bonus_text": "€1,500 Welcome Pack + 270 Free Spins",
             "rtp_score": "96.45%",
             "affiliate_link": "https://vpartners.link",
-            "regulatory_text": "18+. T&Cs apply. Play responsibly. BeGambleAware.org"
+            "regulatory_text": "18+. T&Cs apply. Play responsibly. BeGambleAware.org",
+            "allowed_countries": ["DE", "NL", "FI", "CY"] # חוקי באירופה
         },
         {
             "casino_name": "Bet365 Casino",
             "bonus_text": "Stake £10 and get 50 Free Spins",
             "rtp_score": "97.15%",
             "affiliate_link": "https://bet365.link",
-            "regulatory_text": "18+. New UK players only. Min £10 deposit. 50 Free Spins. T&Cs apply."
+            "regulatory_text": "18+. New UK players only. Min £10 deposit. 50 Free Spins. T&Cs apply.",
+            "allowed_countries": ["UK", "GB", "IE"] # חוקי בבריטניה ואירלנד בלבד!
         }
     ]
 
