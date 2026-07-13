@@ -3,14 +3,18 @@ let casinoData = [];
 let filteredData = []; 
 let userCountry = "UNKNOWN";
 
-// 1. פונקציית ה-Callback הרשמית בשיטת ה-JSONP שלך
+// 1. פונקציית ה-Callback הרשמית בשיטת ה-JSONP החינמית והמאובטחת
 window.processIP = function(data) {
-    if (data && data.country) {
+    // השירות מחזיר שדה בשם country_code או country
+    if (data && data.country_code) {
+        userCountry = data.country_code.toUpperCase();
+    } else if (data && data.country) {
         userCountry = data.country.toUpperCase();
-        if (userCountry === "GB") userCountry = "UK";
     } else {
         userCountry = "UNKNOWN";
     }
+    
+    if (userCountry === "GB") userCountry = "UK";
     console.log("JSONP Engine Successfully Detected Geo:", userCountry);
     
     // הפעלת סינון האתר מיד עם קבלת המדינה מה-IP
@@ -113,7 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const hotGameAction = document.getElementById("hot-game-action");
         const hotGameLink = document.getElementById("hot-game-link");
         if (hotGameAction && hotGameLink) {
-            if (filteredData.length > 0) {
+            if (filteredData.length > 0 && filteredData[0]) {
                 hotGameLink.href = filteredData[0].affiliate_link;
                 hotGameAction.style.display = "block";
             } else {
@@ -130,10 +134,12 @@ document.addEventListener("DOMContentLoaded", () => {
         if (bestCasinoElement && bestBonusElement && bestBonusAction && bestBonusLink) {
             if (filteredData.length > 0) {
                 const topCasino = [...filteredData].sort((a, b) => parseFloat(b.rtp_score) - parseFloat(a.rtp_score));
-                bestCasinoElement.innerText = topCasino[0].casino_name + " 🏆";
-                bestBonusElement.innerText = topCasino[0].bonus_text;
-                bestBonusLink.href = topCasino[0].affiliate_link;
-                bestBonusAction.style.display = "block";
+                if (topCasino && topCasino[0]) {
+                    bestCasinoElement.innerText = topCasino[0].casino_name + " 🏆";
+                    bestBonusElement.innerText = topCasino[0].bonus_text;
+                    bestBonusLink.href = topCasino[0].affiliate_link;
+                    bestBonusAction.style.display = "block";
+                }
             } else {
                 bestCasinoElement.innerText = "No Offers Available";
                 bestBonusElement.innerText = "Switch region to view legal bonuses.";
@@ -153,9 +159,19 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(data => {
             casinoData = data;
             
-            // יצירת תג סקריפט דינמי (JSONP) מאובטח וחינמי ב-HTTPS דרך ipinfo
+            // יצירת תג סקריפט דינמי (JSONP) דרך השירות החינמי והפתוח של seeip.org (תומך ב-HTTPS מלא ללא תשלום)
             const script = document.createElement("script");
-            script.src = "https://ipinfo.io"; 
+            script.src = "https://ipapi.co"; 
+            
+            // גיבוי במקרה חירום מוחלט - אם הסקריפט לא נטען תוך 3 שניות, נשחרר את האתר על קפריסין
+            setTimeout(() => {
+                if (userCountry === "UNKNOWN") {
+                    console.warn("Geo service timed out, using fallback CY view.");
+                    userCountry = "CY";
+                    window.triggerFilter();
+                }
+            }, 3000);
+
             document.body.appendChild(script);
         })
         .catch(error => {
