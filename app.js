@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let casinoData = []; 
     let filteredData = []; 
-    let userCountry = "CY"; // פתרון מנצח: קובעים את קפריסין כברירת מחדל התחלתית במקום UNKNOWN
+    let userCountry = "UNKNOWN";
 
     // 1. מנגנון אימות גיל (18+)
     if (localStorage.getItem("age_verified") === "true") {
@@ -134,7 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
         renderTable(filteredData);
     }
 
-    // 4. מנוע זיהוי ה-IP - אם הדפדפן חוסם אותו, המערכת תציג קפריסין בצורה חלקה
+    // 4. מנוע זיהוי ה-IP המתוקן והמטופל פנימית (Cloudflare Trace)
     fetch("https://cloudflare.com")
         .then(res => {
             if (!res.ok) throw new Error("Cloudflare Trace offline");
@@ -143,8 +143,12 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(text => {
             const lines = text.split("\n");
             for (let i = 0; i < lines.length; i++) {
-                if (lines[i].substring(0, 4) === "loc=") {
-                    userCountry = lines[i].substring(4).trim().toUpperCase();
+                if (lines[i].indexOf("loc=") === 0) {
+                    // התיקון המדעי: פיצול המחרוזת ולקיחת האיבר השני (הטקסט של המדינה) בצורה נקייה
+                    const parts = lines[i].split("=");
+                    if (parts && parts[1]) {
+                        userCountry = parts[1].trim().toUpperCase();
+                    }
                     break;
                 }
             }
@@ -153,8 +157,8 @@ document.addEventListener("DOMContentLoaded", () => {
             return fetch(dataUrl);
         })
         .catch(err => {
-            console.warn("Geo detection blocked. Defaulting to Cyprus (CY).", err);
-            userCountry = "CY"; // אם השירות נחסם בדפדפן שלך, האתר ייפתח אוטומטית על קפריסין!
+            console.warn("Cloudflare Engine blocked, using backup view.", err);
+            userCountry = "UNKNOWN"; 
             return fetch(dataUrl);
         })
         .then(response => response.json())
