@@ -1,7 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // הכתובת המלאה והמדויקת של קובץ הנתונים שלך בגיטהב
-    const dataUrl = "data.json";
-    
+    const dataUrl = "data.json"; 
     const loadingElement = document.getElementById("loading");
     const tableElement = document.getElementById("casino-table");
     const tableBody = document.getElementById("table-body");
@@ -15,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let filteredData = []; 
     let userCountry = "UNKNOWN";
 
-    // 1. הפעלת מנגנון אימות גיל (18+)
+    // 1. מנגנון אימות גיל (18+)
     if (localStorage.getItem("age_verified") === "true") {
         if (ageGate) ageGate.style.display = "none";
     } else {
@@ -67,23 +65,27 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 3. מנוע זיהוי ה-IP הרשמי והנקי (באמצעות ipapi.co המאובטח ב-HTTPS)
-    fetch("https://ipapi.co")
+    // 3. מנוע זיהוי ה-IP היציב בעולם (באמצעות ה-API של Cloudflare)
+    fetch("https://cloudflare.com")
         .then(res => {
-            if (!res.ok) throw new Error("Geo API Network error");
-            return res.json();
+            if (!res.ok) throw new Error("Cloudflare Trace Offline");
+            return res.text();
         })
-        .then(geo => {
-            // קבלת קוד המדינה בצורה נקייה ויציבה
-            userCountry = geo.country_code ? geo.country_code.toUpperCase() : "UNKNOWN";
+        .then(text => {
+            // פירוק הנתונים של Cloudflare בצורה בטוחה ללא שגיאות קריסה
+            const lines = text.split("\n");
+            const locLine = lines.find(line => line.trim().startsWith("loc="));
+            if (locLine) {
+                userCountry = locLine.split("=")[1].trim().toUpperCase();
+            }
             if (userCountry === "GB") userCountry = "UK";
-            console.log("System Status - Country Detected:", userCountry);
+            console.log("Cloudflare Trace - Country Detected:", userCountry);
             
             return fetch(dataUrl);
         })
         .catch(err => {
-            console.error("Geo Matrix Error, falling back to UNKNOWN.", err);
-            userCountry = "UNKNOWN"; // במקרה של חסימה, המדינה תהיה UNKNOWN כדי שלא תציג סתם את בריטניה
+            console.error("Geo Matrix Error, falling back to default.", err);
+            userCountry = "UNKNOWN"; 
             return fetch(dataUrl);
         })
         .then(response => {
@@ -95,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
             
             // סינון קפדני לפי המדינה של הגולש
             filteredData = casinoData.filter(item => {
-                if (!item.allowed_countries) return false; // מונע הצגה בטעות אם אין שדה מדינות
+                if (!item.allowed_countries) return false; 
                 return item.allowed_countries.includes(userCountry);
             });
 
