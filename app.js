@@ -65,31 +65,39 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 3. מנוע דיבוג וזיהוי IP מאובטח וחסין קריסות (Cloudflare Trace)
-    fetch("https://cloudflare.com")
+    // 3. מנוע זיהוי ה-IP המקצועי החדש - באמצעות שירות HTTPS JSON חסין חסימות
+    fetch("https://ipapi.co")
         .then(res => {
-            if (!res.ok) throw new Error("Cloudflare Trace offline");
-            return res.text();
+            if (!res.ok) throw new Error("Geo API Offline");
+            return res.json();
         })
-        .then(text => {
-            // פירוק בטוח לחלוטין של המלל שחוזר מ-Cloudflare ללא פונקציות מחרוזת שבירות
-            const lines = text.split("\n");
-            for (let i = 0; i < lines.length; i++) {
-                if (lines[i].indexOf("loc=") === 0) {
-                    userCountry = lines[i].replace("loc=", "").trim().toUpperCase();
-                    break;
-                }
+        .then(geo => {
+            // קריאה ישירה של קוד המדינה מתוך ה-JSON ללא חיתוך ידני
+            if (geo && geo.country_code) {
+                userCountry = geo.country_code.toUpperCase();
             }
-            
             if (userCountry === "GB") userCountry = "UK";
-            console.log("Debug System - Detected Country:", userCountry);
+            console.log("System Status - Country Detected:", userCountry);
             
             return fetch(dataUrl);
         })
         .catch(err => {
-            console.error("Geo Debug Matrix Error:", err);
-            userCountry = "UNKNOWN"; 
-            return fetch(dataUrl);
+            console.error("Primary Geo error, trying fallback service...", err);
+            // שירות גיבוי משני מאובטח (HTTPS) במקרה שהראשון נכשל
+            return fetch("https://freeipapi.com")
+                .then(res => res.json())
+                .then(geo2 => {
+                    if (geo2 && geo2.countryCode) {
+                        userCountry = geo2.countryCode.toUpperCase();
+                    }
+                    if (userCountry === "GB") userCountry = "UK";
+                    return fetch(dataUrl);
+                })
+                .catch(err2 => {
+                    console.error("All Geo APIs failed, using default.", err2);
+                    userCountry = "UNKNOWN";
+                    return fetch(dataUrl);
+                });
         })
         .then(response => {
             if (!response.ok) throw new Error("Database offline");
@@ -98,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(data => {
             casinoData = data;
             
-            // סינון הנתונים לפי המדינה שזוהתה בצורה מוחלטת
+            // סינון קפדני לפי המדינה שזוהתה בצורה אוטומטית
             filteredData = casinoData.filter(item => {
                 if (!item.allowed_countries) return false; 
                 return item.allowed_countries.includes(userCountry);
