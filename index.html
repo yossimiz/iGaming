@@ -207,17 +207,23 @@
         <h1>Live RTP Casino Tracker</h1>
         <p class="subtitle">Real-time data engine monitoring verified payouts across EU & UK jurisdictions.</p>
     </header>
-
         <!-- 1. אזור מידע חם ובונוסים לשחקנים -->
     <div class="promo-grid" style="display: flex; gap: 20px; margin-bottom: 30px; flex-wrap: wrap;">
-        <!-- כרטיס משחק חם -->
-        <div class="promo-card" style="background: linear-gradient(135deg, #1e1b4b, #311042); border: 1px solid #4c1d95; padding: 20px; border-radius: 12px; flex: 1; min-width: 280px; position: relative;">
+               <!-- כרטיס משחק חם - עם כפתור גישה ישיר משודרג -->
+        <div class="promo-card" style="background: linear-gradient(135deg, #1e1b4b, #311042); border: 1px solid #4c1d95; padding: 20px; border-radius: 12px; flex: 1; min-width: 280px; position: relative; display: flex; flex-direction: column; justify-content: space-between;">
             <span style="position: absolute; top: 12px; right: 12px; background: #ef4444; color: white; font-size: 0.75rem; font-weight: 800; padding: 3px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em;">🔥 HOT NOW</span>
-            <h3 style="margin: 0 0 8px 0; color: #f8fafc; font-size: 1.2rem;">Trending Slot Matrix</h3>
-            <p style="margin: 0 0 12px 0; color: #c084fc; font-weight: 700; font-size: 1.1rem;" id="hot-game-title">Loading...</p>
-            <p style="margin: 0; color: #94a3b8; font-size: 0.85rem;">Currently spiking in volume and payout multipliers across EU servers.</p>
+            <div>
+                <h3 style="margin: 0 0 8px 0; color: #f8fafc; font-size: 1.2rem;">Trending Slot Matrix</h3>
+                <p style="margin: 0 0 4px 0; color: #c084fc; font-weight: 700; font-size: 1.1rem;" id="hot-game-title">Loading...</p>
+                <p style="margin: 0 0 15px 0; color: #94a3b8; font-size: 0.85rem;">Currently spiking in volume and payout multipliers across EU servers.</p>
+            </div>
+            <!-- הכפתור הדינמי החדש -->
+            <div id="hot-game-action" style="display: none;">
+                <a href="#" id="hot-game-link" target="_blank" rel="nofollow noopener" style="background-color: #a855f7; color: white; padding: 8px 16px; text-decoration: none; border-radius: 6px; font-weight: 700; display: inline-block; font-size: 0.9rem; box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3); transition: all 0.2s;">
+                    Play This Slot Now →
+                </a>
+            </div>
         </div>
-
                <!-- כרטיס טיפ בונוסים חכם - מעודכן דינמית -->
         <div class="promo-card" style="background: linear-gradient(135deg, #064e3b, #022c22); border: 1px solid #065f46; padding: 20px; border-radius: 12px; flex: 1; min-width: 280px; position: relative;">
             <span style="position: absolute; top: 12px; right: 12px; background: #10b981; color: white; font-size: 0.75rem; font-weight: 800; padding: 3px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em;">💡 BEST OFFER</span>
