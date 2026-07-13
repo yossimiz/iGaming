@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         if (hotGameAction && hotGameLink) {
             if (filteredData.length > 0) {
-                // תיקון סופי: לקיחת הלינק מהאיבר הראשון במערך [0]
+                // תיקון קריטי: שליפת הלינק מתוך האיבר הראשון במערך המסונן [0]
                 hotGameLink.href = filteredData[0].affiliate_link;
                 hotGameAction.style.display = "block";
             } else {
@@ -114,12 +114,13 @@ document.addEventListener("DOMContentLoaded", () => {
         
         if (bestCasinoElement && bestBonusElement && bestBonusAction && bestBonusLink) {
             if (filteredData.length > 0) {
+                // מיון למציאת המותג עם ה-RTP הגבוה ביותר
                 const topCasino = [...filteredData].sort((a, b) => parseFloat(b.rtp_score) - parseFloat(a.rtp_score));
                 
                 bestCasinoElement.innerText = topCasino[0].casino_name + " 🏆";
                 bestBonusElement.innerText = topCasino[0].bonus_text;
                 
-                // תיקון סופי: לקיחת הלינק מהאיבר הממוין הראשון [0]
+                // תיקון קריטי: שליפת הלינק מתוך האיבר הממוין הראשון [0]
                 bestBonusLink.href = topCasino[0].affiliate_link;
                 bestBonusAction.style.display = "block";
             } else {
