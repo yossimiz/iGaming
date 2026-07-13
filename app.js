@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const dataUrl = "https://github.io";
+    // הכתובת המלאה והמדויקת של קובץ הנתונים שלך בגיטהב
+    const dataUrl = "https://github.io"; 
+    
     const loadingElement = document.getElementById("loading");
     const tableElement = document.getElementById("casino-table");
     const tableBody = document.getElementById("table-body");
@@ -13,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let filteredData = []; 
     let userCountry = "UNKNOWN";
 
-    // 1. מנגנון אימות גיל
+    // 1. הפעלת מנגנון אימות גיל (18+)
     if (localStorage.getItem("age_verified") === "true") {
         if (ageGate) ageGate.style.display = "none";
     } else {
@@ -65,13 +67,14 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 3. מנוע זיהוי ה-IP המאובטח (HTTPS)
-    fetch("https://ipapi.co") // חזרה ל-ipapi מוגן ב-HTTPS
+    // 3. מנוע זיהוי ה-IP הרשמי והנקי (באמצעות ipapi.co המאובטח ב-HTTPS)
+    fetch("https://ipapi.co")
         .then(res => {
-            if (!res.ok) throw new Error("Geo API failed");
+            if (!res.ok) throw new Error("Geo API Network error");
             return res.json();
         })
         .then(geo => {
+            // קבלת קוד המדינה בצורה נקייה ויציבה
             userCountry = geo.country_code ? geo.country_code.toUpperCase() : "UNKNOWN";
             if (userCountry === "GB") userCountry = "UK";
             console.log("System Status - Country Detected:", userCountry);
@@ -80,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .catch(err => {
             console.error("Geo Matrix Error, falling back to UNKNOWN.", err);
-            userCountry = "UNKNOWN"; // אם יש שגיאה, המדינה תהיה UNKNOWN כדי שלא תציג סתם את בריטניה
+            userCountry = "UNKNOWN"; // במקרה של חסימה, המדינה תהיה UNKNOWN כדי שלא תציג סתם את בריטניה
             return fetch(dataUrl);
         })
         .then(response => {
@@ -90,9 +93,9 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(data => {
             casinoData = data;
             
-            // סינון קפדני
+            // סינון קפדני לפי המדינה של הגולש
             filteredData = casinoData.filter(item => {
-                if (!item.allowed_countries) return false; // שינוי ל-false כדי שאם אין מדינות ב-JSON הוא יסתיר הכל
+                if (!item.allowed_countries) return false; // מונע הצגה בטעות אם אין שדה מדינות
                 return item.allowed_countries.includes(userCountry);
             });
 
