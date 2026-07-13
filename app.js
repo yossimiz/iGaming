@@ -9,11 +9,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const ageAccept = document.getElementById("age-accept");
     const ageReject = document.getElementById("age-reject");
 
-    let casinoData = []; // כל הנתונים מהשרת
-    let filteredData = []; // הנתונים הרלוונטיים רק למדינה של הגולש
-    let userCountry = "UK"; // ברירת מחדל למקרה שה-API חסום
+    let casinoData = []; 
+    let filteredData = []; 
+    let userCountry = "UNKNOWN"; // מתחילים ממצב ניטרלי
 
-    // 1. הפעלת חלון אימות הגיל (18+)
+    // 1. מנגנון אימות גיל (18+)
     if (localStorage.getItem("age_verified") === "true") {
         if (ageGate) ageGate.style.display = "none";
     } else {
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
         tableBody.innerHTML = "";
         
         if (data.length === 0) {
-            tableBody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#94a3b8;">No regulated brands available in your region yet.</td></tr>`;
+            tableBody.innerHTML = `<tr><td colspan="4" style="text-align:center; padding: 40px; color:#94a3b8;">No regulated brands available in your region (${userCountry}) yet.</td></tr>`;
             return;
         }
 
@@ -65,20 +65,25 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 3. מנוע זיהוי ה-IP ומשיכת הנתונים במקביל
-    // אנחנו מבצעים פנייה ל-ipapi כדי לדעת את המדינה של הגולש בזמן אמת
-    fetch("https://ipapi.co/json/")
-        .then(res => res.json())
-        .then(geo => {
-            // קבלת קוד המדינה (למשל: GB, DE, IL)
-            userCountry = geo.country_code ? geo.country_code.toUpperCase() : "UK";
-            if (userCountry === "GB") userCountry = "UK"; // השוואת תקן בריטניה
-            console.log("User detected country code:", userCountry);
-            return fetch(dataUrl); // ממשיך למשיכת נתוני הקזינו
+    // 3. מנוע זיהוי ה-IP המקצועי באמצעות Cloudflare (חסין חסימות)
+    fetch("https://1.1.1")
+        .then(res => res.text())
+        .then(text => {
+            // קריאת הנתונים מ-Cloudflare וחילוץ קוד המדינה (loc=XX)
+            const lines = text.split("\n");
+            const locLine = lines.find(line => line.startsWith("loc="));
+            if (locLine) {
+                userCountry = locLine.split("=")[1].toUpperCase();
+            }
+            if (userCountry === "GB") userCountry = "UK";
+            console.log("Cloudflare Geo-IP detected:", userCountry);
+            
+            return fetch(dataUrl); // מעבר למשיכת קובץ הנתונים מהקזינו
         })
         .catch(err => {
-            console.warn("Geo-IP service unavailable, using default view.", err);
-            return fetch(dataUrl); // אם ה-IP API נכשל, עדיין נמשוך את נתוני הקזינו ולא נתקע את האתר
+            console.error("Geo API error, falling back to default.", err);
+            userCountry = "UK"; // ברירת מחדל במקרה חירום קיצוני
+            return fetch(dataUrl);
         })
         .then(response => {
             if (!response.ok) throw new Error("Database offline");
@@ -87,11 +92,9 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(data => {
             casinoData = data;
             
-            // --- סינון הנתונים לפי המדינה של הגולש ---
+            // סינון הנתונים לפי המדינה שזוהתה ב-Cloudflare
             filteredData = casinoData.filter(item => {
-                // אם רשת השותפים לא הגדירה מדינות מוגבלות, נציג לכולם כברירת מחדל
                 if (!item.allowed_countries) return true;
-                // מציג את הקזינו רק אם המדינה של הגולש נמצאת ברשימה המורשת
                 return item.allowed_countries.includes(userCountry);
             });
 
@@ -107,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-    // 4. מנגנון המיון (עובד על הנתונים המסוננים!)
+    // 4. מנגנון מיון
     if (sortSelect) {
         sortSelect.addEventListener("change", (e) => {
             const value = e.target.value;
