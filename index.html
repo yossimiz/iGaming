@@ -208,12 +208,27 @@
         <p class="subtitle">Real-time data engine monitoring verified payouts across EU & UK jurisdictions.</p>
     </header>
 
-    <div class="controls">
-        <select id="sort-select">
-            <option value="default">Sort By: Default</option>
-            <option value="rtp-desc">Highest RTP First</option>
-            <option value="name-asc">Alphabetical (A-Z)</option>
-        </select>
+        <!-- סרגל כלי סינון, מיון ובחירת מדינה משודרג -->
+    <div class="controls" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 25px;">
+        <div style="color: var(--secondary-text); font-weight: 600;">
+            Region: <span id="display-country" style="color: var(--accent-color); background: rgba(16, 185, 129, 0.1); padding: 4px 8px; border-radius: 4px;">Detecting...</span>
+        </div>
+        <div style="display: flex; gap: 12px;">
+            <!-- בחירת מדינה ידנית במקרה של חסימת IP -->
+            <select id="country-select">
+                <option value="AUTO">🌍 Auto Detect Location</option>
+                <option value="CY">🇨🇾 Cyprus</option>
+                <option value="UK">🇬🇧 United Kingdom</option>
+                <option value="DE">🇩🇪 Germany</option>
+                <option value="IL">🇮🇱 Israel</option>
+            </select>
+            
+            <select id="sort-select">
+                <option value="default">Sort By: Default</option>
+                <option value="rtp-desc">Highest RTP First</option>
+                <option value="name-asc">Alphabetical (A-Z)</option>
+            </select>
+        </div>
     </div>
     
     <div class="table-responsive">
