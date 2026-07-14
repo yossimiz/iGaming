@@ -154,25 +154,31 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     // 5. טעינת נתוני ה-JSON של בתי הקזינו
+      // 5. טעינת נתוני ה-JSON של בתי הקזינו וזיהוי מיקום מודרני (Fetch)
     fetch(dataUrl)
         .then(response => response.json())
         .then(data => {
             casinoData = data;
             
-            // יצירת תג סקריפט דינמי (JSONP) דרך השירות החינמי והפתוח של seeip.org (תומך ב-HTTPS מלא ללא תשלום)
-            const script = document.createElement("script");
-            script.src = "https://ipapi.co"; 
-            
-            // גיבוי במקרה חירום מוחלט - אם הסקריפט לא נטען תוך 3 שניות, נשחרר את האתר על קפריסין
-            setTimeout(() => {
-                if (userCountry === "UNKNOWN") {
-                    console.warn("Geo service timed out, using fallback CY view.");
-                    userCountry = "CY";
+            // זיהוי מיקום מהיר ומאובטח ללא סקריפטים מסובכים
+            fetch("https://ipapi.co/json/")
+                .then(res => res.json())
+                .then(geo => {
+                    if (geo && geo.country_code) {
+                        userCountry = geo.country_code.toUpperCase();
+                    } else if (geo && geo.country) {
+                        userCountry = geo.country.toUpperCase();
+                    }
+                    
+                    if (userCountry === "GB") userCountry = "UK";
+                    console.log("Geo Engine Successfully Detected:", userCountry);
                     window.triggerFilter();
-                }
-            }, 3000);
-
-            document.body.appendChild(script);
+                })
+                .catch(geoError => {
+                    console.warn("Geo API failed, using fallback CY:", geoError);
+                    userCountry = "CY"; // רשת ביטחון במקרה של חסימה
+                    window.triggerFilter();
+                });
         })
         .catch(error => {
             console.error("Critical System Error Loading JSON:", error);
@@ -180,6 +186,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 loadingElement.innerHTML = `<span style="color: #ef4444;">Failed to sync with live data matrix.</span>`;
             }
         });
+
 
     // 6. האזנה לשינויים ידניים
     if (countrySelect) {
