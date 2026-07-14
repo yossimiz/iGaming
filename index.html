@@ -378,157 +378,63 @@
 </section>
 <style>
 /* --- Premium Luxury Slot Widget & Coin Canvas Styles --- */
+/* --- תיקון רוחב ומראה יוקרתי לווידג'ט במחשב --- */
 .premium-slots-section {
-    max-width: 500px; /* גודל קומפקטי שמחליף במדויק את המחשבון הישן */
-    margin: 30px auto;
+    max-width: 360px; /* נעילה לרוחב מהודק וקומפקטי בדיוק כמו המחשבון הישן */
+    margin: 20px auto 40px auto;
     padding: 0 15px;
     position: relative;
 }
 
 .slot-widget-box {
-    background-color: #0f131c;
-    border: 2px solid #1e2638;
-    border-radius: 16px;
+    background: linear-gradient(145deg, #131926 0%, #090d15 100%);
+    border: 2px solid #232d42;
+    border-radius: 20px;
     padding: 20px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05);
+    /* הצללה תלת-ממדית עמוקה שגורמת לווידג'ט לקפוץ מהמסך */
+    box-shadow: 0 25px 60px rgba(0,0,0,0.8), 
+                inset 0 2px 3px rgba(255,255,255,0.05),
+                0 0 30px rgba(0, 255, 135, 0.05);
     position: relative;
-    overflow: visible; /* מאפשר למטבעות לקפוץ אל מחוץ לווידג'ט */
+    overflow: visible;
 }
 
-/* שרשראות הקנבס של המטבעות הנופלים */
-#coin-canvas {
-    position: absolute;
-    top: -100px;
-    left: -50px;
-    width: calc(100% + 100px);
-    height: calc(100% + 200px);
-    pointer-events: none; /* מונע חסימת לחיצות עכבר מהאתר */
-    z-index: 100;
-}
-
-/* שלד המכונה המטאלי */
+/* שלד המכונה המטאלי המהודק */
 .lux-machine {
-    background: linear-gradient(135deg, #07090e 0%, #0d111a 100%);
-    border: 3px solid #1a2233;
-    border-radius: 12px;
-    padding: 15px;
-    box-shadow: inset 0 0 25px rgba(0,0,0,0.9);
+    background: linear-gradient(135deg, #05070a 0%, #101624 50%, #05070a 100%);
+    border: 3px solid #1f293d;
+    border-radius: 14px;
+    padding: 12px;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.9), 0 4px 15px rgba(0,0,0,0.5);
 }
 
-/* חלון הצפייה התלת-ממדי */
+/* התאמת גובה ה-Viewport למראה סימטרי */
 .lux-viewport {
     display: flex;
     justify-content: space-between;
-    background: #030508;
-    border: 2px solid #222d42;
+    background: #020305;
+    border: 2px solid #1a2233;
     border-radius: 8px;
-    height: 90px;
+    height: 80px; /* קיצור קל של הגובה לאיזון ויזואלי */
     overflow: hidden;
     position: relative;
-    box-shadow: inset 0 15px 25px rgba(0,0,0,0.95), inset 0 -15px 25px rgba(0,0,0,0.95);
-}
-
-.lux-viewport::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 75%, rgba(0,0,0,0.6) 100%);
-    pointer-events: none;
-}
-
-/* חלון של גלגל בודד */
-.lux-reel-window {
-    width: 32%;
-    height: 100%;
-    position: relative;
-    background: linear-gradient(to bottom, #070a0f 0%, #121824 50%, #070a0f 100%);
-}
-
-.lux-reel-window:not(:last-child) {
-    border-right: 1px solid #1a2233;
-}
-
-/* רצועת הסמלים עם ה-Motion Blur החלק */
-.lux-reel {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    position: absolute;
-    width: 100%;
-    top: 0;
-    transform: translateY(0);
+    box-shadow: inset 0 15px 20px rgba(0,0,0,0.95), inset 0 -15px 20px rgba(0,0,0,0.95);
 }
 
 .lux-reel div {
-    height: 90px;
-    line-height: 90px;
-    font-size: 32px;
+    height: 80px; /* התאמת גובה הסמלים לחלון החדש */
+    line-height: 80px;
+    font-size: 28px;
     text-align: center;
-    user-select: none;
 }
 
-/* אנימציית סיבוב מהירה וחלקה בטירוף של CSS */
+/* תיקון האנימציה לגובה החדש כדי שהעצירה תהיה מושלמת */
 @keyframes lux-spin {
     0% { transform: translateY(0); filter: blur(0px); }
-    50% { filter: blur(4px); } /* אפקט טשטוש תנועה קולנועי באמצע הסיבוב */
-    100% { transform: translateY(-450px); filter: blur(0px); }
+    50% { filter: blur(4px); }
+    100% { transform: translateY(-400px); filter: blur(0px); }
 }
 
-.lux-reel.active-spin {
-    animation: lux-spin 0.12s linear infinite;
-}
-
-/* כפתור הפעלה יוקרתי ופועם */
-.lux-spin-button {
-    width: 100%;
-    margin-top: 15px;
-    background: linear-gradient(135deg, #00ff87 0%, #00b35c 100%);
-    color: #05070a;
-    border: none;
-    padding: 14px;
-    border-radius: 6px;
-    font-weight: 800;
-    font-size: 14px;
-    letter-spacing: 1px;
-    cursor: pointer;
-    box-shadow: 0 4px 20px rgba(0, 255, 135, 0.25);
-    transition: all 0.2s ease;
-}
-
-.lux-spin-button:hover {
-    box-shadow: 0 6px 25px rgba(0, 255, 135, 0.45);
-    transform: translateY(-1px);
-}
-
-/* תיבת הזכייה הדינמית של הג'קפוט */
-.lux-win-card {
-    margin-top: 20px;
-    background: #05070a;
-    border: 1px solid #00ff87;
-    border-radius: 8px;
-    padding: 15px;
-    box-shadow: 0 0 25px rgba(0, 255, 135, 0.2);
-    animation: luxPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.lux-banner { color: #00ff87; font-size: 11px; font-weight: 800; letter-spacing: 1px; margin-bottom: 5px; }
-#lux-win-title { color: #ffffff; font-size: 18px; margin: 0 0 4px 0; }
-#lux-win-detail { color: #38bdf8; font-size: 13px; font-weight: 600; margin: 0 0 12px 0; }
-
-.lux-action-btn {
-    display: block;
-    background: linear-gradient(135deg, #ff5500 0%, #ff3300 100%);
-    color: #ffffff;
-    text-decoration: none;
-    padding: 10px;
-    border-radius: 4px;
-    font-weight: 700;
-    font-size: 13px;
-    transition: background 0.2s;
-}
-
-@keyframes luxPop { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
 </style>
 
     <div class="controls">
