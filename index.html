@@ -3,673 +3,459 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live RTP Casino Tracker | Real-Time iGaming Data Hub</title>
+    <title>SlotMetric - Smart Real-Time Casino Metrics & Live Scanner</title>
     <style>
+        /* --- Premium Dark Mode Framework --- */
         :root {
-            --bg-color: #0b0f19; 
-            --card-bg: #151f32; 
-            --primary-text: #f8fafc;
-            --secondary-text: #94a3b8;
-            --accent-color: #10b981; 
-            --btn-color: #2563eb; 
-            --btn-hover: #1d4ed8;
-            --border-color: #22314d;
+            --bg-main: #0d1117;
+            --bg-card: #1a1f29;
+            --bg-accent: #111622;
+            --border-color: #222c3f;
+            --text-main: #ffffff;
+            --text-secondary: #94a3b8;
+            --neon-green: #00ff87;
+            --neon-blue: #38bdf8;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--primary-text);
+            background-color: var(--bg-main);
+            color: var(--text-main);
             margin: 0;
-            padding: 15px;
-            line-height: 1.5;
+            padding: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+            direction: ltr;
+            overflow-x: hidden;
         }
 
+        /* --- Premium Top Navigation Bar --- */
         .navbar {
-            background-color: #0e1726;
+            background-color: var(--bg-card);
             border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
             padding: 15px 20px;
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        .navbar-logo {
-            font-size: 1.3rem;
+        .nav-logo {
+            font-size: 22px;
             font-weight: 800;
-            letter-spacing: -0.03em;
-            background: linear-gradient(to right, #3b82f6, #10b981);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--text-main);
+            text-decoration: none;
+            letter-spacing: 0.5px;
         }
-        .system-badge {
+        .logo-highlight {
+            color: var(--neon-green);
+        }
+        .nav-links {
             display: flex;
             align-items: center;
-            gap: 6px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--accent-color);
-            background: rgba(16, 185, 129, 0.08);
-            padding: 4px 10px;
-            border-radius: 20px;
-            border: 1px solid rgba(16, 185, 129, 0.2);
-        }
-
-        .stats-ticker {
-            background: #111827;
-            padding: 10px 20px;
-            font-size: 0.78rem;
-            color: var(--secondary-text);
-            display: flex;
             gap: 20px;
-            border-bottom: 1px solid var(--border-color);
-            overflow-x: auto;
-            white-space: nowrap;
         }
-        .stats-ticker::-webkit-scrollbar { display: none; } /* מסתיר סרגל גלילה מכוער במובייל */
-        .stats-item strong { color: var(--primary-text); }
-
-        .container {
-            max-width: 1150px;
-            margin: 20px auto;
-            background: var(--card-bg);
-            padding: 25px;
-            border-radius: 16px;
-            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
-            border: 1px solid var(--border-color);
-            box-sizing: border-box;
+        .nav-item {
+            color: #b3c0d4;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            transition: color 0.2s ease;
         }
-
-        .promo-grid {
+        .nav-item:hover {
+            color: var(--text-main);
+        }
+        .nav-item.active {
+            color: var(--neon-green);
+        }
+        .free-games-btn {
+            background: linear-gradient(135deg, var(--neon-green) 0%, #00d16c 100%);
+            color: var(--bg-main) !important;
+            padding: 8px 16px;
+            border-radius: 6px;
             display: flex;
-            gap: 15px;
-            margin-bottom: 25px;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(0, 255, 135, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .free-games-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(0, 255, 135, 0.4);
+        }
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--bg-main);
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(0.9); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.5; }
+            100% { transform: scale(0.9); opacity: 1; }
+        }
+
+        /* --- Top Live Ticker / Metrics Bar --- */
+        .metrics-bar {
+            background-color: #090d16;
+            border-bottom: 1px solid var(--border-color);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
             flex-wrap: wrap;
         }
-
-        .table-responsive {
-            overflow-x: auto;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            background: #0e1624;
+        .metric-item {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-family: monospace;
+            letter-spacing: 0.5px;
         }
-
-        table { width: 100%; border-collapse: collapse; text-align: left; min-width: 600px; }
-        th, td { padding: 14px 18px; border-bottom: 1px solid var(--border-color); vertical-align: middle; }
-        th { background-color: #0b111e; color: var(--primary-text); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700; }
-        tr:hover td { background-color: #17233a; transition: background-color 0.15s; }
-
-        .casino-name { font-size: 1.1rem; font-weight: 700; color: var(--primary-text); display: block; margin-bottom: 4px; }
-        .rating-stars { color: #f59e0b; font-size: 0.82rem; font-weight: 600; display: flex; align-items: center; gap: 4px; }
-        
-        .tag-badge { background: #1e293b; color: #cbd5e1; font-size: 0.65rem; font-weight: 700; padding: 3px 6px; border-radius: 4px; margin-right: 4px; border: 1px solid #334155; display: inline-block; margin-top: 5px; text-transform: uppercase; }
-        .bonus-badge { background: rgba(59, 130, 246, 0.08); color: #60a5fa; padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 0.9rem; display: inline-block; border: 1px solid rgba(59, 130, 246, 0.15); }
-        
-        .feature-list { margin: 0; padding: 0; list-style: none; font-size: 0.8rem; color: #cbd5e1; }
-        .feature-list li { margin-bottom: 4px; display: flex; align-items: center; gap: 6px; white-space: nowrap; }
-        .feature-list li::before { content: "✓"; color: var(--accent-color); font-weight: bold; }
-
-        .rtp-container { display: flex; align-items: center; gap: 6px; }
-        .live-dot { width: 8px; height: 8px; background-color: var(--accent-color); border-radius: 50%; display: inline-block; animation: pulse 1.5s infinite; }
-        .rtp-badge { color: var(--accent-color); font-size: 1.15rem; font-weight: 800; font-variant-numeric: tabular-nums; }
-
-        .btn-play { background-color: var(--btn-color); color: white; padding: 9px 18px; text-decoration: none; border-radius: 8px; font-weight: 700; display: inline-block; text-align: center; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25); transition: all 0.2s; font-size: 0.9rem; white-space: nowrap; }
-        .btn-play:hover { background-color: var(--btn-hover); transform: translateY(-1px); }
-        .regulatory-text { display: block; font-size: 0.65rem; color: var(--secondary-text); margin-top: 6px; max-width: 180px; line-height: 1.3; }
-        .loading { text-align: center; padding: 40px; font-size: 1.1rem; color: var(--secondary-text); }
-        
-        .controls { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; }
-        .controls select { background-color: #0b0f19; color: var(--primary-text); border: 1px solid var(--border-color); padding: 10px 14px; border-radius: 8px; font-weight: 600; cursor: pointer; outline: none; font-size: 0.88rem; width: 100%; }
-        
-        /* חוקי התאמה למובייל (Media Queries) */
-        @media (min-width: 600px) {
-            .controls select { width: auto; }
-        }
-        @media (max-width: 500px) {
-            .container { padding: 15px; }
-            h1 { font-size: 1.8rem; }
-            p.subtitle { font-size: 0.95rem; }
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(0.9); opacity: 0.6; }
-            50% { transform: scale(1.1); opacity: 1; }
-            100% { transform: scale(0.9); opacity: 0.6; }
+        .metric-item .highlight {
+            color: var(--text-main);
+            font-weight: 700;
         }
     </style>
-</head>
-<body>
-<!-- Top Navigation Bar - English Version -->
-<nav class="navbar">
-  <div class="nav-container">
-    <!-- Brand Logo -->
-    <a href="#" class="nav-logo">
-      Slot<span class="logo-highlight">Metric</span>
-    </a>
-
-    <!-- Navigation Menu & CTA -->
-   <div class="nav-links">
-  <a href="index.html" class="nav-item active">Home</a>
-  <!-- Change the '#' to 'free-games.html' -->
-  <a href="free-games.html" class="nav-item free-games-btn">
-    <span class="pulse-dot"></span> Free Games
-  </a>
-</div>
-  </div>
-</nav>
-
 <style>
-/* Premium Dark Mode Navbar Style */
-.navbar {
-  background-color: #1a1f29; /* Deep Casino-Guru style dark blue */
-  border-bottom: 1px solid #2a3245;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  padding: 15px 20px;
-  font-family: system-ui, -apple-system, sans-serif;
-  direction: ltr; /* Ensures international left-to-right alignment */
-}
-
-.nav-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-/* Logo Design */
-.nav-logo {
-  font-size: 22px;
-  font-weight: 800;
-  color: #ffffff;
-  text-decoration: none;
-  letter-spacing: 0.5px;
-}
-
-.logo-highlight {
-  color: #00ff87; /* Our signature RTP neon green */
-}
-
-/* Navigation Links */
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-.nav-item {
-  color: #b3c0d4;
-  text-decoration: none;
-  font-size: 15px;
-  font-weight: 600;
-  transition: color 0.2s ease;
-}
-
-.nav-item:hover {
-  color: #ffffff;
-}
-
-.nav-item.active {
-  color: #00ff87;
-}
-
-/* Glowing High-CTR Free Games Button */
-.free-games-btn {
-  background: linear-gradient(135deg, #00ff87 0%, #00d16c 100%);
-  color: #0d1117 !important;
-  padding: 8px 16px;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 4px 15px rgba(0, 255, 135, 0.2);
-  transition: transform 0.2s, box-shadow 0.2s !important;
-}
-
-.free-games-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(0, 255, 135, 0.4);
-}
-
-/* Active breathing pulse next to text */
-.pulse-dot {
-  width: 8px;
-  height: 8px;
-  background-color: #0d1117;
-  border-radius: 50%;
-  display: inline-block;
-  animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-  0% { transform: scale(0.9); opacity: 1; }
-  50% { transform: scale(1.2); opacity: 0.5; }
-  100% { transform: scale(0.9); opacity: 1; }
-}
-
-/* Mobile Responsive Optimization */
-@media (max-width: 480px) {
-  .nav-container {
-    flex-direction: row;
-    gap: 10px;
-  }
-  .nav-item:not(.free-games-btn) {
-    display: none; /* Hides secondary links on mobile to keep focus on Free Games */
-  }
-  .nav-logo {
-    font-size: 18px;
-  }
-  .free-games-btn {
-    padding: 6px 12px;
-    font-size: 13px;
-  }
-}
-</style>
-
-<div id="age-gate" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0b0f19; z-index: 9999; display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px; box-sizing: border-box;">
-    <div style="background: #151f32; padding: 30px; border-radius: 16px; border: 1px solid #22314d; max-width: 420px; width: 100%; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);">
-        <div style="font-size: 2.5rem; margin-bottom: 15px;">🔞</div>
-        <h2 style="color: #f8fafc; margin: 0 0 10px 0; font-size: 1.4rem;">Age Verification Required</h2>
-        <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 25px; line-height: 1.4;">You must be 18 years old or over to view the live casino matrix and RTP data. Please confirm your age to proceed.</p>
-        <div style="display: flex; gap: 12px; justify-content: center;">
-            <button id="age-accept" style="background: #10b981; color: white; border: none; padding: 12px 25px; font-weight: 700; border-radius: 8px; cursor: pointer; font-size: 0.95rem; flex: 1;">I am 18 or older</button>
-            <button id="age-reject" style="background: #22314d; color: #94a3b8; border: none; padding: 12px 15px; font-weight: 600; border-radius: 8px; cursor: pointer; font-size: 0.85rem;">Exit</button>
-        </div>
-    </div>
-</div>
-
-<nav class="navbar">
-    <div class="navbar-logo">SLOTMETRIC</div>
-    <div class="system-badge">
-        <span style="width: 6px; height: 6px; background-color: var(--accent-color); border-radius: 50%; display: inline-block;"></span>
-        System Operational
-    </div>
-</nav>
-
-<div class="stats-ticker">
-    <div class="stats-item">Scanned Networks: <strong style="color:#3b82f6;">42 Regulated Brokers</strong></div>
-    <div class="stats-item">Global RTP Avg: <strong style="color:var(--accent-color);">96.48%</strong></div>
-    <div class="stats-item">Active Jackpots Pool: <strong style="color:#ef4444;">€14,842,910</strong></div>
-    <div class="stats-item">Data Sync: <strong style="color:var(--secondary-text);">Every 60 Mins</strong></div>
-</div>
-
-<div class="container">
-    <header style="margin-bottom: 25px; border-bottom: 1px solid var(--border-color); padding-bottom: 20px;">
-        <h1 style="margin: 0 0 8px 0;">Live RTP Casino Tracker</h1>
-        <p class="subtitle">Real-time data engine monitoring verified payouts across EU & UK jurisdictions.</p>
-    </header>
-    <div class="promo-grid">
-        <!-- כרטיס שמאלי (סגול): משחק חם -->
-        <div class="promo-card" style="background: linear-gradient(135deg, #1e1b4b, #311042); border: 1px solid #4c1d95; padding: 20px; border-radius: 12px; flex: 1; min-width: 280px; position: relative; display: flex; flex-direction: column; justify-content: space-between; box-shadow: inset 0 1px 1px rgba(255,255,255,0.1);">
-            <span style="position: absolute; top: 12px; right: 12px; background: #ef4444; color: white; font-size: 0.68rem; font-weight: 800; padding: 3px 8px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.05em;">🔥 HOT NOW</span>
-            <div>
-                <h3 style="margin: 0 0 6px 0; color: #f8fafc; font-size: 1.15rem; font-weight: 700;">Trending Slot Matrix</h3>
-                <p style="margin: 0 0 4px 0; color: #c084fc; font-weight: 800; font-size: 1.15rem;" id="hot-game-title">Loading Matrix...</p>
-                <p style="margin: 0 0 15px 0; color: #94a3b8; font-size: 0.82rem; line-height: 1.4;">Spiking in bets-per-minute and multipliers across European gaming servers.</p>
-            </div>
-            <div id="hot-game-action" style="display: none;">
-                <a href="#" id="hot-game-link" target="_blank" rel="nofollow noopener" style="background: linear-gradient(to right, #a855f7, #7c3aed); color: white; padding: 9px 18px; text-decoration: none; border-radius: 8px; font-weight: 700; display: inline-block; font-size: 0.88rem; box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);">
-                    Launch Slot Demo →
-                </a>
-            </div>
-        </div>
-
-        <!-- כרטיס ימני (ירוק): בונוס מוביל -->
-        <div class="promo-card" style="background: linear-gradient(135deg, #064e3b, #022c22); border: 1px solid #065f46; padding: 20px; border-radius: 12px; flex: 1; min-width: 280px; position: relative; display: flex; flex-direction: column; justify-content: space-between; box-shadow: inset 0 1px 1px rgba(255,255,255,0.1);">
-            <span style="position: absolute; top: 12px; right: 12px; background: #10b981; color: white; font-size: 0.68rem; font-weight: 800; padding: 3px 8px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.05em;">💡 BEST OFFER</span>
-            <div>
-                <h3 style="margin: 0 0 6px 0; color: #f8fafc; font-size: 1.15rem; font-weight: 700;">Top Payout Bonus</h3>
-                <p style="margin: 0 0 2px 0; color: #34d399; font-weight: 800; font-size: 1.15rem;" id="best-bonus-casino">Loading Brand...</p>
-                <p style="margin: 0 0 15px 0; color: #f8fafc; font-size: 0.9rem; font-weight: 600;" id="best-bonus-text">Loading Package...</p>
-            </div>
-            <div id="best-bonus-action" style="display: none;">
-                <a href="#" id="best-bonus-link" target="_blank" rel="nofollow noopener" style="background: linear-gradient(to right, #10b981, #059669); color: white; padding: 9px 18px; text-decoration: none; border-radius: 8px; font-weight: 700; display: inline-block; font-size: 0.88rem; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);">
-                    Claim Premium Match →
-                </a>
-            </div>
-        </div>
-    </div>
-
-<!-- Premium Interactive Slot Machine Component -->
-<!-- High-End Luxury Slot Machine Widget with Physics Coin Rain -->
-<!-- Premium Live iGaming Video Showroom Section -->
-<section class="premium-video-section">
-  <div class="video-showroom-card">
-    
-    <!-- וידאו חי של סלוט באיכות פרימיום הרץ בלולאה שקטה -->
-    <div class="video-overlay-wrapper">
-      <video class="bg-slot-video" autoplay loop muted playsinline poster="https://unsplash.com">
-        <source src="https://mixkit.co" type="video/mp4">
-      </video>
-      <div class="dark-gradient-shader"></div>
-    </div>
-
-    <!-- כפתור ההנעה לפעולה הזוהר שיושב מעל הוידאו -->
-    <div class="video-content-hub">
-      <a href="free-games.html" class="lux-play-trigger-btn">
-        <span class="live-pulse"></span> ENTER FREE DEMO PLAY
-      </a>
-    </div>
-
-  </div>
-</section>
-<style>
-/* --- Premium iGaming Video Showroom Styles --- */
-.premium-video-section {
-    max-width: 480px; /* רוחב מלבני מושלם וקומפקטי בדיוק כמו המחשבון הישן */
-    margin: 30px auto;
+/* --- Premium Digital RTP Scanner Component Styles --- */
+.premium-scanner-section {
+    max-width: 480px; /* רוחב מלבני מהודק ואידיאלי שיושב בול במקום המחשבון */
+    margin: 25px auto 40px auto;
     padding: 0 15px;
 }
 
-.video-showroom-card {
-    background-color: #0f131c;
-    border: 2px solid #232d42;
-    border-radius: 16px;
-    height: 140px; /* גובה מהודק, אלגנטי ולא קלסטרופובי */
+.scanner-card {
+    background-color: #080d16;
+    border: 2px solid #1f293d;
+    border-radius: 14px;
+    height: 110px; /* גובה קומפקטי, מהודק ואלגנטי */
     position: relative;
     overflow: hidden;
-    box-shadow: 0 20px 45px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.6), 
+                inset 0 1px 0 rgba(255,255,255,0.05),
+                0 0 25px rgba(0, 255, 135, 0.05);
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-/* קונטיינר הוידאו ושכבת הערפול של ה-Dark Mode */
-.video-overlay-wrapper {
+/* אנימציית הגלים הדיגיטליים שזזים וזורמים ברקע ללא הפסקה */
+.scanner-animated-bg {
     position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
+    top: 0; left: 0; width: 200%; height: 100%;
+    background: linear-gradient(90deg, #080d16 0%, #0d1a2e 25%, #11253e 50%, #0d1a2e 75%, #080d16 100%);
     z-index: 1;
+    animation: moveMatrix 6s linear infinite; /* תנועת רקע קבועה וזורמת */
 }
 
-.bg-slot-video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* מותח את הוידאו בצורה חלקה לכל רוחב הכרטיס */
-    filter: saturate(1.2) brightness(0.7); /* מעשיר את צבעי המכונה ומעדן אותם */
-}
-
-/* שכבת צבע מדורגת שמחברת את הוידאו לרקע השחור של האתר */
-.dark-gradient-shader {
+/* קו לייזר זוהר שסורק את הבאנר מלמעלה למטה */
+.scanner-laser-line {
     position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient(135deg, rgba(13, 17, 23, 0.85) 0%, rgba(9, 13, 21, 0.6) 100%);
-}
-
-/* תוכן הכפתור שצף מעל הוידאו */
-.video-content-hub {
-    position: relative;
+    top: 0; left: 0; width: 100%; height: 3px;
+    background: linear-gradient(90deg, rgba(0,255,135,0) 0%, #00ff87 50%, rgba(0,255,135,0) 100%);
     z-index: 2;
-    width: 100%;
-    padding: 0 20px;
-    text-align: center;
+    box-shadow: 0 0 15px #00ff87;
+    animation: laserScan 3s ease-in-out infinite; /* סריקה קבועה שזזה כל הזמן */
 }
 
-/* כפתור יוקרתי, זוהר ומזמין בסטנדרט של Casino Guru */
-.lux-play-trigger-btn {
-    display: inline-flex;
+.scanner-content {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    padding: 0 25px;
+    box-sizing: border-box;
+}
+
+/* כפתור פרימיום רחב, ישר ומיושר בסטנדרט של קזינו גורו */
+.lux-scanner-trigger-btn {
+    display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 12px;
     background: linear-gradient(135deg, #00ff87 0%, #00b35c 100%);
     color: #05070a;
     text-decoration: none;
     font-weight: 800;
-    font-size: 14px;
+    font-size: 13px;
     letter-spacing: 1px;
-    padding: 14px 28px;
+    padding: 15px;
     border-radius: 8px;
-    box-shadow: 0 4px 25px rgba(0, 255, 135, 0.4);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    width: 80px; /* שומר על כפתור מהודק במרכז */
-    max-width: 280px;
+    box-shadow: 0 4px 20px rgba(0, 255, 135, 0.35);
+    transition: transform 0.2s, box-shadow 0.2s;
+    width: 100%; /* תופס את כל רוחב המלבן, מונע שבירת טקסט */
+    white-space: nowrap; /* מכריח את המשפט להישאר בשורה אחת יפה */
 }
 
-.lux-play-trigger-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 30px rgba(0, 255, 135, 0.6);
+.lux-scanner-trigger-btn:hover {
+    transform: translateY(-1.5px);
+    box-shadow: 0 6px 25px rgba(0, 255, 135, 0.55);
 }
 
-/* נקודת פעימה חיה (Pulse) בצבע אדום/ירוק שמסמלת שידור חי של נתונים */
-.live-pulse {
-    width: 8px;
-    height: 8px;
+/* נקודת פעימה זוהרת חיה */
+.live-pulse-dot {
+    width: 7px;
+    height: 7px;
     background-color: #05070a;
     border-radius: 50%;
     display: inline-block;
-    animation: buttonPulse 1.5s infinite;
+    animation: pulseCore 1.4s infinite;
 }
 
-@keyframes buttonPulse {
+/* --- הגדרת אנימציות התנועה החיות --- */
+@keyframes moveMatrix {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+@keyframes laserScan {
+    0% { top: 0%; opacity: 0.3; }
+    50% { top: 100%; opacity: 1; }
+    100% { top: 0%; opacity: 0.3; }
+}
+
+@keyframes pulseCore {
     0% { transform: scale(0.9); opacity: 1; }
     50% { transform: scale(1.3); opacity: 0.4; }
     100% { transform: scale(0.9); opacity: 1; }
 }
-</style>
-<style>
-/* תוספת קטנה לוודא שבאנר הווידאו מתכווץ בצורה מושלמת במסכי סמארטפונים ומובייל */
+
+/* התאמה מלאה למסכי טלפונים */
 @media (max-width: 500px) {
-  .premium-video-section {
-    max-width: 100%;
-    padding: 0 10px;
-  }
-  .video-showroom-card {
-    height: 120px; /* קיצור גובה קל למסכים קטנים */
-  }
-  .lux-play-trigger-btn {
-    padding: 12px 20px;
-    font-size: 12px;
-  }
+    .premium-scanner-section { max-width: 100%; padding: 0 10px; }
+    .lux-scanner-trigger-btn { font-size: 11px; padding: 13px; gap: 8px; }
+    .scanner-card { height: 95px; }
 }
 </style>
+<style>
+/* --- Premium Operators Live Grid Table Styles --- */
+.table-section {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
 
-<!-- מרווח מעוצב ואלגנטי שמפריד בין באנר הווידאו החי לבין טבלת המפעילים שמתחתיו -->
-<div style="margin-bottom: 50px;"></div>
-    <div class="controls">
-        <div style="color: var(--secondary-text); font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 6px;">
-            Target Feed: <span id="display-country" style="color: var(--accent-color); background: rgba(16, 185, 129, 0.1); padding: 3px 8px; border-radius: 4px; font-weight: 700; border: 1px solid rgba(16, 185, 129, 0.15);">Detecting...</span>
+.table-wrapper {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    overflow-x: auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+th {
+    background-color: #151922;
+    color: var(--text-secondary);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+td {
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+/* Casino Row Elements */
+.casino-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.bonus-badge {
+    background-color: rgba(56, 189, 248, 0.08);
+    color: var(--neon-blue);
+    border: 1px dashed rgba(56, 189, 248, 0.2);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+/* RTP Cell Layout */
+.rtp-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.live-dot {
+    width: 6px;
+    height: 6px;
+    background-color: var(--neon-green);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--neon-green);
+}
+
+.rtp-badge {
+    color: var(--neon-green);
+    font-weight: 700;
+    font-size: 14px;
+}
+
+/* Premium High-CTR CTA Button & Regulatory Specs */
+.btn-play {
+    display: inline-block;
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    color: var(--text-main);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 10px 20px;
+    border-radius: 6px;
+    box-shadow: 0 4px 15px rgba(3, 105, 161, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.btn-play:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(3, 105, 161, 0.4);
+}
+
+.regulatory-text {
+    display: block;
+    font-size: 10px;
+    color: #64748b;
+    margin-top: 6px;
+    line-height: 1.4;
+    max-width: 180px;
+}
+
+/* --- Responsive Table Fix for Mobile --- */
+@media (max-width: 768px) {
+    th { padding: 12px 15px; font-size: 10px; }
+    td { padding: 15px; }
+    .casino-name { font-size: 14px; }
+    .bonus-badge { font-size: 12px; padding: 4px 8px; }
+    .btn-play { padding: 8px 14px; font-size: 12px; }
+}
+</style>
+</head>
+<body>
+
+    <!-- Premium Navigation Menu (English Version) -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="index.html" class="nav-logo">Slot<span class="logo-highlight">Metric</span></a>
+        <div class="nav-links">
+          <a href="index.html" class="nav-item active">Home</a>
+          <a href="free-games.html" class="nav-item free-games-btn">
+            <span class="pulse-dot"></span> Free Games
+          </a>
         </div>
-        <div style="display: flex; gap: 10px; flex-wrap: wrap; width: 100%; margin-top: 10px;">
-            <select id="country-select" style="flex: 1;">
-                <option value="AUTO">🌍 Auto Detect Region</option>
-                <option value="CY">🇨🇾 Cyprus Feed</option>
-               <option value="UK">GB United Kingdom</option>
-                <option value="DE">🇩🇪 Germany Feed</option>
-                <option value="IL">🇮🇱 Israel (Restricted)</option>
-            </select>
-            <select id="sort-select" style="flex: 1;">
-                <option value="default">Sort Data: Default Matrix</option>
-                <option value="rtp-desc">⚡ Payout (Highest RTP)</option>
-                <option value="name-asc">🔤 Alphabetical (A-Z)</option>
-            </select>
-        </div>
-    </div>
-    <div class="table-responsive">
-        <div id="loading" class="loading">Syncing secure iGaming cryptographic matrix...</div>
-        <table id="casino-table" style="display: none;">
-            <thead>
-                <tr>
-                    <th>Casino Operator</th>
-                    <th>Verified Welcome Package</th>
-                    <th>Operator Highlights</th>
-                    <th>Real-Time RTP</th>
-                    <th>Secure Action</th>
-                </tr>
-            </thead>
-            <tbody id="table-body"></tbody>
-        </table>
+      </div>
+    </nav>
+
+    <!-- Top Live Ticker / Statistics Feed -->
+    <div class="metrics-bar">
+      <div class="metric-item">🟢 Scanned Networks: <span class="highlight">42 Regulated Operators</span></div>
+      <div class="metric-item">📊 Global RTP Avg: <span class="highlight">96.48%</span></div>
+      <div class="metric-item">🎰 Active Jackpots Pool: <span class="highlight">€14,842,910</span></div>
+      <div class="metric-item">⚡ Data Sync: <span class="highlight">Live via API</span></div>
     </div>
 
-    <footer style="margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border-color); text-align: center; color: var(--secondary-text); font-size: 0.78rem; line-height: 1.6;">
-        <p style="max-width: 850px; margin: 0 auto 15px auto;"><strong>Regulatory Transparency Disclaimer:</strong> SlotMetric is an independent authority and comparison hub. The data and bonus details displayed are collected via API pipelines for educational purposes. Gambling involves significant financial risk. Never gamble with funds you cannot afford to lose.</p>
-        <p style="margin: 15px 0;">
-            <a href="https://begambleaware.org" target="_blank" rel="noopener nofollow" style="color: #60a5fa; text-decoration: none; margin: 0 10px; font-weight: 700;">BeGambleAware.org</a> | 
-            <a href="https://gamstop.co.uk" target="_blank" rel="noopener nofollow" style="color: #60a5fa; text-decoration: none; margin: 0 10px; font-weight: 700;">GAMSTOP UK</a> | 
-            <a href="https://gamblingtherapy.org" target="_blank" rel="noopener nofollow" style="color: #60a5fa; text-decoration: none; margin: 0 10px; font-weight: 700;">Gambling Therapy Global</a>
+    <!-- Premium Digital RTP Matrix Scanner Section -->
+    <section class="premium-scanner-section">
+      <div class="scanner-card">
+        
+        <!-- רקע דיגיטלי מונפש שזז כל הזמן -->
+        <div class="scanner-animated-bg"></div>
+        <div class="scanner-laser-line"></div>
+
+        <!-- כפתור הנעה לפעולה רחב, יוקרתי ומיושר בשורה אחת -->
+        <div class="scanner-content">
+          <a href="free-games.html" class="lux-scanner-trigger-btn">
+            <span class="live-pulse-dot"></span> ENTER FREE DEMO PLAY PLATFORM →
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <div style="margin-bottom: 30px;"></div>
+    <!-- Operators Grid Table Section -->
+    <section class="table-section">
+        
+        <!-- כותרת פנימית וסלקטורים לסינון ידני -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;">
+            <div>
+                <span style="font-size: 12px; color: var(--text-secondary); text-transform: uppercase; font-family: monospace;">Target Feed:</span>
+                <span id="display-country" style="background-color: rgba(0, 255, 135, 0.1); color: var(--neon-green); font-size: 12px; font-weight: 700; padding: 4px 8px; border-radius: 4px; margin-left: 5px; font-family: monospace;">IL</span>
+            </div>
+            
+            <div style="display: flex; gap: 10px;">
+                <!-- סלקטור מדינות ידני -->
+                <select id="country-select" style="background-color: var(--bg-card); color: var(--text-main); border: 1px solid var(--border-color); padding: 8px 12px; border-radius: 6px; font-weight: 600; cursor: pointer;">
+                    <option value="AUTO">Auto Detect Region</option>
+                    <option value="CY">Cyprus Feed</option>
+                    <option value="UK">United Kingdom</option>
+                    <option value="DE">Germany Feed</option>
+                    <option value="IL">Israel (Restricted)</option>
+                </select>
+
+                <!-- סלקטור מיון נתונים -->
+                <select id="sort-select" style="background-color: var(--bg-card); color: var(--text-main); border: 1px solid var(--border-color); padding: 8px 12px; border-radius: 6px; font-weight: 600; cursor: pointer;">
+                    <option value="default">Sort Data: Default Matrix</option>
+                    <option value="rtp-desc">Highest RTP First</option>
+                    <option value="name-asc">Alphabetical A-Z</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- מבנה הטבלה הראשי - 5 עמודות סימטריות ומיושרות לחלוטין -->
+        <div class="table-wrapper">
+            <table id="casino-table">
+                <thead>
+                    <tr>
+                        <th>Casino Operator</th>
+                        <th>Verified Welcome Package</th>
+                        <th>Operator Highlights</th>
+                        <th>Real-Time RTP</th>
+                        <th>Secure Action</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    <!-- הנתונים יוזרקו לכאן דינמית על ידי קובץ ה-app.js מה-JSON -->
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <!-- Premium Trust & Regulatory Compliance Footer -->
+    <footer style="max-width: 1200px; margin: 80px auto 40px auto; padding: 0 20px; text-align: center; border-top: 1px solid var(--border-color); padding-top: 30px;">
+        <p style="font-size: 11px; color: var(--text-secondary); max-width: 800px; margin: 0 auto 20px auto; line-height: 1.6;">
+            Regulatory Transparency Disclaimer: SlotMetric is an independent authority and comparison hub. The data and bonus details displayed are collected via API pipelines for educational purposes. Gambling involves significant financial risk. Never gamble with funds you cannot afford to lose.
         </p>
-        <p style="color: #64748b; font-size: 0.72rem;">© 2026 SlotMetric Hub. All global matrix structures are cryptographically monitored. Play Responsibly. 18+ Only.</p>
+        <div style="display: flex; justify-content: center; gap: 20px; font-size: 12px; font-weight: 700; font-family: sans-serif;">
+            <a href="https://begambleaware.org" target="_blank" rel="noopener" style="color: #64748b; text-decoration: none; transition: color 0.2s;">BeGambleAware.org</a>
+            <span style="color: var(--border-color);">|</span>
+            <a href="https://gamstop.co.uk" target="_blank" rel="noopener" style="color: #64748b; text-decoration: none; transition: color 0.2s;">GAMSTOP UK</a>
+            <span style="color: var(--border-color);">|</span>
+            <a href="https://gamblingtherapy.org" target="_blank" rel="noopener" style="color: #64748b; text-decoration: none; transition: color 0.2s;">Gambling Therapy Global</a>
+        </div>
     </footer>
-</div>
 
-<script src="app.js"></script>
-<!-- JavaScript Engine for the Premium Interactive Slot Machine -->
-<!-- JavaScript Physics Engine: 3-Reel Slots & Dynamic Gold Coin Rain -->
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-    const r1 = document.getElementById("l-reel1");
-    const r2 = document.getElementById("l-reel2");
-    const r3 = document.getElementById("l-reel3");
-    const trigger = document.getElementById("lux-spin-trigger");
-    const winPanel = document.getElementById("lux-winner-panel");
-    const canvas = document.getElementById("coin-canvas");
-    
-    if (!trigger || !r1 || !r2 || !r3 || !canvas) return;
-    
-    const ctx = canvas.getContext("2d");
-    let isSpinning = false;
-    let coins = [];
-    let animationFrameId;
-
-    // --- 1. מנוע פיזיקלי למטרת מטבעות זהב (HTML5 Canvas) ---
-    function resizeCanvas() {
-        const box = canvas.parentElement.getBoundingClientRect();
-        canvas.width = box.width + 100;
-        canvas.height = box.height + 200;
-    }
-    window.addEventListener("resize", resizeCanvas);
-    resizeCanvas();
-
-    class Coin {
-        constructor() {
-            this.x = Math.random() * canvas.width;
-            this.y = Math.random() * -50 - 20;
-            this.radius = Math.random() * 5 + 6; // גודל המטבע
-            this.speedY = Math.random() * 4 + 5; // מהירות נפילה
-            this.speedX = Math.random() * 4 - 2; // פיזור לצדדים
-            this.rotation = Math.random() * Math.PI * 2;
-            this.rotationSpeed = Math.random() * 0.2 - 0.1;
-            this.opacity = 1;
-        }
-        update() {
-            this.y += this.speedY;
-            this.x += this.speedX;
-            this.rotation += this.rotationSpeed;
-            if (this.y > canvas.height - 40) {
-                this.opacity -= 0.02; // אפקט היעלמות חלקה בתחתית
-            }
-        }
-        draw() {
-            ctx.save();
-            ctx.translate(this.x, this.y);
-            ctx.rotate(this.rotation);
-            ctx.globalAlpha = Math.max(0, this.opacity);
-            
-            // ציור מטבע זהב יוקרתי בתלת-ממד באמצעות שכבות צבע
-            ctx.beginPath();
-            ctx.ellipse(0, 0, this.radius, this.radius * 0.6, 0, 0, Math.PI * 2);
-            ctx.fillStyle = "#ffd700"; // צבע זהב ראשי
-            ctx.fill();
-            ctx.strokeStyle = "#b8860b"; // מסגרת מוזהבת כהה
-            ctx.lineWidth = 2;
-            ctx.stroke();
-            
-            // ברק פנימי על המטבע
-            ctx.beginPath();
-            ctx.ellipse(0, 0, this.radius * 0.7, this.radius * 0.4, 0, 0, Math.PI * 2);
-            ctx.fillStyle = "#fff799";
-            ctx.fill();
-            
-            ctx.restore();
-        }
-    }
-
-    function spawnCoins() {
-        coins = [];
-        for (let i = 0; i < 60; i++) { // כמות מטבעות הזהב שייפלו
-            setTimeout(() => {
-                if (isSpinning || winPanel.style.display === "block") {
-                    coins.push(new Coin());
-                }
-            }, i * 40); // המטרה מדורגת וזורמת
-        }
-        cancelAnimationFrame(animationFrameId);
-        animateCoins();
-    }
-
-    function animateCoins() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        let activeCoins = false;
-        
-        coins.forEach(coin => {
-            coin.update();
-            coin.draw();
-            if (coin.opacity > 0 && coin.y < canvas.height) {
-                activeCoins = true;
-            }
-        });
-        
-        if (activeCoins) {
-            animationFrameId = requestAnimationFrame(animateCoins);
-        } else {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
-    }
-
-    // --- 2. מנגנון הפעלת מכונת הסלוטים והסיבוב המדורג ---
-    trigger.addEventListener("click", () => {
-        if (isSpinning) return;
-        
-        // משיכת הנתונים המעודכנים לפי המדינה (מתוך ה-filteredData ב-app.js)
-        let activeData = (window.filteredData && window.filteredData.length > 0) ? window.filteredData : window.casinoData;
-        
-        // רשת ביטחון קשיחה כדי שהגלגל יעבוד תמיד
-        if (!activeData || activeData.length === 0) {
-            activeData = [
-                { "casino_name": "Bet365 Casino", "bonus_text": "Stake £10 and get 50 Free Spins", "affiliate_link": "https://bet365.link" },
-                { "casino_name": "Vulkan Vegas", "bonus_text": "100% Up to €1,500 + 150 Free Spins", "affiliate_link": "https://vpartners.link" },
-                { "casino_name": "888 Casino", "bonus_text": "100% Up To £100 + 88 Free Spins", "affiliate_link": "https://vpartners.link" }
-            ];
-        }
-
-        isSpinning = true;
-        trigger.disabled = true;
-        trigger.innerText = "⚡ SPINNING SYSTEMS...";
-        winPanel.style.display = "none";
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        resizeCanvas();
-
-        // הפעלת סחרור ה-Motion Blur המהיר ב-CSS
-        r1.classList.add("active-spin");
-        r2.classList.add("active-spin");
-        r3.classList.add("active-spin");
-
-        const randomIndex = Math.floor(Math.random() * activeData.length);
-        const selectedCasino = activeData[randomIndex];
-
-        // עצירה מדורגת וריאליסטית של שלושת הגלגלים
-        setTimeout(() => { r1.classList.remove("active-spin"); }, 1400); // גלגל 1 נעצר
-        setTimeout(() => { r2.classList.remove("active-spin"); }, 2000); // גלגל 2 נעצר
-        
-        setTimeout(() => { 
-            r3.classList.remove("active-spin"); // גלגל 3 נעצר - רגע הזכייה!
-            
-            if (selectedCasino) {
-                document.getElementById("lux-win-title").innerText = selectedCasino.casino_name + " 🏆";
-                document.getElementById("lux-win-detail").innerText = selectedCasino.bonus_text || "Premium Operator Bonus Verified";
-                document.getElementById("lux-win-link").href = selectedCasino.affiliate_link || "#";
-                
-                winPanel.style.display = "block";
-                
-                // הפעלת מטר המטבעות הנוצץ על המסך
-                spawnCoins();
-            }
-            
-            trigger.disabled = false;
-            trigger.innerText = "SPIN TO WIN";
-            isSpinning = false;
-        }, 2600);
-    });
-});
-</script>
 </body>
 </html>
