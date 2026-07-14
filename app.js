@@ -190,20 +190,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-// הבלוק המעודכן והמתוקן (שלב 6):
+// שלב 6 המעודכן והסופי ב-app.js
 if (countrySelect) {
     countrySelect.addEventListener("change", (e) => {
         let selected = e.target.value;
         if (selected !== "AUTO") {
-            // התיקון הקריטי: מוודא שכל וריאציה של בריטניה הופכת ל-UK אחיד
-            if (selected === "GB" || selected === "UK") {
+            // התיקון הקריטי: הופך את הבחירה לאותיות גדולות כדי למנוע בעיות של uk/UK או gb/GB
+            selected = selected.toUpperCase();
+            
+            // תרגום אחיד של בריטניה ל-UK
+            if (selected === "GB" || selected === "UK" || selected === "UNITED KINGDOM") {
                 selected = "UK";
             }
+            
             userCountry = selected;
             window.triggerFilter();
         }
     });
 }
+
 
 
     if (sortSelect) {
