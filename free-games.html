@@ -86,56 +86,94 @@
             color: #b3c0d4;
             font-size: 16px;
         }
-       /* Optimized Grid Layout for better game visibility */
-.games-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); /* Widens the cards */
-  gap: 30px;
-}
 
-/* Increases the internal iframe height significantly */
-.game-video-container {
-  position: relative;
-  width: 100%;
-  padding-top: 65%; /* Changed from 56.25% to give more vertical space for menus */
-  background-color: #000;
-}
-
-        .game-video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
+        /* גריד קומפקטי של קוביות קטנות שאהבת */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
         }
+
+        /* עיצוב כרטיס קטן ומהודק */
+        .game-card {
+            background-color: #1a1f29;
+            border: 1px solid #2a3245;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+        .game-card:hover {
+            transform: translateY(-3px);
+            border-color: #00ff87;
+        }
+
+        /* אזור תמונת המשחק בקובייה */
+        .game-preview-container {
+            position: relative;
+            width: 100%;
+            padding-top: 60%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* שכבת ערפול וכפתור הפעלה בריחוף עכבר */
+        .game-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(13, 17, 23, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        .game-card:hover .game-overlay {
+            opacity: 1;
+        }
+        .inline-play-btn {
+            background-color: #00ff87;
+            color: #0d1117;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 13px;
+            transition: transform 0.2s;
+        }
+        .inline-play-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* פרטי המשחק מתחת לקובייה */
         .game-info {
-            padding: 20px;
+            padding: 12px;
         }
         .game-info h3 {
-            margin: 0 0 12px 0;
-            font-size: 18px;
+            color: #ffffff;
+            font-size: 15px;
+            margin: 0 0 8px 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         .game-badges {
             display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 6px;
+            margin-bottom: 12px;
         }
         .badge {
-            font-size: 12px;
+            font-size: 10px;
             font-weight: 700;
-            padding: 4px 8px;
-            border-radius: 4px;
+            padding: 2px 6px;
+            border-radius: 3px;
         }
-        .badge.provider {
-            background-color: #2a3245;
-            color: #b3c0d4;
-        }
-        .badge.rtp {
-            background-color: rgba(0, 255, 135, 0.1);
-            color: #00ff87;
-            border: 1px solid rgba(0, 255, 135, 0.2);
-        }
+        .badge.provider { background-color: #2a3245; color: #b3c0d4; }
+        .badge.rtp { background-color: rgba(0, 255, 135, 0.1); color: #00ff87; }
+
+        /* כפתור כסף אמיתי קטן ומשולב */
         .play-real-btn {
             display: block;
             text-align: center;
@@ -143,13 +181,56 @@
             color: #ffffff;
             text-decoration: none;
             font-weight: 700;
-            padding: 12px;
-            border-radius: 6px;
-            transition: all 0.2s ease;
+            font-size: 12px;
+            padding: 8px;
+            border-radius: 4px;
+            transition: background 0.2s;
         }
         .play-real-btn:hover {
-            transform: scale(1.02);
-            box-shadow: 0 6px 20px rgba(255, 85, 0, 0.4);
+            background: linear-gradient(135deg, #ffaa11 0%, #ff6611 100%);
+        }
+
+        /* --- עיצוב חלון המשחק הקופץ (Modal) --- */
+        .game-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(10, 14, 22, 0.95);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            position: relative;
+            width: 90%;
+            max-width: 960px;
+            background-color: #1a1f29;
+            border: 1px solid #2a3245;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+        .modal-header {
+            padding: 15px 20px;
+            background-color: #151922;
+            border-bottom: 1px solid #2a3245;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-header h3 { margin: 0; font-size: 18px; color: #ffffff; }
+        .close-modal {
+            background: none; border: none; color: #b3c0d4;
+            font-size: 24px; cursor: pointer; transition: color 0.2s;
+        }
+        .close-modal:hover { color: #ff5500; }
+        .modal-body {
+            position: relative;
+            padding-top: 56.25%; /* יחס קזינו מושלם 16:9 */
+            background-color: #000;
+        }
+        .modal-body iframe {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;
         }
 
         @media (max-width: 480px) {
@@ -169,7 +250,6 @@
         </div>
       </div>
     </nav>
-
     <!-- Free Games Main Section -->
     <section class="games-section">
       <div class="section-header">
@@ -179,53 +259,96 @@
 
       <div class="games-grid">
         
-        <!-- Game 1: Gates of Olympus -->
+        <!-- קובייה 1: Gates of Olympus -->
         <div class="game-card">
-          <div class="game-video-container">
-           <iframe src="https://softswiss.com" allowfullscreen></iframe>
+          <div class="game-preview-container" style="background-image: url('https://mascot.bet');">
+            <div class="game-overlay">
+              <button class="inline-play-btn" onclick="openGameModal('Gates of Olympus', 'https://softswiss.com')">⚡ Play Demo</button>
+            </div>
           </div>
           <div class="game-info">
             <h3>Gates of Olympus</h3>
             <div class="game-badges">
-              <span class="badge provider">Pragmatic Play</span>
-              <span class="badge rtp">RTP: 96.50%</span>
+              <span class="badge provider">Pragmatic</span>
+              <span class="badge rtp">96.50%</span>
             </div>
-            <a href="#affiliate-link" class="play-real-btn">🚀 Play for Real Money</a>
+            <a href="#affiliate-link" class="play-real-btn">Play for Real</a>
           </div>
         </div>
 
-        <!-- Game 2: Sweet Bonanza -->
+        <!-- קובייה 2: Sweet Bonanza -->
         <div class="game-card">
-          <div class="game-video-container">
-          <iframe src="https://softswiss.com" allowfullscreen></iframe>
+          <div class="game-preview-container" style="background-image: url('https://mascot.bet');">
+            <div class="game-overlay">
+              <button class="inline-play-btn" onclick="openGameModal('Sweet Bonanza', 'https://softswiss.com')">⚡ Play Demo</button>
+            </div>
           </div>
           <div class="game-info">
             <h3>Sweet Bonanza</h3>
             <div class="game-badges">
-              <span class="badge provider">Pragmatic Play</span>
-              <span class="badge rtp">RTP: 96.48%</span>
+              <span class="badge provider">Pragmatic</span>
+              <span class="badge rtp">96.48%</span>
             </div>
-            <a href="#affiliate-link" class="play-real-btn">🚀 Play for Real Money</a>
+            <a href="#affiliate-link" class="play-real-btn">Play for Real</a>
           </div>
         </div>
 
-        <!-- Game 3: Book of Dead -->
+        <!-- קובייה 3: Book of Dead -->
         <div class="game-card">
-          <div class="game-video-container">
-           <iframe src="https://softswiss.com" allowfullscreen></iframe>
+          <div class="game-preview-container" style="background-image: url('https://mascot.bet');">
+            <div class="game-overlay">
+              <button class="inline-play-btn" onclick="openGameModal('Book of Dead', 'https://softswiss.com')">⚡ Play Demo</button>
+            </div>
           </div>
           <div class="game-info">
             <h3>Book of Dead</h3>
             <div class="game-badges">
               <span class="badge provider">Play'n GO</span>
-              <span class="badge rtp">RTP: 96.21%</span>
+              <span class="badge rtp">96.21%</span>
             </div>
-            <a href="#affiliate-link" class="play-real-btn">🚀 Play for Real Money</a>
+            <a href="#affiliate-link" class="play-real-btn">Play for Real</a>
           </div>
         </div>
 
       </div>
     </section>
+
+    <!-- רכיב החלון הקופץ הנסתר (Modal) -->
+    <div id="gameModal" class="game-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalGameTitle">Slot Game</h3>
+                <button class="close-modal" onclick="closeGameModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <iframe id="modalIframe" src="" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- מנגנון הפעלה חכם ב-JavaScript -->
+    <script>
+        function openGameModal(gameName, demoUrl) {
+            document.getElementById('modalGameTitle').innerText = gameName;
+            document.getElementById('modalIframe').src = demoUrl;
+            document.getElementById('gameModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden'; /* מונע גלילה של הרקע */
+        }
+
+        function closeGameModal() {
+            document.getElementById('gameModal').style.display = 'none';
+            document.getElementById('modalIframe').src = ''; /* עוצר את סאונד המשחק */
+            document.body.style.overflow = 'auto';
+        }
+
+        /* סגירת החלון בלחיצה מחוץ למשחק */
+        window.onclick = function(event) {
+            const modal = document.getElementById('gameModal');
+            if (event.target === modal) {
+                closeGameModal();
+            }
+        }
+    </script>
 
 </body>
 </html>
