@@ -331,41 +331,199 @@
         </div>
     </div>
 
-    <!-- 3. מחשבון RTP אינטראקטיבי - רוחב מלא 100% והתאמה מושלמת למובייל -->
-    <div class="rtp-calculator" style="background: linear-gradient(135deg, #0f172a, #1e293b); border: 1px solid var(--border-color); padding: 22px; border-radius: 14px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); width: 100%; box-sizing: border-box;">
-        <h3 style="margin: 0 0 5px 0; color: var(--primary-text); font-size: 1.15rem; display: flex; align-items: center; gap: 8px;">
-            🧮 Mathematical Payout Predictor
-        </h3>
-        <p style="color: var(--secondary-text); font-size: 0.82rem; margin: 0 0 18px 0;">Estimate your theoretical returns based on session volume and live matrix scores.</p>
-        
-        <!-- שימוש ב-flex-wrap ובמינימום רוחב גמיש להתאמה מיידית למסכי טלפונים -->
-        <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: stretch; width: 100%;">
-            
-            <div style="flex: 1; min-width: 240px; display: flex; flex-direction: column;">
-                <label style="display: block; color: var(--secondary-text); font-size: 0.72rem; margin-bottom: 6px; font-weight: 700; letter-spacing: 0.05em;">SESSION BANKROLL</label>
-                <div style="position: relative; flex: 1; display: flex; align-items: center;">
-                    <span style="position: absolute; left: 12px; color: var(--secondary-text); font-weight: 700; font-size: 0.9rem;">€</span>
-                    <input type="number" id="calc-budget" value="100" min="10" style="width: 100%; height: 46px; background: #0b0f19; border: 1px solid var(--border-color); padding: 0 12px 0 28px; border-radius: 8px; color: white; font-weight: 700; outline: none; box-sizing: border-box; font-size: 0.95rem;">
-                </div>
-            </div>
-            
-            <div style="flex: 1; min-width: 240px; display: flex; flex-direction: column;">
-                <label style="display: block; color: var(--secondary-text); font-size: 0.72rem; margin-bottom: 6px; font-weight: 700; letter-spacing: 0.05em;">TARGET RTP</label>
-                <div style="position: relative; flex: 1; display: flex; align-items: center;">
-                    <input type="number" id="calc-rtp" value="97.15" min="80" max="99.9" step="0.01" style="width: 100%; height: 46px; background: #0b0f19; border: 1px solid var(--border-color); padding: 0 32px 0 12px; border-radius: 8px; color: var(--accent-color); font-weight: 700; outline: none; box-sizing: border-box; font-size: 0.95rem;">
-                    <span style="position: absolute; right: 12px; color: var(--accent-color); font-weight: 700; font-size: 0.9rem;">%</span>
-                </div>
-            </div>
-            
-            <div style="flex: 1.2; min-width: 240px; display: flex; flex-direction: column;">
-                <label style="display: block; color: var(--secondary-text); font-size: 0.72rem; margin-bottom: 6px; font-weight: 700; letter-spacing: 0.05em;">THEORETICAL RETURN</label>
-                <div style="flex: 1; height: 46px; background: #0b0f19; border: 1px solid var(--border-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; box-sizing: border-box; padding: 0 15px;">
-                    <span id="calc-result" style="color: white; font-size: 1.25rem; font-weight: 800; font-variant-numeric: tabular-nums;">€97.15</span>
-                </div>
-            </div>
-            
+ <!-- Luxury Slot Engine Widget - Pure Minimalist Version -->
+<div class="lux-slot-widget">
+  
+  <!-- שכבת קנבס שקופה למטר המטבעות הנופלים -->
+  <canvas id="silver-coin-canvas"></canvas>
+
+  <!-- גוף המכונה המטאלי -->
+  <div class="slots-brushed-housing">
+    <div class="slots-internal-viewport">
+      
+      <!-- גלגל 1 -->
+      <div class="slots-reel-track">
+        <div class="slots-reel-strip" id="s-reel1">
+          <div>💎</div><div>👑</div><div>777</div><div>⭐</div><div>💎</div><div>👑</div><div>777</div>
         </div>
+      </div>
+      
+      <!-- גלגל 2 -->
+      <div class="slots-reel-track">
+        <div class="slots-reel-strip" id="s-reel2">
+          <div>👑</div><div>777</div><div>⭐</div><div>💎</div><div>👑</div><div>777</div><div>⭐</div>
+        </div>
+      </div>
+      
+      <!-- גלגל 3 -->
+      <div class="slots-reel-track">
+        <div class="slots-reel-strip" id="s-reel3">
+          <div>777</div><div>⭐</div><div>💎</div><div>👑</div><div>777</div><div>⭐</div><div>💎</div>
+        </div>
+      </div>
+
     </div>
+    
+    <!-- כפתור הפעלה אלגנטי ומהודק -->
+    <button class="slots-trigger-action-btn" id="slots-action-trigger">SPIN ENGINE</button>
+  </div>
+
+  <!-- תיבת הזכייה שקופצת בעיצוב נקי מתחת לווידג'ט -->
+  <div class="slots-success-panel" id="slots-win-display" style="display: none;">
+      <div class="slots-panel-banner">🔥 OPERATOR MATCH SECURED</div>
+      <h3 id="slots-panel-title">Bet365 Casino</h3>
+      <p id="slots-panel-detail">Stake £10 and get 50 Free Spins</p>
+      <a href="#" id="slots-panel-link" target="_blank" rel="nofollow" class="slots-panel-btn">Claim Access Now →</a>
+  </div>
+
+</div>
+<style>
+/* --- Luxury Silver Slot Widget Styles --- */
+.lux-slot-widget {
+    max-width: 480px; /* רוחב מלבני מושלם ומאוזן שתואם למבזקים שמעליו */
+    margin: 30px auto;
+    padding: 0 15px;
+    position: relative;
+    box-sizing: border-box;
+}
+
+/* קנבס המטבעות הנופלים */
+#silver-coin-canvas {
+    position: absolute;
+    top: -80px;
+    left: -40px;
+    width: calc(100% + 80px);
+    height: calc(100% + 160px);
+    pointer-events: none;
+    z-index: 99;
+}
+
+/* מארז פלדה מוברשת אפל ויוקרתי */
+.slots-brushed-housing {
+    background: linear-gradient(145deg, #141923 0%, #090d14 100%);
+    border: 2px solid #222d3f;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05);
+}
+
+/* חלון הצפייה המיושר והפרופורציונלי */
+.slots-internal-viewport {
+    display: flex;
+    justify-content: space-between;
+    background: #030508;
+    border: 2px solid #1c2635;
+    border-radius: 10px;
+    height: 90px; /* גובה מדויק שמונע חיתוך סמלים */
+    overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 15px 20px rgba(0,0,0,0.9), inset 0 -15px 20px rgba(0,0,0,0.9);
+}
+
+/* השתקפות אור זכוכיתית מעל הגלגלים */
+.slots-internal-viewport::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,0) 70%, rgba(0,0,0,0.4) 100%);
+    pointer-events: none;
+}
+
+/* נתיב של גלגל בודד */
+.slots-reel-track {
+    width: 33%;
+    height: 100%;
+    position: relative;
+    background: linear-gradient(to bottom, #070a0f 0%, #111722 50%, #070a0f 100%);
+}
+
+.slots-reel-track:not(:last-child) {
+    border-right: 1px solid #1a2333;
+}
+
+/* רצועת הסמלים הווקטוריים */
+.slots-reel-strip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    transform: translateY(0);
+}
+
+.slots-reel-strip div {
+    height: 90px;
+    line-height: 90px;
+    font-size: 34px;
+    text-align: center;
+    user-select: none;
+}
+
+/* אנימציית סחרור פרימיום עם אפקט טשטוש קולנועי */
+@keyframes slotsBlurSpin {
+    0% { transform: translateY(0); filter: blur(0px); }
+    50% { filter: blur(5px); } /* טשטוש תנועה ריאליסטי באמצע הריצה */
+    100% { transform: translateY(-360px); filter: blur(0px); }
+}
+
+.slots-reel-strip.run-spin {
+    animation: slotsBlurSpin 0.12s linear infinite;
+}
+
+/* כפתור הפעלה נקי ומינימליסטי - ירוק מטאלי */
+.slots-trigger-action-btn {
+    width: 100%;
+    margin-top: 15px;
+    background: linear-gradient(135deg, #00ff87 0%, #00a354 100%);
+    color: #05070a;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0, 255, 135, 0.25);
+    transition: all 0.2s ease;
+}
+
+.slots-trigger-action-btn:hover {
+    box-shadow: 0 6px 25px rgba(0, 255, 135, 0.45);
+    transform: translateY(-1px);
+}
+
+/* תיבת הזכייה המינימליסטית */
+.slots-success-panel {
+    margin-top: 20px;
+    background: #05070a;
+    border: 1px solid #00ff87;
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: 0 0 25px rgba(0, 255, 135, 0.2);
+    animation: slotsPanelPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.slots-panel-banner { color: #00ff87; font-size: 11px; font-weight: 800; letter-spacing: 1px; margin-bottom: 5px; text-align: center; }
+#slots-panel-title { color: #ffffff; font-size: 18px; margin: 0 0 4px 0; text-align: center; }
+#slots-panel-detail { color: #38bdf8; font-size: 13px; font-weight: 600; margin: 0 0 12px 0; text-align: center; }
+
+.slots-panel-btn {
+    display: block;
+    background: linear-gradient(135deg, #ff5500 0%, #ff3300 100%);
+    color: #ffffff;
+    text-decoration: none;
+    padding: 11px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 13px;
+    text-align: center;
+    transition: background 0.2s;
+}
+
+@keyframes slotsPanelPop { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+</style>
+
 
     <div class="controls">
         <div style="color: var(--secondary-text); font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 6px;">
@@ -414,5 +572,174 @@
 </div>
 
 <script src="app.js"></script>
+<!-- JavaScript Physics Engine: Luxury 3-Reel Slots & Dynamic Silver Coin Rain -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const r1 = document.getElementById("s-reel1");
+    const r2 = document.getElementById("s-reel2");
+    const r3 = document.getElementById("s-reel3");
+    const trigger = document.getElementById("slots-action-trigger");
+    const winPanel = document.getElementById("slots-win-display");
+    const canvas = document.getElementById("silver-coin-canvas");
+    
+    if (!trigger || !r1 || !r2 || !r3 || !canvas) return;
+    
+    const ctx = canvas.getContext("2d");
+    let isSpinning = false;
+    let coins = [];
+    let animationFrameId;
+
+    // --- 1. מנוע פיזיקלי למטרת מטבעות כסף כרום (HTML5 Canvas) ---
+    function resizeCanvas() {
+        const box = canvas.parentElement.getBoundingClientRect();
+        canvas.width = box.width + 80;
+        canvas.height = box.height + 160;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    class SilverCoin {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * -50 - 20;
+            this.radius = Math.random() * 4 + 7; // קוטר המטבע
+            this.speedY = Math.random() * 4 + 5; // מהירות נפילה אנכית
+            this.speedX = Math.random() * 3 - 1.5; // פיזור אופקי עדין
+            this.rotation = Math.random() * Math.PI * 2;
+            this.rotationSpeed = Math.random() * 0.2 - 0.1;
+            this.opacity = 1;
+        }
+        update() {
+            this.y += this.speedY;
+            this.x += this.speedX;
+            this.rotation += this.rotationSpeed;
+            if (this.y > canvas.height - 30) {
+                this.opacity -= 0.03; // היעלמות חלקה בקצה הווידג'ט
+            }
+        }
+        draw() {
+            ctx.save();
+            ctx.translate(this.x, this.y);
+            ctx.rotate(this.rotation);
+            ctx.globalAlpha = Math.max(0, this.opacity);
+            
+            // יצירת מראה כסף/כרום מטאלי באמצעות מעברי צבע מורכבים
+            ctx.beginPath();
+            ctx.ellipse(0, 0, this.radius, this.radius * 0.55, 0, 0, Math.PI * 2);
+            
+            let gradient = ctx.createLinearGradient(-this.radius, -this.radius, this.radius, this.radius);
+            gradient.addColorStop(0, "#ffffff"); // ברק אור לבן
+            gradient.addColorStop(0.3, "#cfd8dc"); // כסף בהיר
+            gradient.addColorStop(0.7, "#90a4ae"); // כסף מטאלי עמוק
+            gradient.addColorStop(1, "#37474f"); // הצללת כרום כהה
+            
+            ctx.fillStyle = gradient;
+            ctx.fill();
+            
+            // מסגרת היקפית דקה למטבע
+            ctx.strokeStyle = "#78909c";
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+            
+            // טבעת פנימית קטנה ליצירת עומק תלת-ממדי ריאליסטי
+            ctx.beginPath();
+            ctx.ellipse(0, 0, this.radius * 0.65, this.radius * 0.35, 0, 0, Math.PI * 2);
+            ctx.strokeStyle = "rgba(255,255,255,0.4)";
+            ctx.stroke();
+            
+            ctx.restore();
+        }
+    }
+
+    function spawnSilverCoins() {
+        coins = [];
+        for (let i = 0; i < 55; i++) { // כמות המטבעות שימטירו על המסך
+            setTimeout(() => {
+                if (isSpinning || winPanel.style.display === "block") {
+                    coins.push(new SilverCoin());
+                }
+            }, i * 35);
+        }
+        cancelAnimationFrame(animationFrameId);
+        animateSilverCoins();
+    }
+
+    function animateSilverCoins() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let hasActiveCoins = false;
+        
+        coins.forEach(coin => {
+            coin.update();
+            coin.draw();
+            if (coin.opacity > 0 && coin.y < canvas.height) {
+                hasActiveCoins = true;
+            }
+        });
+        
+        if (hasActiveCoins) {
+            animationFrameId = requestAnimationFrame(animateSilverCoins);
+        } else {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+    }
+
+    // --- 2. מנגנון סחרור ועצירה מתוזמנת של גלגלי הסלוט ---
+    trigger.addEventListener("click", () => {
+        if (isSpinning) return;
+        
+        // משיכת רשימת המותגים העדכנית של המדינה הנוכחית מתוך ה-filteredData ב-app.js
+        let activeData = (window.filteredData && window.filteredData.length > 0) ? window.filteredData : window.casinoData;
+        
+        // רשת ביטחון דינמית מובנית כדי שהווידג'ט יעבוד תמיד ללא תקלות קוד
+        if (!activeData || activeData.length === 0) {
+            activeData = [
+                { "casino_name": "Bet365 Casino", "bonus_text": "Stake £10 and get 50 Free Spins", "affiliate_link": "https://bet365.link" },
+                { "casino_name": "Vulkan Vegas", "bonus_text": "100% Up to €1,500 + 150 Free Spins", "affiliate_link": "https://vpartners.link" },
+                { "casino_name": "888 Casino", "bonus_text": "100% Up To £100 + 88 Free Spins", "affiliate_link": "https://vpartners.link" }
+            ];
+        }
+
+        isSpinning = true;
+        trigger.disabled = true;
+        trigger.innerText = "SYNCHRONIZING Feeds...";
+        winPanel.style.display = "none";
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        resizeCanvas();
+
+        // הפעלת האנימציה של הסיבוב המהיר ב-CSS
+        r1.classList.add("run-spin");
+        r2.classList.add("run-spin");
+        r3.classList.add("run-spin");
+
+        // בחירת מותג אקראי מהרשימה החיה
+        const randomIndex = Math.floor(Math.random() * activeData.length);
+        const selectedCasino = activeData[randomIndex];
+
+        // עצירה מדורגת, חלקה ומתוחה (גלגל אחרי גלגל - בדיוק כמו מכונה אמיתית)
+        setTimeout(() => { r1.classList.remove("run-spin"); }, 1300); // גלגל 1 ננעל
+        setTimeout(() => { r2.classList.remove("run-spin"); }, 1900); // גלגל 2 ננעל
+        
+        setTimeout(() => { 
+            r3.classList.remove("run-spin"); // גלגל 3 ננעל - רגע הזכייה
+            
+            if (selectedCasino) {
+                document.getElementById("slots-panel-title").innerText = selectedCasino.casino_name + " 🏆";
+                document.getElementById("slots-panel-detail").innerText = selectedCasino.bonus_text || "Premium Bonus Link Verified";
+                document.getElementById("slots-panel-link").href = selectedCasino.affiliate_link || "#";
+                
+                winPanel.style.display = "block";
+                
+                // הפעלת גשם מטבעות הכסף/כרום הנוצצים
+                spawnSilverCoins();
+            }
+            
+            trigger.disabled = false;
+            trigger.innerText = "SPIN ENGINE";
+            isSpinning = false;
+        }, 2500);
+    });
+});
+</script>
+
 </body>
 </html>
