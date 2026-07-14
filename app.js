@@ -190,16 +190,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-    // 6. האזנה לשינויים ידניים
-    if (countrySelect) {
-        countrySelect.addEventListener("change", (e) => {
-            const selected = e.target.value;
-            if (selected !== "AUTO") {
-                userCountry = selected;
-                window.triggerFilter();
+// הבלוק המעודכן והמתוקן (שלב 6):
+if (countrySelect) {
+    countrySelect.addEventListener("change", (e) => {
+        let selected = e.target.value;
+        if (selected !== "AUTO") {
+            // התיקון הקריטי: מוודא שכל וריאציה של בריטניה הופכת ל-UK אחיד
+            if (selected === "GB" || selected === "UK") {
+                selected = "UK";
             }
-        });
-    }
+            userCountry = selected;
+            window.triggerFilter();
+        }
+    });
+}
+
 
     if (sortSelect) {
         sortSelect.addEventListener("change", (e) => {
