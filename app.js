@@ -108,17 +108,21 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         // סינון המותגים אך ורק לפי המדינה שזוהתה, ללא הגבלת RTP קשיחה בטבלה
+               // סינון חכם ומאובטח המנקה רווחים ותווים נסתרים (Trim) מה-JSON
         filteredData = casinoData.filter(item => {
             if (!item.allowed_countries) return false;
             
-            // תרגום פנימי קשוח כדי לוודא שכל וריאציה של בריטניה תתפוס ב-JSON
-            const countriesArray = item.allowed_countries.map(c => c.toUpperCase());
-            if (userCountry === "UK" || userCountry === "GB") {
-                return countriesArray.includes("UK") || countriesArray.includes("GB");
+            // מנקה רווחים, ירידות שורה ותווים נסתרים מכל המדינות ב-JSON והופך לאותיות גדולות
+            const cleanCountries = item.allowed_countries.map(c => c.trim().replace(/[\r\n]/g, "").toUpperCase());
+            
+            // תרגום אחיד לבריטניה
+            if (userCountry === "UK" || userCountry === "GB" || userCountry === "UNITED KINGDOM") {
+                return cleanCountries.includes("UK") || cleanCountries.includes("GB");
             }
             
-            return countriesArray.includes(userCountry.toUpperCase());
+            return cleanCountries.includes(userCountry.trim().toUpperCase());
         });
+
 
         // כפתור משחק חם (שמאלי)
         const hotGameAction = document.getElementById("hot-game-action");
