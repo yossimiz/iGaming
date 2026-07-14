@@ -86,29 +86,21 @@
             color: #b3c0d4;
             font-size: 16px;
         }
-        .games-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 30px;
-        }
-        .game-card {
-            background-color: #1a1f29;
-            border: 1px solid #2a3245;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease, border-color 0.3s ease;
-        }
-        .game-card:hover {
-            transform: translateY(-5px);
-            border-color: #00ff87;
-        }
-        .game-video-container {
-            position: relative;
-            width: 100%;
-            padding-top: 56.25%;
-            background-color: #000;
-        }
+       /* Optimized Grid Layout for better game visibility */
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); /* Widens the cards */
+  gap: 30px;
+}
+
+/* Increases the internal iframe height significantly */
+.game-video-container {
+  position: relative;
+  width: 100%;
+  padding-top: 65%; /* Changed from 56.25% to give more vertical space for menus */
+  background-color: #000;
+}
+
         .game-video-container iframe {
             position: absolute;
             top: 0;
