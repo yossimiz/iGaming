@@ -201,24 +201,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-// שלב 6 המעודכן והסופי ב-app.js
-if (countrySelect) {
-    countrySelect.addEventListener("change", (e) => {
-        let selected = e.target.value;
-        if (selected !== "AUTO") {
-            // התיקון הקריטי: הופך את הבחירה לאותיות גדולות כדי למנוע בעיות של uk/UK או gb/GB
-            selected = selected.toUpperCase();
+    // 6. האזנה לשינויים ידניים - גרסה חסינת תקלות HTML
+    if (countrySelect) {
+        countrySelect.addEventListener("change", (e) => {
+            const selectedText = e.target.options[e.target.selectedIndex].text.toUpperCase();
+            let selectedValue = e.target.value.toUpperCase();
             
-            // תרגום אחיד של בריטניה ל-UK
-            if (selected === "GB" || selected === "UK" || selected === "UNITED KINGDOM") {
-                selected = "UK";
+            if (selectedValue !== "AUTO") {
+                // בדיקה כפולה: אם הטקסט או הערך מכילים את בריטניה, נכפה UK נקי
+                if (selectedText.includes("UNITED KINGDOM") || selectedText.includes("UK") || 
+                    selectedValue.includes("UK") || selectedValue.includes("GB")) {
+                    userCountry = "UK";
+                } else if (selectedText.includes("CYPRUS") || selectedValue.includes("CY")) {
+                    userCountry = "CY";
+                } else if (selectedText.includes("GERMANY") || selectedValue.includes("DE")) {
+                    userCountry = "DE";
+                } else if (selectedText.includes("ISRAEL") || selectedValue.includes("IL")) {
+                    userCountry = "IL";
+                } else {
+                    userCountry = selectedValue;
+                }
+                
+                console.log("Manual Override Applied:", userCountry);
+                window.triggerFilter();
             }
-            
-            userCountry = selected;
-            window.triggerFilter();
-        }
-    });
-}
+        });
+    }
+
 
 
 
