@@ -333,110 +333,138 @@
 
 <!-- Premium Interactive Slot Machine Component -->
 <!-- High-End Luxury Slot Machine Widget with Physics Coin Rain -->
-<section class="premium-slots-section">
-  <div class="slot-widget-box">
+<!-- Premium Live iGaming Video Showroom Section -->
+<section class="premium-video-section">
+  <div class="video-showroom-card">
     
-    <!-- שכבת קנבס שקופה להמטרת מטבעות הזהב בתלת-ממד -->
-    <canvas id="coin-canvas"></canvas>
-
-    <!-- מכונת הסלוטים היוקרתית -->
-    <div class="lux-machine">
-      <div class="lux-viewport">
-        <!-- גלגל 1 -->
-        <div class="lux-reel-window">
-          <div class="lux-reel" id="l-reel1">
-            <div>💎</div><div>🎰</div><div>🔥</div><div>777</div><div>👑</div><div>💎</div><div>🎰</div><div>777</div>
-          </div>
-        </div>
-        <!-- גלגל 2 -->
-        <div class="lux-reel-window">
-          <div class="lux-reel" id="l-reel2">
-            <div>👑</div><div>777</div><div>🎰</div><div>🔥</div><div>💎</div><div>👑</div><div>777</div><div>🎰</div>
-          </div>
-        </div>
-        <!-- גלגל 3 -->
-        <div class="lux-reel-window">
-          <div class="lux-reel" id="l-reel3">
-            <div>🔥</div><div>🎰</div><div>👑</div><div>777</div><div>💎</div><div>🔥</div><div>🎰</div><div>777</div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- כפתור הפעלה מעוצב עם פעימה זוהרת -->
-      <button class="lux-spin-button" id="lux-spin-trigger">SPIN TO WIN</button>
+    <!-- וידאו חי של סלוט באיכות פרימיום הרץ בלולאה שקטה -->
+    <div class="video-overlay-wrapper">
+      <video class="bg-slot-video" autoplay loop muted playsinline poster="https://unsplash.com">
+        <source src="https://mixkit.co" type="video/mp4">
+      </video>
+      <div class="dark-gradient-shader"></div>
     </div>
 
-    <!-- תיבת זכיית הג'קפוט האוטומטית -->
-    <div class="lux-win-card" id="lux-winner-panel" style="display: none;">
-        <div class="lux-banner">⚡ REGULATED JACKPOT DETECTED</div>
-        <h3 id="lux-win-title">Bet365 Casino</h3>
-        <p id="lux-win-detail">Stake £10 and get 50 Free Spins</p>
-        <a href="#" id="lux-win-link" target="_blank" rel="nofollow" class="lux-action-btn">Claim Access Now →</a>
+    <!-- כפתור ההנעה לפעולה הזוהר שיושב מעל הוידאו -->
+    <div class="video-content-hub">
+      <a href="free-games.html" class="lux-play-trigger-btn">
+        <span class="live-pulse"></span> ENTER FREE DEMO PLAY
+      </a>
     </div>
 
   </div>
 </section>
 <style>
-/* --- Premium Luxury Slot Widget & Coin Canvas Styles --- */
-/* --- תיקון רוחב ומראה יוקרתי לווידג'ט במחשב --- */
-.premium-slots-section {
-    max-width: 360px; /* נעילה לרוחב מהודק וקומפקטי בדיוק כמו המחשבון הישן */
-    margin: 20px auto 40px auto;
+/* --- Premium iGaming Video Showroom Styles --- */
+.premium-video-section {
+    max-width: 480px; /* רוחב מלבני מושלם וקומפקטי בדיוק כמו המחשבון הישן */
+    margin: 30px auto;
     padding: 0 15px;
-    position: relative;
 }
 
-.slot-widget-box {
-    background: linear-gradient(145deg, #131926 0%, #090d15 100%);
+.video-showroom-card {
+    background-color: #0f131c;
     border: 2px solid #232d42;
-    border-radius: 20px;
-    padding: 20px;
-    /* הצללה תלת-ממדית עמוקה שגורמת לווידג'ט לקפוץ מהמסך */
-    box-shadow: 0 25px 60px rgba(0,0,0,0.8), 
-                inset 0 2px 3px rgba(255,255,255,0.05),
-                0 0 30px rgba(0, 255, 135, 0.05);
+    border-radius: 16px;
+    height: 140px; /* גובה מהודק, אלגנטי ולא קלסטרופובי */
     position: relative;
-    overflow: visible;
-}
-
-/* שלד המכונה המטאלי המהודק */
-.lux-machine {
-    background: linear-gradient(135deg, #05070a 0%, #101624 50%, #05070a 100%);
-    border: 3px solid #1f293d;
-    border-radius: 14px;
-    padding: 12px;
-    box-shadow: inset 0 0 20px rgba(0,0,0,0.9), 0 4px 15px rgba(0,0,0,0.5);
-}
-
-/* התאמת גובה ה-Viewport למראה סימטרי */
-.lux-viewport {
-    display: flex;
-    justify-content: space-between;
-    background: #020305;
-    border: 2px solid #1a2233;
-    border-radius: 8px;
-    height: 80px; /* קיצור קל של הגובה לאיזון ויזואלי */
     overflow: hidden;
-    position: relative;
-    box-shadow: inset 0 15px 20px rgba(0,0,0,0.95), inset 0 -15px 20px rgba(0,0,0,0.95);
+    box-shadow: 0 20px 45px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.lux-reel div {
-    height: 80px; /* התאמת גובה הסמלים לחלון החדש */
-    line-height: 80px;
-    font-size: 28px;
+/* קונטיינר הוידאו ושכבת הערפול של ה-Dark Mode */
+.video-overlay-wrapper {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 1;
+}
+
+.bg-slot-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* מותח את הוידאו בצורה חלקה לכל רוחב הכרטיס */
+    filter: saturate(1.2) brightness(0.7); /* מעשיר את צבעי המכונה ומעדן אותם */
+}
+
+/* שכבת צבע מדורגת שמחברת את הוידאו לרקע השחור של האתר */
+.dark-gradient-shader {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(135deg, rgba(13, 17, 23, 0.85) 0%, rgba(9, 13, 21, 0.6) 100%);
+}
+
+/* תוכן הכפתור שצף מעל הוידאו */
+.video-content-hub {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding: 0 20px;
     text-align: center;
 }
 
-/* תיקון האנימציה לגובה החדש כדי שהעצירה תהיה מושלמת */
-@keyframes lux-spin {
-    0% { transform: translateY(0); filter: blur(0px); }
-    50% { filter: blur(4px); }
-    100% { transform: translateY(-400px); filter: blur(0px); }
+/* כפתור יוקרתי, זוהר ומזמין בסטנדרט של Casino Guru */
+.lux-play-trigger-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #00ff87 0%, #00b35c 100%);
+    color: #05070a;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: 1px;
+    padding: 14px 28px;
+    border-radius: 8px;
+    box-shadow: 0 4px 25px rgba(0, 255, 135, 0.4);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    width: 80px; /* שומר על כפתור מהודק במרכז */
+    max-width: 280px;
 }
 
+.lux-play-trigger-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 30px rgba(0, 255, 135, 0.6);
+}
+
+/* נקודת פעימה חיה (Pulse) בצבע אדום/ירוק שמסמלת שידור חי של נתונים */
+.live-pulse {
+    width: 8px;
+    height: 8px;
+    background-color: #05070a;
+    border-radius: 50%;
+    display: inline-block;
+    animation: buttonPulse 1.5s infinite;
+}
+
+@keyframes buttonPulse {
+    0% { transform: scale(0.9); opacity: 1; }
+    50% { transform: scale(1.3); opacity: 0.4; }
+    100% { transform: scale(0.9); opacity: 1; }
+}
+</style>
+<style>
+/* תוספת קטנה לוודא שבאנר הווידאו מתכווץ בצורה מושלמת במסכי סמארטפונים ומובייל */
+@media (max-width: 500px) {
+  .premium-video-section {
+    max-width: 100%;
+    padding: 0 10px;
+  }
+  .video-showroom-card {
+    height: 120px; /* קיצור גובה קל למסכים קטנים */
+  }
+  .lux-play-trigger-btn {
+    padding: 12px 20px;
+    font-size: 12px;
+  }
+}
 </style>
 
+<!-- מרווח מעוצב ואלגנטי שמפריד בין באנר הווידאו החי לבין טבלת המפעילים שמתחתיו -->
+<div style="margin-bottom: 50px;"></div>
     <div class="controls">
         <div style="color: var(--secondary-text); font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 6px;">
             Target Feed: <span id="display-country" style="color: var(--accent-color); background: rgba(16, 185, 129, 0.1); padding: 3px 8px; border-radius: 4px; font-weight: 700; border: 1px solid rgba(16, 185, 129, 0.15);">Detecting...</span>
