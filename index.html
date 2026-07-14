@@ -332,212 +332,203 @@
     </div>
 
 <!-- Premium Interactive Slot Machine Component -->
-<section class="slots-section">
-  <div class="slots-card">
-    <div class="slots-header">
-        <h2>🎰 Real-Time Slot Engine</h2>
-        <p>Spin the SlotMetric engine to sync live operator bonuses and unlock exclusive packages.</p>
-    </div>
+<!-- High-End Luxury Slot Machine Widget with Physics Coin Rain -->
+<section class="premium-slots-section">
+  <div class="slot-widget-box">
+    
+    <!-- שכבת קנבס שקופה להמטרת מטבעות הזהב בתלת-ממד -->
+    <canvas id="coin-canvas"></canvas>
 
-    <!-- גוף מכונת הסלוטים -->
-    <div class="slot-machine">
-        <div class="slot-window">
-            <!-- גלגל 1 -->
-            <div class="reel-container">
-                <div class="reel" id="reel1">🍒 💎 777 ⭐ 🍋 🍒 💎 777</div>
-            </div>
-            <!-- גלגל 2 -->
-            <div class="reel-container">
-                <div class="reel" id="reel2">💎 ⭐ 🍒 777 🍋 💎 ⭐ 777</div>
-            </div>
-            <!-- גלגל 3 -->
-            <div class="reel-container">
-                <div class="reel" id="reel3">⭐ 777 🍋 🍒 💎 ⭐ 777 🍒</div>
-            </div>
+    <!-- מכונת הסלוטים היוקרתית -->
+    <div class="lux-machine">
+      <div class="lux-viewport">
+        <!-- גלגל 1 -->
+        <div class="lux-reel-window">
+          <div class="lux-reel" id="l-reel1">
+            <div>💎</div><div>🎰</div><div>🔥</div><div>777</div><div>👑</div><div>💎</div><div>🎰</div><div>777</div>
+          </div>
         </div>
-        
-        <!-- כפתור ההפעלה של הסלוט -->
-        <button class="slot-spin-btn" id="slot-trigger">SPIN ENGINE</button>
+        <!-- גלגל 2 -->
+        <div class="lux-reel-window">
+          <div class="lux-reel" id="l-reel2">
+            <div>👑</div><div>777</div><div>🎰</div><div>🔥</div><div>💎</div><div>👑</div><div>777</div><div>🎰</div>
+          </div>
+        </div>
+        <!-- גלגל 3 -->
+        <div class="lux-reel-window">
+          <div class="lux-reel" id="l-reel3">
+            <div>🔥</div><div>🎰</div><div>👑</div><div>777</div><div>💎</div><div>🔥</div><div>🎰</div><div>777</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- כפתור הפעלה מעוצב עם פעימה זוהרת -->
+      <button class="lux-spin-button" id="lux-spin-trigger">SPIN TO WIN</button>
     </div>
 
-    <!-- חלונית הזכייה היוקרתית שנחשפת לאחר עצירת הגלגלים -->
-    <div class="slot-win-box" id="slot-winner" style="display: none;">
-        <div class="slot-win-banner">🔥 JACKPOT UNLOCKED! MATCH FOUND</div>
-        <h3 id="slot-win-title">Bet365 Casino</h3>
-        <p id="slot-win-detail">Stake £10 and get 50 Free Spins</p>
-        <a href="#" id="slot-win-link" target="_blank" rel="nofollow" class="slot-action-btn">Secure Instant Access →</a>
+    <!-- תיבת זכיית הג'קפוט האוטומטית -->
+    <div class="lux-win-card" id="lux-winner-panel" style="display: none;">
+        <div class="lux-banner">⚡ REGULATED JACKPOT DETECTED</div>
+        <h3 id="lux-win-title">Bet365 Casino</h3>
+        <p id="lux-win-detail">Stake £10 and get 50 Free Spins</p>
+        <a href="#" id="lux-win-link" target="_blank" rel="nofollow" class="lux-action-btn">Claim Access Now →</a>
     </div>
+
   </div>
 </section>
 <style>
-/* --- Premium Slot Machine Component Styles --- */
-.slots-section {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 0 20px;
-    font-family: system-ui, -apple-system, sans-serif;
+/* --- Premium Luxury Slot Widget & Coin Canvas Styles --- */
+.premium-slots-section {
+    max-width: 500px; /* גודל קומפקטי שמחליף במדויק את המחשבון הישן */
+    margin: 30px auto;
+    padding: 0 15px;
+    position: relative;
 }
 
-.slots-card {
-    background-color: #111622;
-    border: 1px solid #222c3f;
-    border-radius: 12px;
-    padding: 35px 20px;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-    text-align: center;
-}
-
-.slots-header h2 {
-    font-size: 26px;
-    color: #ffffff;
-    margin: 0 0 6px 0;
-}
-
-.slots-header p {
-    color: #94a3b8;
-    font-size: 14px;
-    margin: 0 0 30px 0;
-}
-
-/* קופסת מכונת הסלוטים */
-.slot-machine {
-    background: #090d16;
-    border: 4px solid #1a2333;
+.slot-widget-box {
+    background-color: #0f131c;
+    border: 2px solid #1e2638;
     border-radius: 16px;
-    padding: 25px;
-    max-width: 450px;
-    margin: 0 auto 30px auto;
-    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 255, 135, 0.05);
+    padding: 20px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05);
+    position: relative;
+    overflow: visible; /* מאפשר למטבעות לקפוץ אל מחוץ לווידג'ט */
 }
 
-/* חלון התצוגה של שלושת הגלגלים */
-.slot-window {
+/* שרשראות הקנבס של המטבעות הנופלים */
+#coin-canvas {
+    position: absolute;
+    top: -100px;
+    left: -50px;
+    width: calc(100% + 100px);
+    height: calc(100% + 200px);
+    pointer-events: none; /* מונע חסימת לחיצות עכבר מהאתר */
+    z-index: 100;
+}
+
+/* שלד המכונה המטאלי */
+.lux-machine {
+    background: linear-gradient(135deg, #07090e 0%, #0d111a 100%);
+    border: 3px solid #1a2233;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: inset 0 0 25px rgba(0,0,0,0.9);
+}
+
+/* חלון הצפייה התלת-ממדי */
+.lux-viewport {
     display: flex;
     justify-content: space-between;
-    background: #05070a;
-    border: 3px solid #222c3f;
+    background: #030508;
+    border: 2px solid #222d42;
     border-radius: 8px;
-    height: 100px;
-    overflow: hidden; /* מחביא את שאר הסמלים למעלה ולמטה */
+    height: 90px;
+    overflow: hidden;
     position: relative;
-    box-shadow: inset 0 10px 20px rgba(0,0,0,0.9), inset 0 -10px 20px rgba(0,0,0,0.9);
+    box-shadow: inset 0 15px 25px rgba(0,0,0,0.95), inset 0 -15px 25px rgba(0,0,0,0.95);
 }
 
-/* קונטיינר של גלגל בודד */
-.reel-container {
+.lux-viewport::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 75%, rgba(0,0,0,0.6) 100%);
+    pointer-events: none;
+}
+
+/* חלון של גלגל בודד */
+.lux-reel-window {
     width: 32%;
     height: 100%;
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(to bottom, #0d1117 0%, #161b22 50%, #0d1117 100%);
+    background: linear-gradient(to bottom, #070a0f 0%, #121824 50%, #070a0f 100%);
 }
 
-.reel-container:not(:last-child) {
-    border-right: 2px solid #1a2333;
+.lux-reel-window:not(:last-child) {
+    border-right: 1px solid #1a2233;
 }
-</style>
-<style>
-/* עיצוב רצועת הסמלים עצמה */
-.reel {
-    font-size: 36px;
+
+/* רצועת הסמלים עם ה-Motion Blur החלק */
+.lux-reel {
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    align-items: center;
+    justify-content: flex-start;
     position: absolute;
-    top: -20px; /* מיקום התחלתי */
-    transform: translateY(0);
-    will-change: transform;
-}
-
-/* אנימציית הסחרור של הגלגלים כלפי מטה */
-@keyframes spin-effect {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-300px); } /* מגלגל את רצועת הסמלים במהירות */
-}
-
-.reel.spinning {
-    animation: spin-effect 0.15s linear infinite; /* סחרור אינסופי ומהיר עד העצירה */
-}
-
-/* כפתור ה-SPIN הענקי של המכונה */
-.slot-spin-btn {
     width: 100%;
-    margin-top: 20px;
-    background: linear-gradient(135deg, #00ff87 0%, #00d16c 100%);
-    color: #0d1117;
+    top: 0;
+    transform: translateY(0);
+}
+
+.lux-reel div {
+    height: 90px;
+    line-height: 90px;
+    font-size: 32px;
+    text-align: center;
+    user-select: none;
+}
+
+/* אנימציית סיבוב מהירה וחלקה בטירוף של CSS */
+@keyframes lux-spin {
+    0% { transform: translateY(0); filter: blur(0px); }
+    50% { filter: blur(4px); } /* אפקט טשטוש תנועה קולנועי באמצע הסיבוב */
+    100% { transform: translateY(-450px); filter: blur(0px); }
+}
+
+.lux-reel.active-spin {
+    animation: lux-spin 0.12s linear infinite;
+}
+
+/* כפתור הפעלה יוקרתי ופועם */
+.lux-spin-button {
+    width: 100%;
+    margin-top: 15px;
+    background: linear-gradient(135deg, #00ff87 0%, #00b35c 100%);
+    color: #05070a;
     border: none;
-    padding: 16px;
-    border-radius: 8px;
-    font-weight: 900;
-    font-size: 16px;
+    padding: 14px;
+    border-radius: 6px;
+    font-weight: 800;
+    font-size: 14px;
     letter-spacing: 1px;
     cursor: pointer;
-    box-shadow: 0 4px 20px rgba(0, 255, 135, 0.3);
-    transition: transform 0.1s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(0, 255, 135, 0.25);
+    transition: all 0.2s ease;
 }
 
-.slot-spin-btn:hover {
-    box-shadow: 0 6px 25px rgba(0, 255, 135, 0.5);
+.lux-spin-button:hover {
+    box-shadow: 0 6px 25px rgba(0, 255, 135, 0.45);
+    transform: translateY(-1px);
 }
 
-.slot-spin-btn:active {
-    transform: scale(0.98); /* אפקט לחיצה פיזי */
-}
-
-/* תיבת הזכייה החגיגית של הג'קפוט */
-.slot-win-box {
-    margin-top: 25px;
-    background: #070a12;
-    border: 2px solid #00ff87;
+/* תיבת הזכייה הדינמית של הג'קפוט */
+.lux-win-card {
+    margin-top: 20px;
+    background: #05070a;
+    border: 1px solid #00ff87;
     border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 0 30px rgba(0, 255, 135, 0.25);
-    animation: jackpotPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    padding: 15px;
+    box-shadow: 0 0 25px rgba(0, 255, 135, 0.2);
+    animation: luxPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.slot-win-banner {
-    color: #00ff87;
-    font-size: 13px;
-    font-weight: 800;
-    letter-spacing: 1.5px;
-    margin-bottom: 8px;
-}
+.lux-banner { color: #00ff87; font-size: 11px; font-weight: 800; letter-spacing: 1px; margin-bottom: 5px; }
+#lux-win-title { color: #ffffff; font-size: 18px; margin: 0 0 4px 0; }
+#lux-win-detail { color: #38bdf8; font-size: 13px; font-weight: 600; margin: 0 0 12px 0; }
 
-#slot-win-title {
-    color: #ffffff;
-    font-size: 22px;
-    margin: 0 0 6px 0;
-}
-
-#slot-win-detail {
-    color: #38bdf8;
-    font-size: 15px;
-    font-weight: 600;
-    margin: 0 0 15px 0;
-}
-
-.slot-action-btn {
+.lux-action-btn {
     display: block;
     background: linear-gradient(135deg, #ff5500 0%, #ff3300 100%);
     color: #ffffff;
     text-decoration: none;
-    padding: 14px;
-    border-radius: 6px;
+    padding: 10px;
+    border-radius: 4px;
     font-weight: 700;
-    font-size: 15px;
+    font-size: 13px;
     transition: background 0.2s;
 }
 
-.slot-action-btn:hover {
-    background: linear-gradient(135deg, #ff6611 0%, #ff4411 100%);
-}
-
-@keyframes jackpotPop {
-    from { opacity: 0; transform: scale(0.85); }
-    to { opacity: 1; transform: scale(1); }
-}
+@keyframes luxPop { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
 </style>
 
     <div class="controls">
@@ -588,85 +579,162 @@
 
 <script src="app.js"></script>
 <!-- JavaScript Engine for the Premium Interactive Slot Machine -->
+<!-- JavaScript Physics Engine: 3-Reel Slots & Dynamic Gold Coin Rain -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-    const reel1 = document.getElementById("reel1");
-    const reel2 = document.getElementById("reel2");
-    const reel3 = document.getElementById("reel3");
-    const spinBtn = document.getElementById("slot-trigger");
-    const winBox = document.getElementById("slot-winner");
+    const r1 = document.getElementById("l-reel1");
+    const r2 = document.getElementById("l-reel2");
+    const r3 = document.getElementById("l-reel3");
+    const trigger = document.getElementById("lux-spin-trigger");
+    const winPanel = document.getElementById("lux-winner-panel");
+    const canvas = document.getElementById("coin-canvas");
     
-    const winTitle = document.getElementById("slot-win-title");
-    const winDetail = document.getElementById("slot-win-detail");
-    const winLink = document.getElementById("slot-win-link");
-
+    if (!trigger || !r1 || !r2 || !r3 || !canvas) return;
+    
+    const ctx = canvas.getContext("2d");
     let isSpinning = false;
+    let coins = [];
+    let animationFrameId;
 
-    if (spinBtn && reel1 && reel2 && reel3) {
-        spinBtn.addEventListener("click", () => {
-            // מונע לחיצות כפולות בזמן סיבוב
-            if (isSpinning) return;
-            
-            // משיכת הנתונים המעודכנים לפי המדינה (מתוך ה-filteredData ב-app.js)
-            let activeData = (window.filteredData && window.filteredData.length > 0) ? window.filteredData : window.casinoData;
-            
-            // רשת ביטחון קשיחה כדי שהמכונה תעבוד תמיד
-            if (!activeData || activeData.length === 0) {
-                activeData = [
-                    { "casino_name": "Bet365 Casino", "bonus_text": "Stake £10 and get 50 Free Spins", "affiliate_link": "https://bet365.link" },
-                    { "casino_name": "Vulkan Vegas", "bonus_text": "100% Up to €1,500 + 150 Free Spins", "affiliate_link": "https://vpartners.link" },
-                    { "casino_name": "888 Casino", "bonus_text": "100% Up To £100 + 88 Free Spins", "affiliate_link": "https://vpartners.link" }
-                ];
-            }
-
-            isSpinning = true;
-            spinBtn.disabled = true;
-            spinBtn.innerText = "🎰 SPINNING MATRIX...";
-            if (winBox) winBox.style.display = "none";
-
-            // 1. הפעלת האנימציה של הסיבוב המהיר לכל שלושת הגלגלים
-            reel1.classList.add("spinning");
-            reel2.classList.add("spinning");
-            reel3.classList.add("spinning");
-
-            // הגרלת הקזינו המנצח מתוך הנתונים
-            const randomIndex = Math.floor(Math.random() * activeData.length);
-            const selectedCasino = activeData[randomIndex];
-
-            // 2. עצירה מדורגת של הגלגלים (יצירת אפקט מתח כמו במכונה אמיתית)
-            
-            // עצירת גלגל 1 (אחרי 1.5 שניות)
-            setTimeout(() => {
-                reel1.classList.remove("spinning");
-            }, 1500);
-
-            // עצירת גלגל 2 (אחרי 2.2 שניות)
-            setTimeout(() => {
-                reel2.classList.remove("spinning");
-            }, 2200);
-
-            // עצירת גלגל 3 וחשיפת הג'קפוט (אחרי 3 שניות מלאות)
-            setTimeout(() => {
-                reel3.classList.remove("spinning");
-                
-                // הזרקת הנתונים לקופסת הזכייה היוקרתית
-                if (selectedCasino && winBox) {
-                    winTitle.innerText = selectedCasino.casino_name + " 🏆";
-                    winDetail.innerText = selectedCasino.bonus_text || "Exclusive Live Bonus Verified";
-                    winLink.href = selectedCasino.affiliate_link || "#";
-                    
-                    // הצגת תיבת הזכייה הדינמית
-                    winBox.style.display = "block";
-                    winBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                }
-
-                // החזרת הכפתור למצב פעיל
-                spinBtn.disabled = false;
-                spinBtn.innerText = "SPIN ENGINE";
-                isSpinning = false;
-            }, 3000);
-        });
+    // --- 1. מנוע פיזיקלי למטרת מטבעות זהב (HTML5 Canvas) ---
+    function resizeCanvas() {
+        const box = canvas.parentElement.getBoundingClientRect();
+        canvas.width = box.width + 100;
+        canvas.height = box.height + 200;
     }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    class Coin {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * -50 - 20;
+            this.radius = Math.random() * 5 + 6; // גודל המטבע
+            this.speedY = Math.random() * 4 + 5; // מהירות נפילה
+            this.speedX = Math.random() * 4 - 2; // פיזור לצדדים
+            this.rotation = Math.random() * Math.PI * 2;
+            this.rotationSpeed = Math.random() * 0.2 - 0.1;
+            this.opacity = 1;
+        }
+        update() {
+            this.y += this.speedY;
+            this.x += this.speedX;
+            this.rotation += this.rotationSpeed;
+            if (this.y > canvas.height - 40) {
+                this.opacity -= 0.02; // אפקט היעלמות חלקה בתחתית
+            }
+        }
+        draw() {
+            ctx.save();
+            ctx.translate(this.x, this.y);
+            ctx.rotate(this.rotation);
+            ctx.globalAlpha = Math.max(0, this.opacity);
+            
+            // ציור מטבע זהב יוקרתי בתלת-ממד באמצעות שכבות צבע
+            ctx.beginPath();
+            ctx.ellipse(0, 0, this.radius, this.radius * 0.6, 0, 0, Math.PI * 2);
+            ctx.fillStyle = "#ffd700"; // צבע זהב ראשי
+            ctx.fill();
+            ctx.strokeStyle = "#b8860b"; // מסגרת מוזהבת כהה
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            // ברק פנימי על המטבע
+            ctx.beginPath();
+            ctx.ellipse(0, 0, this.radius * 0.7, this.radius * 0.4, 0, 0, Math.PI * 2);
+            ctx.fillStyle = "#fff799";
+            ctx.fill();
+            
+            ctx.restore();
+        }
+    }
+
+    function spawnCoins() {
+        coins = [];
+        for (let i = 0; i < 60; i++) { // כמות מטבעות הזהב שייפלו
+            setTimeout(() => {
+                if (isSpinning || winPanel.style.display === "block") {
+                    coins.push(new Coin());
+                }
+            }, i * 40); // המטרה מדורגת וזורמת
+        }
+        cancelAnimationFrame(animationFrameId);
+        animateCoins();
+    }
+
+    function animateCoins() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let activeCoins = false;
+        
+        coins.forEach(coin => {
+            coin.update();
+            coin.draw();
+            if (coin.opacity > 0 && coin.y < canvas.height) {
+                activeCoins = true;
+            }
+        });
+        
+        if (activeCoins) {
+            animationFrameId = requestAnimationFrame(animateCoins);
+        } else {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+    }
+
+    // --- 2. מנגנון הפעלת מכונת הסלוטים והסיבוב המדורג ---
+    trigger.addEventListener("click", () => {
+        if (isSpinning) return;
+        
+        // משיכת הנתונים המעודכנים לפי המדינה (מתוך ה-filteredData ב-app.js)
+        let activeData = (window.filteredData && window.filteredData.length > 0) ? window.filteredData : window.casinoData;
+        
+        // רשת ביטחון קשיחה כדי שהגלגל יעבוד תמיד
+        if (!activeData || activeData.length === 0) {
+            activeData = [
+                { "casino_name": "Bet365 Casino", "bonus_text": "Stake £10 and get 50 Free Spins", "affiliate_link": "https://bet365.link" },
+                { "casino_name": "Vulkan Vegas", "bonus_text": "100% Up to €1,500 + 150 Free Spins", "affiliate_link": "https://vpartners.link" },
+                { "casino_name": "888 Casino", "bonus_text": "100% Up To £100 + 88 Free Spins", "affiliate_link": "https://vpartners.link" }
+            ];
+        }
+
+        isSpinning = true;
+        trigger.disabled = true;
+        trigger.innerText = "⚡ SPINNING SYSTEMS...";
+        winPanel.style.display = "none";
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        resizeCanvas();
+
+        // הפעלת סחרור ה-Motion Blur המהיר ב-CSS
+        r1.classList.add("active-spin");
+        r2.classList.add("active-spin");
+        r3.classList.add("active-spin");
+
+        const randomIndex = Math.floor(Math.random() * activeData.length);
+        const selectedCasino = activeData[randomIndex];
+
+        // עצירה מדורגת וריאליסטית של שלושת הגלגלים
+        setTimeout(() => { r1.classList.remove("active-spin"); }, 1400); // גלגל 1 נעצר
+        setTimeout(() => { r2.classList.remove("active-spin"); }, 2000); // גלגל 2 נעצר
+        
+        setTimeout(() => { 
+            r3.classList.remove("active-spin"); // גלגל 3 נעצר - רגע הזכייה!
+            
+            if (selectedCasino) {
+                document.getElementById("lux-win-title").innerText = selectedCasino.casino_name + " 🏆";
+                document.getElementById("lux-win-detail").innerText = selectedCasino.bonus_text || "Premium Operator Bonus Verified";
+                document.getElementById("lux-win-link").href = selectedCasino.affiliate_link || "#";
+                
+                winPanel.style.display = "block";
+                
+                // הפעלת מטר המטבעות הנוצץ על המסך
+                spawnCoins();
+            }
+            
+            trigger.disabled = false;
+            trigger.innerText = "SPIN TO WIN";
+            isSpinning = false;
+        }, 2600);
+    });
 });
 </script>
 </body>
