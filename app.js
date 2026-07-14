@@ -160,14 +160,12 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(data => {
             casinoData = data;
             
-            // זיהוי מיקום מהיר ומאובטח ללא סקריפטים מסובכים
-            fetch("https://ipapi.co/json/")
+            // שימוש בשרת הגלובלי והחזק של ip-api
+            fetch("https://ip-api.com")
                 .then(res => res.json())
                 .then(geo => {
-                    if (geo && geo.country_code) {
-                        userCountry = geo.country_code.toUpperCase();
-                    } else if (geo && geo.country) {
-                        userCountry = geo.country.toUpperCase();
+                    if (geo && geo.countryCode) {
+                        userCountry = geo.countryCode.toUpperCase(); // ip-api מחזיר countryCode באותיות גדולות
                     }
                     
                     if (userCountry === "GB") userCountry = "UK";
@@ -176,7 +174,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 })
                 .catch(geoError => {
                     console.warn("Geo API failed, using fallback CY:", geoError);
-                    userCountry = "CY"; // רשת ביטחון במקרה של חסימה
+                    userCountry = "CY"; // רשת ביטחון במקרה חירום
                     window.triggerFilter();
                 });
         })
@@ -186,7 +184,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 loadingElement.innerHTML = `<span style="color: #ef4444;">Failed to sync with live data matrix.</span>`;
             }
         });
-
 
     // 6. האזנה לשינויים ידניים
     if (countrySelect) {
