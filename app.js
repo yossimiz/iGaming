@@ -68,20 +68,32 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        data.forEach(item => {
+               data.forEach(item => {
             const row = document.createElement("tr");
             row.innerHTML = `
+                <!-- 1. שם הקזינו -->
                 <td><span class="casino-name">${item.casino_name}</span></td>
+                
+                <!-- 2. הבונוס -->
                 <td><span class="bonus-badge">${item.bonus_text}</span></td>
+                
+                <!-- 3. נקודות ציון / Highlights (הוספת live-dot כאן כדי לשמור על העיצוב) -->
                 <td>
                     <div class="rtp-container">
-                        <span class="live-dot"></span>
-                        <span class="rtp-badge">${item.rtp_score}</span>
+                        <span class="live-dot" style="background-color: #00ff87;"></span>
+                        <span style="color: #b3c0d4; font-size: 13px; font-weight: 600;">Verified App</span>
                     </div>
                 </td>
+                
+                <!-- 4. אחוז ה-RTP הריאלי - יישב בדיוק מתחת ל-REAL-TIME RTP -->
+                <td>
+                    <span class="rtp-badge" style="color: #00ff87; font-weight: 700;">${item.rtp_score}</span>
+                </td>
+                
+                <!-- 5. הכפתור הכחול והרגולציה - יישב בדיוק מתחת ל-SECURE ACTION -->
                 <td>
                     <a href="${item.affiliate_link}" target="_blank" rel="nofollow noopener" class="btn-play">Claim Access</a>
-                    <span class="regulatory-text">${item.regulatory_text}</span>
+                    <span class="regulatory-text" style="display: block; margin-top: 4px;">${item.regulatory_text}</span>
                 </td>
             `;
             tableBody.appendChild(row);
