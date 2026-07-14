@@ -107,10 +107,17 @@ document.addEventListener("DOMContentLoaded", () => {
             hotGameElement.innerText = hotGameText;
         }
 
-        // סינון המותגים מתוך ה-JSON לפי המדינה שזוהתה
+        // סינון המותגים אך ורק לפי המדינה שזוהתה, ללא הגבלת RTP קשיחה בטבלה
         filteredData = casinoData.filter(item => {
-            if (!item.allowed_countries) return false; 
-            return item.allowed_countries.includes(userCountry);
+            if (!item.allowed_countries) return false;
+            
+            // תרגום פנימי קשוח כדי לוודא שכל וריאציה של בריטניה תתפוס ב-JSON
+            const countriesArray = item.allowed_countries.map(c => c.toUpperCase());
+            if (userCountry === "UK" || userCountry === "GB") {
+                return countriesArray.includes("UK") || countriesArray.includes("GB");
+            }
+            
+            return countriesArray.includes(userCountry.toUpperCase());
         });
 
         // כפתור משחק חם (שמאלי)
