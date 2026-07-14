@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SlotMetric - Smart Real-Time Casino Metrics & Live Scanner</title>
+    <title>SlotMetric - Smart Real-Time Casino Metrics & Live RTP Scanner</title>
     <style>
         /* --- Premium Dark Mode Framework --- */
         :root {
@@ -15,6 +15,7 @@
             --text-secondary: #94a3b8;
             --neon-green: #00ff87;
             --neon-blue: #38bdf8;
+            --neon-orange: #ff5500;
         }
 
         body {
@@ -81,7 +82,7 @@
             gap: 8px;
             font-weight: 700;
             box-shadow: 0 4px 15px rgba(0, 255, 135, 0.2);
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s !important;
         }
         .free-games-btn:hover {
             transform: translateY(-1px);
@@ -122,118 +123,160 @@
             font-weight: 700;
         }
     </style>
+</head>
 <style>
-/* --- Premium Digital RTP Scanner Component Styles --- */
-.premium-scanner-section {
-    max-width: 480px; /* רוחב מלבני מהודק ואידיאלי שיושב בול במקום המחשבון */
-    margin: 25px auto 40px auto;
-    padding: 0 15px;
+/* --- Premium Live RTP Radar Scanner Styles --- */
+.radar-section {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+  font-family: 'Courier New', Courier, monospace;
 }
 
-.scanner-card {
-    background-color: #080d16;
-    border: 2px solid #1f293d;
-    border-radius: 14px;
-    height: 110px; /* גובה קומפקטי, מהודק ואלגנטי */
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.6), 
-                inset 0 1px 0 rgba(255,255,255,0.05),
-                0 0 25px rgba(0, 255, 135, 0.05);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.radar-container {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 30px;
+  background-color: var(--bg-accent);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
 }
 
-/* אנימציית הגלים הדיגיטליים שזזים וזורמים ברקע ללא הפסקה */
-.scanner-animated-bg {
-    position: absolute;
-    top: 0; left: 0; width: 200%; height: 100%;
-    background: linear-gradient(90deg, #080d16 0%, #0d1a2e 25%, #11253e 50%, #0d1a2e 75%, #080d16 100%);
-    z-index: 1;
-    animation: moveMatrix 6s linear infinite; /* תנועת רקע קבועה וזורמת */
+@media (max-width: 768px) {
+  .radar-container { grid-template-columns: 1fr; }
 }
 
-/* קו לייזר זוהר שסורק את הבאנר מלמעלה למטה */
-.scanner-laser-line {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 3px;
-    background: linear-gradient(90deg, rgba(0,255,135,0) 0%, #00ff87 50%, rgba(0,255,135,0) 100%);
-    z-index: 2;
-    box-shadow: 0 0 15px #00ff87;
-    animation: laserScan 3s ease-in-out infinite; /* סריקה קבועה שזזה כל הזמן */
+.radar-visual-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #090d16;
+  border-radius: 8px;
+  padding: 20px;
+  border: 1px solid #1a2333;
 }
 
-.scanner-content {
-    position: relative;
-    z-index: 3;
-    width: 100%;
-    padding: 0 25px;
-    box-sizing: border-box;
+.radar-screen {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle, #0f2b1d 0%, #050a07 100%);
+  border: 4px solid #1f3f2e;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 255, 135, 0.15);
 }
 
-/* כפתור פרימיום רחב, ישר ומיושר בסטנדרט של קזינו גורו */
-.lux-scanner-trigger-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    background: linear-gradient(135deg, #00ff87 0%, #00b35c 100%);
-    color: #05070a;
-    text-decoration: none;
-    font-weight: 800;
-    font-size: 13px;
-    letter-spacing: 1px;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 255, 135, 0.35);
-    transition: transform 0.2s, box-shadow 0.2s;
-    width: 100%; /* תופס את כל רוחב המלבן, מונע שבירת טקסט */
-    white-space: nowrap; /* מכריח את המשפט להישאר בשורה אחת יפה */
+.radar-sweep {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: conic-gradient(from 0deg, rgba(0, 255, 135, 0.4) 0deg, rgba(0, 255, 135, 0) 90deg);
+  border-radius: 50%;
+  transform-origin: center;
+  animation: sweep 4s linear infinite;
 }
 
-.lux-scanner-trigger-btn:hover {
-    transform: translateY(-1.5px);
-    box-shadow: 0 6px 25px rgba(0, 255, 135, 0.55);
+.radar-circle {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px dashed rgba(0, 255, 135, 0.2);
+  border-radius: 50%;
+}
+.c1 { width: 60px; height: 60px; }
+.c2 { width: 120px; height: 120px; }
+.c3 { width: 180px; height: 180px; }
+
+.radar-blip {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background-color: var(--neon-green);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--neon-green);
+  animation: blink 2s infinite ease-in-out;
+}
+.b1 { top: 40px; left: 70px; animation-delay: 0.5s; }
+.b2 { top: 130px; left: 160px; animation-delay: 1.5s; }
+
+.radar-status {
+  margin-top: 15px;
+  font-size: 13px;
+  color: var(--neon-green);
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: 1px;
 }
 
-/* נקודת פעימה זוהרת חיה */
-.live-pulse-dot {
-    width: 7px;
-    height: 7px;
-    background-color: #05070a;
-    border-radius: 50%;
-    display: inline-block;
-    animation: pulseCore 1.4s infinite;
+.status-dot.pulse {
+  width: 8px;
+  height: 8px;
+  background-color: var(--neon-green);
+  border-radius: 50%;
+  animation: statusPulse 1.5s infinite;
 }
 
-/* --- הגדרת אנימציות התנועה החיות --- */
-@keyframes moveMatrix {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+.radar-info-box {
+  background: #070a12;
+  border: 1px solid #1a2333;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  height: 260px;
 }
 
-@keyframes laserScan {
-    0% { top: 0%; opacity: 0.3; }
-    50% { top: 100%; opacity: 1; }
-    100% { top: 0%; opacity: 0.3; }
+.terminal-header {
+  background: #111622;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-bottom: 1px solid #1a2333;
 }
 
-@keyframes pulseCore {
-    0% { transform: scale(0.9); opacity: 1; }
-    50% { transform: scale(1.3); opacity: 0.4; }
-    100% { transform: scale(0.9); opacity: 1; }
+.term-dot { width: 10px; height: 10px; border-radius: 50%; }
+.term-dot.red { background-color: #ef4444; }
+.term-dot.yellow { background-color: #f59e0b; }
+.term-dot.green { background-color: #10b981; }
+.term-title { color: #64748b; font-size: 11px; margin-left: 10px; font-family: sans-serif; }
+
+.terminal-body {
+  padding: 15px;
+  overflow-y: hidden;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-/* התאמה מלאה למסכי טלפונים */
-@media (max-width: 500px) {
-    .premium-scanner-section { max-width: 100%; padding: 0 10px; }
-    .lux-scanner-trigger-btn { font-size: 11px; padding: 13px; gap: 8px; }
-    .scanner-card { height: 95px; }
+.log-line {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #94a3b8;
+}
+.text-green { color: var(--neon-green); }
+.text-blue { color: var(--neon-blue); }
+
+@keyframes sweep { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+@keyframes blink { 0%, 100% { opacity: 0.2; } 50% { opacity: 1; } }
+@keyframes statusPulse { 0% { transform: scale(0.9); opacity: 0.4; } 50% { transform: scale(1.2); opacity: 1; } 100% { transform: scale(0.9); opacity: 0.4; } }
+
+@media (max-width: 480px) {
+  .radar-container { padding: 15px; gap: 15px; }
+  .radar-screen { width: 160px; height: 160px; }
+  .radar-info-box { height: 200px; }
+  .log-line { font-size: 11px; }
 }
 </style>
 <style>
-/* --- Premium Operators Live Grid Table Styles --- */
+/* --- Premium Operators Live Grid Table --- */
 .table-section {
     max-width: 1200px;
     margin: 60px auto;
@@ -353,6 +396,7 @@ tr:last-child td {
     .btn-play { padding: 8px 14px; font-size: 12px; }
 }
 </style>
+</style>
 </head>
 <body>
 
@@ -377,97 +421,44 @@ tr:last-child td {
       <div class="metric-item">⚡ Data Sync: <span class="highlight">Live via API</span></div>
     </div>
 
-    <!-- Premium Digital RTP Matrix Scanner Section -->
-<!-- Live Ticker & Premium Digital RTP Matrix Scanner Container -->
-<!-- Live Ticker & Premium Digital RTP Matrix Scanner Container -->
-<section class="premium-scanner-section">
-  
-  <!-- 1. שתי התיבות הדינמיות המקוריות - מסודרות בגריד קשוח של 2 עמודות במחשב -->
-  <div class="metrics-grid-box">
-    
-    <!-- מבזק שמאלי: המשחק החם -->
-    <div class="metric-card-purple">
-      <span class="card-badge-orange">🔥 HOT NOW</span>
-      <h4 class="card-mini-title">Trending Slot Matrix</h4>
-      <div id="hot-game-title" class="card-main-value-purple">Sweet Bonanza (Pragmatic Play) 🍬</div>
-      <p class="card-desc-text">Spiking in bets-per-minute and multipliers across European gaming servers.</p>
-      <!-- תגית ה-ID הקריטית ש-app.js חייב כדי לא לקפוא -->
-      <div id="hot-game-action" style="display:none;"><a id="hot-game-link" href="#"></a></div>
-    </div>
+    <!-- Animated Live RTP Radar Section -->
+    <section class="radar-section">
+      <div class="radar-container">
+        
+        <!-- Left Side: Circular Radar Sweeper -->
+        <div class="radar-visual-box">
+          <div class="radar-screen">
+            <div class="radar-sweep"></div>
+            <div class="radar-circle c1"></div>
+            <div class="radar-circle c2"></div>
+            <div class="radar-circle c3"></div>
+            <div class="radar-blip b1"></div>
+            <div class="radar-blip b2"></div>
+          </div>
+          <div class="radar-status">
+            <span class="status-dot pulse"></span> NETWORK SCANNER ACTIVE
+          </div>
+        </div>
 
-    <!-- מבזק ימני: הבונוס המוביל מהטבלה -->
-    <div class="metric-card-green">
-      <span class="card-badge-green">🏆 BEST OFFER</span>
-      <h4 class="card-mini-title">Top Payout Bonus</h4>
-      <div id="best-bonus-casino" class="card-main-value-green">No Offers Available</div>
-      <div id="best-bonus-text" class="card-sub-value-text">Switch region to view legal bonuses.</div>
-      <!-- תגיות ה-ID הקריטיות ש-app.js חייב כדי להציג את הטבלה ב-UK -->
-      <div id="best-bonus-action" style="display:none;"><a id="best-bonus-link" href="#"></a></div>
-    </div>
+        <!-- Right Side: Digital Command Core Terminal -->
+        <div class="radar-info-box">
+          <div class="terminal-header">
+            <span class="term-dot red"></span>
+            <span class="term-dot yellow"></span>
+            <span class="term-dot green"></span>
+            <span class="term-title">slotmetric_core_v2.sh</span>
+          </div>
+          <div class="terminal-body" id="terminal-logs">
+            <p class="log-line text-green">> initializing network matrix...</p>
+            <p class="log-line">> establishing secure https connection to global data feeds...</p>
+            <p class="log-line text-blue">> [sync] fetching metrics from regulated operators...</p>
+          </div>
+        </div>
 
-  </div>
+      </div>
+    </section>
 
-  <!-- 2. ווידג'ט הלייזר המלבני והרחב שיושב במרכז המסך -->
-  <div class="scanner-card">
-    <div class="scanner-animated-bg"></div>
-    <div class="scanner-laser-line"></div>
-    <div class="scanner-content">
-      <a href="free-games.html" class="lux-scanner-trigger-btn">
-        <span class="live-pulse-dot"></span> ENTER FREE DEMO PLAY PLATFORM →
-      </a>
-    </div>
-  </div>
-
-</section>
-
-<style>
-/* --- עיצוב הגריד של שתי התיבות שישבו זו לצד זו במחשב --- */
-.metrics-grid-box {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* מכריח 2 עמודות שוות במחשב */
-    gap: 20px;
-    margin-bottom: 25px;
-    width: 100%;
-}
-
-@media (max-width: 768px) {
-    .metrics-grid-box {
-        grid-template-columns: 1fr; /* יורד לאחד מתחת לשני רק בניידים */
-    }
-}
-
-/* עיצוב התיבה הסגולה */
-.metric-card-purple {
-    background: linear-gradient(135deg, #1e1333 0%, #0d081a 100%);
-    border: 1px solid #3b2366;
-    border-radius: 12px;
-    padding: 20px;
-    position: relative;
-    text-align: left;
-}
-
-/* עיצוב התיבה הירוקה */
-.metric-card-green {
-    background: linear-gradient(135deg, #091a14 0%, #040d0a 100%);
-    border: 1px solid #103a2b;
-    border-radius: 12px;
-    padding: 20px;
-    position: relative;
-    text-align: left;
-}
-
-/* טקסטים ותגים פנימיים אחידים */
-.card-badge-orange { position: absolute; top: 15px; right: 15px; background: #ff4500; color: #fff; font-size: 9px; font-weight: 800; padding: 3px 8px; border-radius: 20px; letter-spacing: 0.5px; font-family: monospace; }
-.card-badge-green { position: absolute; top: 15px; right: 15px; background: #00ff87; color: #05070a; font-size: 9px; font-weight: 800; padding: 3px 8px; border-radius: 20px; letter-spacing: 0.5px; font-family: monospace; }
-.card-mini-title { margin: 0 0 6px 0; color: #b3c0d4; font-size: 13px; text-transform: uppercase; font-family: monospace; font-weight: 600; }
-.card-main-value-purple { color: #a855f7; font-size: 16px; font-weight: 700; margin-bottom: 4px; }
-.card-main-value-green { color: #00ff87; font-size: 16px; font-weight: 700; margin-bottom: 2px; }
-.card-sub-value-text { color: #94a3b8; font-size: 13px; font-weight: 500; }
-.card-desc-text { margin: 0; color: #64748b; font-size: 11px; line-height: 1.4; }
-</style>
-
-
-    <div style="margin-bottom: 30px;"></div>
+    <div style="margin-bottom: 50px;"></div>
     <!-- Operators Grid Table Section -->
     <section class="table-section">
         
@@ -515,6 +506,7 @@ tr:last-child td {
             </table>
         </div>
     </section>
+
     <!-- Premium Trust & Regulatory Compliance Footer -->
     <footer style="max-width: 1200px; margin: 80px auto 40px auto; padding: 0 20px; text-align: center; border-top: 1px solid var(--border-color); padding-top: 30px;">
         <p style="font-size: 11px; color: var(--text-secondary); max-width: 800px; margin: 0 auto 20px auto; line-height: 1.6;">
