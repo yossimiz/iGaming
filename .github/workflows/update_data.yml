@@ -1,9 +1,9 @@
 name: Hourly Casino Data Update
 
 on:
+  workflow_dispatch: # משאיר את כפתור ההרצה הידנית שלך פעיל
   schedule:
-    - cron: '0 * * * *' # רץ אוטומטית בכל שעה עגולה
-  workflow_dispatch: # מאפשר לך להריץ את זה גם ידנית בלחיצת כפתור בגיטהב
+    - cron: '0 * * * *' # פקודה קשיחה שמפעילה את הסקריפט אוטומטית בכל שעה עגולה
 
 jobs:
   update-data:
