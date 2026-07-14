@@ -297,3 +297,36 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 });
+
+// מנגנון הזרקת הודעות רצות לטרמינל המכ"ם
+document.addEventListener("DOMContentLoaded", () => {
+    const logsContainer = document.getElementById("terminal-logs");
+    if (!logsContainer) return;
+
+    const logMessages = [
+        "> [scan] checking live rtp variances across european nodes...",
+        "> [success] connection stable. 0ms packet latency.",
+        "> [api] mapping secure payout protocols for target feed...",
+        "> [sync] live data matrix verified with Curacao & UKGC indices.",
+        "> [radar] scanning active jackpot pools... current pool: €14.8M",
+        "> [alert] high rtp shift detected on pragmatic play core systems."
+    ];
+
+    let messageIndex = 0;
+
+    setInterval(() => {
+        // מייצר שורה חדשה ומכניס אותה
+        const newLog = document.createElement("p");
+        newLog.className = "log-line text-green";
+        newLog.innerText = logMessages[messageIndex];
+        
+        logsContainer.appendChild(newLog);
+        
+        // מוחק את השורה הראשונה כדי שהקופסה לא תתמלא ותימתח
+        if (logsContainer.children.length > 5) {
+            logsContainer.removeChild(logsContainer.children[0]);
+        }
+
+        messageIndex = (messageIndex + 1) % logMessages.length;
+    }, 3500); // שורה חדשה קופצת בכל 3.5 שניות
+});
