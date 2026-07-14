@@ -331,47 +331,54 @@
         </div>
     </div>
 
-<!-- Interactive Casino Lucky Wheel Component -->
-<section class="wheel-section">
-  <div class="wheel-card">
-    <div class="wheel-header">
-        <h2>🎰 Live Bonus Scanner Wheel</h2>
-        <p>Spin the live tracking wheel to unlock verified legal operator bonuses in your region.</p>
+<!-- Premium Interactive Slot Machine Component -->
+<section class="slots-section">
+  <div class="slots-card">
+    <div class="slots-header">
+        <h2>🎰 Real-Time Slot Engine</h2>
+        <p>Spin the SlotMetric engine to sync live operator bonuses and unlock exclusive packages.</p>
     </div>
 
-    <!-- אזור הגלגל הויזואלי -->
-    <div class="wheel-wrapper">
-        <div class="wheel-pointer">▼</div>
-        <div class="lucky-wheel" id="main-wheel">
-            <div class="wheel-slice s1"><span>100 FS</span></div>
-            <div class="wheel-slice s2"><span>200% Match</span></div>
-            <div class="wheel-slice s3"><span>50 Spins</span></div>
-            <div class="wheel-slice s4"><span>€1500 Pack</span></div>
-            <div class="wheel-slice s5"><span>100% Up</span></div>
-            <div class="wheel-slice s6"><span>No Deposit</span></div>
+    <!-- גוף מכונת הסלוטים -->
+    <div class="slot-machine">
+        <div class="slot-window">
+            <!-- גלגל 1 -->
+            <div class="reel-container">
+                <div class="reel" id="reel1">🍒 💎 777 ⭐ 🍋 🍒 💎 777</div>
+            </div>
+            <!-- גלגל 2 -->
+            <div class="reel-container">
+                <div class="reel" id="reel2">💎 ⭐ 🍒 777 🍋 💎 ⭐ 777</div>
+            </div>
+            <!-- גלגל 3 -->
+            <div class="reel-container">
+                <div class="reel" id="reel3">⭐ 777 🍋 🍒 💎 ⭐ 777 🍒</div>
+            </div>
         </div>
-        <button class="wheel-spin-btn" id="spin-trigger">SPIN</button>
+        
+        <!-- כפתור ההפעלה של הסלוט -->
+        <button class="slot-spin-btn" id="slot-trigger">SPIN ENGINE</button>
     </div>
 
-    <!-- חלונית הזכייה הדינמית שקופצת אחרי הסיבוב -->
-    <div class="wheel-win-box" id="wheel-winner" style="display: none;">
-        <div class="win-banner">🎉 EXCLUSIVE BONUS UNLOCKED!</div>
-        <h3 id="win-casino-title">Ice Casino</h3>
-        <p id="win-bonus-detail">€1,500 Welcome Pack + 270 Free Spins</p>
-        <a href="#" id="win-affiliate-link" target="_blank" rel="nofollow" class="win-action-btn">Claim Your Bonus Now →</a>
+    <!-- חלונית הזכייה היוקרתית שנחשפת לאחר עצירת הגלגלים -->
+    <div class="slot-win-box" id="slot-winner" style="display: none;">
+        <div class="slot-win-banner">🔥 JACKPOT UNLOCKED! MATCH FOUND</div>
+        <h3 id="slot-win-title">Bet365 Casino</h3>
+        <p id="slot-win-detail">Stake £10 and get 50 Free Spins</p>
+        <a href="#" id="slot-win-link" target="_blank" rel="nofollow" class="slot-action-btn">Secure Instant Access →</a>
     </div>
   </div>
 </section>
 <style>
-/* --- Interactive Lucky Wheel Component Styles --- */
-.wheel-section {
+/* --- Premium Slot Machine Component Styles --- */
+.slots-section {
     max-width: 800px;
     margin: 40px auto;
     padding: 0 20px;
     font-family: system-ui, -apple-system, sans-serif;
 }
 
-.wheel-card {
+.slots-card {
     background-color: #111622;
     border: 1px solid #222c3f;
     border-radius: 12px;
@@ -380,162 +387,158 @@
     text-align: center;
 }
 
-.wheel-header h2 {
+.slots-header h2 {
     font-size: 26px;
     color: #ffffff;
     margin: 0 0 6px 0;
 }
 
-.wheel-header p {
+.slots-header p {
     color: #94a3b8;
     font-size: 14px;
     margin: 0 0 30px 0;
 }
 
-/* קונטיינר מרכזי שמחזיק את הגלגל והחץ */
-.wheel-wrapper {
-    position: relative;
-    width: 280px;
-    height: 280px;
-    margin: 0 auto 30px auto;
-}
-
-/* החץ המסמן בראש הגלגל */
-.wheel-pointer {
-    position: absolute;
-    top: -15px;
-    left: 50%;
-    transform: translateX(-50%);
-    color: #ff5500;
-    font-size: 28px;
-    z-index: 10;
-    text-shadow: 0 2px 10px rgba(255, 85, 0, 0.4);
-}
-
-/* הגלגל העגול עם אנימציית סיבוב עדינה קבועה (Idle) */
-.lucky-wheel {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    border: 6px solid #1a2333;
+/* קופסת מכונת הסלוטים */
+.slot-machine {
     background: #090d16;
+    border: 4px solid #1a2333;
+    border-radius: 16px;
+    padding: 25px;
+    max-width: 450px;
+    margin: 0 auto 30px auto;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 255, 135, 0.05);
+}
+
+/* חלון התצוגה של שלושת הגלגלים */
+.slot-window {
+    display: flex;
+    justify-content: space-between;
+    background: #05070a;
+    border: 3px solid #222c3f;
+    border-radius: 8px;
+    height: 100px;
+    overflow: hidden; /* מחביא את שאר הסמלים למעלה ולמטה */
     position: relative;
-    overflow: hidden;
-    box-shadow: 0 0 30px rgba(0, 255, 135, 0.1);
-    transition: transform 4s cubic-bezier(0.15, 0.85, 0.35, 1); /* עצירה חלקה וטבעית */
+    box-shadow: inset 0 10px 20px rgba(0,0,0,0.9), inset 0 -10px 20px rgba(0,0,0,0.9);
 }
 
-/* כפתור ה-SPIN המרכזי שיושב בדיוק באמצע הגלגל */
-.wheel-spin-btn {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 65px;
-    height: 65px;
-    background: linear-gradient(135deg, #00ff87 0%, #00d16c 100%);
-    color: #0d1117;
-    border: 4px solid #111622;
-    border-radius: 50%;
-    font-weight: 900;
-    font-size: 13px;
-    cursor: pointer;
-    z-index: 5;
-    box-shadow: 0 4px 15px rgba(0, 255, 135, 0.4);
-    transition: transform 0.2s;
+/* קונטיינר של גלגל בודד */
+.reel-container {
+    width: 32%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to bottom, #0d1117 0%, #161b22 50%, #0d1117 100%);
 }
 
-.wheel-spin-btn:hover {
-    transform: translate(-50%, -50%) scale(1.05);
+.reel-container:not(:last-child) {
+    border-right: 2px solid #1a2333;
 }
 </style>
 <style>
-/* חלוקת הגלגל ל-6 פרוסות (סלייסים) סימטריות */
-.wheel-slice {
+/* עיצוב רצועת הסמלים עצמה */
+.reel {
+    font-size: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
     position: absolute;
-    width: 50%;
-    height: 50%;
-    transform-origin: 100% 100%;
-    left: 0;
-    top: 0;
+    top: -20px; /* מיקום התחלתי */
+    transform: translateY(0);
+    will-change: transform;
 }
 
-.wheel-slice span {
-    position: absolute;
-    left: 40px;
-    top: 50px;
-    transform: rotate(45deg);
-    color: #ffffff;
-    font-size: 11px;
-    font-weight: 700;
-    display: block;
-    width: 80px;
-    text-align: center;
+/* אנימציית הסחרור של הגלגלים כלפי מטה */
+@keyframes spin-effect {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-300px); } /* מגלגל את רצועת הסמלים במהירות */
 }
 
-/* הגדרת זוויות וצבעים משתנים לפרוסות למראה קזינו חי */
-.s1 { transform: rotate(0deg); background-color: #171d2c; border-right: 1px solid #222c3f; }
-.s2 { transform: rotate(60deg); background-color: #1a2333; border-right: 1px solid #222c3f; }
-.s3 { transform: rotate(120deg); background-color: #171d2c; border-right: 1px solid #222c3f; }
-.s4 { transform: rotate(180deg); background-color: #1a2333; border-right: 1px solid #222c3f; }
-.s5 { transform: rotate(240deg); background-color: #171d2c; border-right: 1px solid #222c3f; }
-.s6 { transform: rotate(300deg); background-color: #1a2333; border-right: 1px solid #222c3f; }
+.reel.spinning {
+    animation: spin-effect 0.15s linear infinite; /* סחרור אינסופי ומהיר עד העצירה */
+}
 
-/* תיבת הזכייה הדינמית שקופצת אחרי שהגלגל נעצר */
-.wheel-win-box {
+/* כפתור ה-SPIN הענקי של המכונה */
+.slot-spin-btn {
+    width: 100%;
+    margin-top: 20px;
+    background: linear-gradient(135deg, #00ff87 0%, #00d16c 100%);
+    color: #0d1117;
+    border: none;
+    padding: 16px;
+    border-radius: 8px;
+    font-weight: 900;
+    font-size: 16px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0, 255, 135, 0.3);
+    transition: transform 0.1s, box-shadow 0.2s;
+}
+
+.slot-spin-btn:hover {
+    box-shadow: 0 6px 25px rgba(0, 255, 135, 0.5);
+}
+
+.slot-spin-btn:active {
+    transform: scale(0.98); /* אפקט לחיצה פיזי */
+}
+
+/* תיבת הזכייה החגיגית של הג'קפוט */
+.slot-win-box {
     margin-top: 25px;
     background: #070a12;
     border: 2px solid #00ff87;
     border-radius: 8px;
     padding: 20px;
-    box-shadow: 0 0 25px rgba(0, 255, 135, 0.2);
-    animation: popInWinner 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 0 30px rgba(0, 255, 135, 0.25);
+    animation: jackpotPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.win-banner {
+.slot-win-banner {
     color: #00ff87;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 800;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
     margin-bottom: 8px;
 }
 
-#win-casino-title {
+#slot-win-title {
     color: #ffffff;
-    font-size: 20px;
-    margin: 0 0 4px 0;
+    font-size: 22px;
+    margin: 0 0 6px 0;
 }
 
-#win-bonus-detail {
+#slot-win-detail {
     color: #38bdf8;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 600;
     margin: 0 0 15px 0;
 }
 
-.win-action-btn {
+.slot-action-btn {
     display: block;
     background: linear-gradient(135deg, #ff5500 0%, #ff3300 100%);
     color: #ffffff;
     text-decoration: none;
-    padding: 12px;
+    padding: 14px;
     border-radius: 6px;
     font-weight: 700;
-    font-size: 14px;
-    transition: background 0.2s, transform 0.2s;
+    font-size: 15px;
+    transition: background 0.2s;
 }
 
-.win-action-btn:hover {
+.slot-action-btn:hover {
     background: linear-gradient(135deg, #ff6611 0%, #ff4411 100%);
-    transform: scale(1.01);
 }
 
-@keyframes popInWinner {
-    from { opacity: 0; transform: scale(0.9); }
+@keyframes jackpotPop {
+    from { opacity: 0; transform: scale(0.85); }
     to { opacity: 1; transform: scale(1); }
 }
 </style>
-
 
     <div class="controls">
         <div style="color: var(--secondary-text); font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 6px;">
@@ -584,62 +587,84 @@
 </div>
 
 <script src="app.js"></script>
-<!-- JavaScript Engine for the Interactive Match Component -->
-<!-- JavaScript Engine for the Interactive Lucky Wheel Component -->
+<!-- JavaScript Engine for the Premium Interactive Slot Machine -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-    const wheel = document.getElementById("main-wheel");
-    const spinBtn = document.getElementById("spin-trigger");
-    const winBox = document.getElementById("wheel-winner");
+    const reel1 = document.getElementById("reel1");
+    const reel2 = document.getElementById("reel2");
+    const reel3 = document.getElementById("reel3");
+    const spinBtn = document.getElementById("slot-trigger");
+    const winBox = document.getElementById("slot-winner");
     
-    const winTitle = document.getElementById("win-casino-title");
-    const winDetail = document.getElementById("win-bonus-detail");
-    const winLink = document.getElementById("win-affiliate-link");
+    const winTitle = document.getElementById("slot-win-title");
+    const winDetail = document.getElementById("slot-win-detail");
+    const winLink = document.getElementById("slot-win-link");
 
     let isSpinning = false;
 
-    if (spinBtn && wheel) {
+    if (spinBtn && reel1 && reel2 && reel3) {
         spinBtn.addEventListener("click", () => {
-            // מונע לחיצות כפולות בזמן שהגלגל מסתובב
+            // מונע לחיצות כפולות בזמן סיבוב
             if (isSpinning) return;
             
-            // בדיקה שקובץ ה-JSON נטען ויש נתונים מסוננים לפי המדינה (מתוך app.js)
-            const activeData = (window.filteredData && window.filteredData.length > 0) ? window.filteredData : window.casinoData;
+            // משיכת הנתונים המעודכנים לפי המדינה (מתוך ה-filteredData ב-app.js)
+            let activeData = (window.filteredData && window.filteredData.length > 0) ? window.filteredData : window.casinoData;
             
+            // רשת ביטחון קשיחה כדי שהמכונה תעבוד תמיד
             if (!activeData || activeData.length === 0) {
-                alert("Live data matrix is syncing. Please wait a moment or switch regions.");
-                return;
+                activeData = [
+                    { "casino_name": "Bet365 Casino", "bonus_text": "Stake £10 and get 50 Free Spins", "affiliate_link": "https://bet365.link" },
+                    { "casino_name": "Vulkan Vegas", "bonus_text": "100% Up to €1,500 + 150 Free Spins", "affiliate_link": "https://vpartners.link" },
+                    { "casino_name": "888 Casino", "bonus_text": "100% Up To £100 + 88 Free Spins", "affiliate_link": "https://vpartners.link" }
+                ];
             }
 
             isSpinning = true;
-            winBox.style.display = "none"; // מחביא זכייה קודמת אם יש
-            
-            // 1. הגרלת קזינו אקראי מתוך הרשימה החיה של אותה מדינה
+            spinBtn.disabled = true;
+            spinBtn.innerText = "🎰 SPINNING MATRIX...";
+            if (winBox) winBox.style.display = "none";
+
+            // 1. הפעלת האנימציה של הסיבוב המהיר לכל שלושת הגלגלים
+            reel1.classList.add("spinning");
+            reel2.classList.add("spinning");
+            reel3.classList.add("spinning");
+
+            // הגרלת הקזינו המנצח מתוך הנתונים
             const randomIndex = Math.floor(Math.random() * activeData.length);
             const selectedCasino = activeData[randomIndex];
 
-            // 2. חישוב פיזיקלי של זווית הסיבוב (לפחות 5 סיבובים מלאים + זווית אקראית לעצירה טבעית)
-            const baseSpins = 5 * 360; // 1800 מעלות
-            const randomDegrees = Math.floor(Math.random() * 360);
-            const totalRotation = baseSpins + randomDegrees;
-
-            // סיבוב הגלגל באמצעות ה-CSS Transition
-            wheel.style.transform = `rotate(${totalRotation}deg)`;
-
-            // 3. חשיפת תיבת הזכייה בדיוק ברגע שהגלגל מסיים לעצור (אחרי 4 שניות)
+            // 2. עצירה מדורגת של הגלגלים (יצירת אפקט מתח כמו במכונה אמיתית)
+            
+            // עצירת גלגל 1 (אחרי 1.5 שניות)
             setTimeout(() => {
-                if (selectedCasino) {
+                reel1.classList.remove("spinning");
+            }, 1500);
+
+            // עצירת גלגל 2 (אחרי 2.2 שניות)
+            setTimeout(() => {
+                reel2.classList.remove("spinning");
+            }, 2200);
+
+            // עצירת גלגל 3 וחשיפת הג'קפוט (אחרי 3 שניות מלאות)
+            setTimeout(() => {
+                reel3.classList.remove("spinning");
+                
+                // הזרקת הנתונים לקופסת הזכייה היוקרתית
+                if (selectedCasino && winBox) {
                     winTitle.innerText = selectedCasino.casino_name + " 🏆";
-                    winDetail.innerText = selectedCasino.bonus_text;
-                    winLink.href = selectedCasino.affiliate_link;
+                    winDetail.innerText = selectedCasino.bonus_text || "Exclusive Live Bonus Verified";
+                    winLink.href = selectedCasino.affiliate_link || "#";
                     
+                    // הצגת תיבת הזכייה הדינמית
                     winBox.style.display = "block";
-                    
-                    // גלילה חלקה אל תיבת הזכייה
                     winBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 }
+
+                // החזרת הכפתור למצב פעיל
+                spinBtn.disabled = false;
+                spinBtn.innerText = "SPIN ENGINE";
                 isSpinning = false;
-            }, 4000); // תואם בדיוק ל-4 שניות שמוגדרות ב-transition של ה-CSS
+            }, 3000);
         });
     }
 });
