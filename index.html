@@ -331,41 +331,194 @@
         </div>
     </div>
 
-    <!-- 3. מחשבון RTP אינטראקטיבי - רוחב מלא 100% והתאמה מושלמת למובייל -->
-    <div class="rtp-calculator" style="background: linear-gradient(135deg, #0f172a, #1e293b); border: 1px solid var(--border-color); padding: 22px; border-radius: 14px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); width: 100%; box-sizing: border-box;">
-        <h3 style="margin: 0 0 5px 0; color: var(--primary-text); font-size: 1.15rem; display: flex; align-items: center; gap: 8px;">
-            🧮 Mathematical Payout Predictor
-        </h3>
-        <p style="color: var(--secondary-text); font-size: 0.82rem; margin: 0 0 18px 0;">Estimate your theoretical returns based on session volume and live matrix scores.</p>
-        
-        <!-- שימוש ב-flex-wrap ובמינימום רוחב גמיש להתאמה מיידית למסכי טלפונים -->
-        <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: stretch; width: 100%;">
-            
-            <div style="flex: 1; min-width: 240px; display: flex; flex-direction: column;">
-                <label style="display: block; color: var(--secondary-text); font-size: 0.72rem; margin-bottom: 6px; font-weight: 700; letter-spacing: 0.05em;">SESSION BANKROLL</label>
-                <div style="position: relative; flex: 1; display: flex; align-items: center;">
-                    <span style="position: absolute; left: 12px; color: var(--secondary-text); font-weight: 700; font-size: 0.9rem;">€</span>
-                    <input type="number" id="calc-budget" value="100" min="10" style="width: 100%; height: 46px; background: #0b0f19; border: 1px solid var(--border-color); padding: 0 12px 0 28px; border-radius: 8px; color: white; font-weight: 700; outline: none; box-sizing: border-box; font-size: 0.95rem;">
-                </div>
-            </div>
-            
-            <div style="flex: 1; min-width: 240px; display: flex; flex-direction: column;">
-                <label style="display: block; color: var(--secondary-text); font-size: 0.72rem; margin-bottom: 6px; font-weight: 700; letter-spacing: 0.05em;">TARGET RTP</label>
-                <div style="position: relative; flex: 1; display: flex; align-items: center;">
-                    <input type="number" id="calc-rtp" value="97.15" min="80" max="99.9" step="0.01" style="width: 100%; height: 46px; background: #0b0f19; border: 1px solid var(--border-color); padding: 0 32px 0 12px; border-radius: 8px; color: var(--accent-color); font-weight: 700; outline: none; box-sizing: border-box; font-size: 0.95rem;">
-                    <span style="position: absolute; right: 12px; color: var(--accent-color); font-weight: 700; font-size: 0.9rem;">%</span>
-                </div>
-            </div>
-            
-            <div style="flex: 1.2; min-width: 240px; display: flex; flex-direction: column;">
-                <label style="display: block; color: var(--secondary-text); font-size: 0.72rem; margin-bottom: 6px; font-weight: 700; letter-spacing: 0.05em;">THEORETICAL RETURN</label>
-                <div style="flex: 1; height: 46px; background: #0b0f19; border: 1px solid var(--border-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; box-sizing: border-box; padding: 0 15px;">
-                    <span id="calc-result" style="color: white; font-size: 1.25rem; font-weight: 800; font-variant-numeric: tabular-nums;">€97.15</span>
-                </div>
-            </div>
-            
-        </div>
+    <!-- Interactive Casino Smart-Match Engine -->
+<section class="match-section">
+  <div class="match-container">
+    <div class="match-header">
+        <h2>🎯 AI Casino Match Engine</h2>
+        <p>Select your top priority and let our live matrix find your regulated legal match.</p>
     </div>
+
+    <!-- כפתורי הבחירה האינטראקטיביים -->
+    <div class="match-options">
+        <button class="match-opt-btn active" data-priority="bonus">💰 High Welcome Bonus</button>
+        <button class="match-opt-btn" data-priority="rtp">⚡ Maximum Real-Time RTP</button>
+        <button class="match-opt-btn" data-priority="safety">🔒 Top Safety Score</button>
+    </div>
+
+    <!-- כפתור ההפעלה הראשי -->
+    <button class="btn-match-trigger" id="find-match-btn">⚡ MATCH MY PERFECT CASINO</button>
+
+    <!-- תיבת התוצאה הדינמית שתתעדכן בלחיצה -->
+    <div class="match-result-box" id="match-result" style="display: none;">
+        <div class="result-header">
+            <span class="match-badge">👑 YOUR BEST MATCH</span>
+            <h3 id="res-casino-name">Bet365 Casino</h3>
+        </div>
+        <div class="result-body">
+            <div class="res-stat">Bonus: <span id="res-bonus-text" style="color: #38bdf8;">--</span></div>
+            <div class="res-stat">Live RTP: <span id="res-rtp-score" style="color: #00ff87;">--</span></div>
+        </div>
+        <a href="#" id="res-affiliate-link" target="_blank" rel="nofollow" class="res-play-btn">Secure Instant Access →</a>
+    </div>
+  </div>
+</section>
+<style>
+/* --- Interactive Match Engine Styles --- */
+.match-section {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+.match-container {
+    background-color: #111622;
+    border: 1px solid #222c3f;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    text-align: center;
+}
+
+.match-header h2 {
+    font-size: 26px;
+    color: #ffffff;
+    margin: 0 0 8px 0;
+}
+
+.match-header p {
+    color: #94a3b8;
+    font-size: 14px;
+    margin: 0 0 25px 0;
+}
+
+/* גריד של כפתורי הבחירה האינטראקטיביים */
+.match-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.match-opt-btn {
+    background-color: #090d16;
+    color: #94a3b8;
+    border: 1px solid #1a2333;
+    padding: 15px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.match-opt-btn:hover {
+    border-color: #38bdf8;
+    color: #ffffff;
+}
+
+/* מצב לחוץ/אקטיבי של כפתור עדיפות */
+.match-opt-btn.active {
+    background-color: rgba(56, 189, 248, 0.05);
+    border-color: #38bdf8;
+    color: #38bdf8;
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.1);
+}
+
+/* כפתור ההפעלה הראשי הדינמי */
+.btn-match-trigger {
+    width: 100%;
+    max-width: 400px;
+    background: linear-gradient(135deg, #00ff87 0%, #00d16c 100%);
+    color: #0d1117;
+    border: none;
+    padding: 16px;
+    border-radius: 8px;
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0, 255, 135, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-match-trigger:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 25px rgba(0, 255, 135, 0.4);
+}
+
+/* תיבת התוצאה הדינמית הנחשפת בלחיצה */
+.match-result-box {
+    margin-top: 30px;
+    background: #070a12;
+    border: 1px solid #00ff87;
+    border-radius: 8px;
+    padding: 20px;
+    animation: fadeInResult 0.4s ease-out;
+}
+
+.result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #1a2333;
+    padding-bottom: 12px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.match-badge {
+    background-color: rgba(0, 255, 135, 0.1);
+    color: #00ff87;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.result-header h3 {
+    margin: 0;
+    color: #ffffff;
+    font-size: 18px;
+}
+
+.result-body {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 20px;
+}
+
+.res-stat {
+    font-size: 14px;
+    color: #94a3b8;
+    font-weight: 600;
+}
+
+.res-play-btn {
+    display: block;
+    background: linear-gradient(135deg, #ff5500 0%, #ff3300 100%);
+    color: #ffffff;
+    text-decoration: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 14px;
+    transition: background 0.2s;
+}
+
+.res-play-btn:hover {
+    background: linear-gradient(135deg, #ff6611 0%, #ff4411 100%);
+}
+
+@keyframes fadeInResult {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+</style>
+
 
     <div class="controls">
         <div style="color: var(--secondary-text); font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 6px;">
@@ -414,5 +567,76 @@
 </div>
 
 <script src="app.js"></script>
+<!-- JavaScript Engine for the Interactive Match Component -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const optButtons = document.querySelectorAll(".match-opt-btn");
+    const triggerButton = document.getElementById("find-match-btn");
+    const resultBox = document.getElementById("match-result");
+    
+    const resName = document.getElementById("res-casino-name");
+    const resBonus = document.getElementById("res-bonus-text");
+    const resRtp = document.getElementById("res-rtp-score");
+    const resLink = document.getElementById("res-affiliate-link");
+
+    let currentPriority = "bonus"; // עדיפות ברירת מחדל
+
+    // 1. האזנה ללחיצה על כפתורי העדיפויות והחלפת מצב ויזואלי אקטיבי
+    optButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+            optButtons.forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            currentPriority = btn.getAttribute("data-priority");
+        });
+    });
+
+    // 2. חישוב והצגת הקזינו המתאים ביותר מתוך המערך הגלובלי של האתר
+    if (triggerButton) {
+        triggerButton.addEventListener("click", () => {
+            // בדיקה שקובץ ה-JSON נטען ויש נתונים מסוננים לפי המדינה (משתמש במערך filteredData מתוך app.js)
+            const targetData = (window.filteredData && window.filteredData.length > 0) ? window.filteredData : window.casinoData;
+            
+            if (!targetData || targetData.length === 0) {
+                alert("Please wait a moment for the live matrix data to sync, or select another region.");
+                return;
+            }
+
+            let bestMatch = targetData[0];
+
+            // אלגוריתם סינון חכם לפי העדפת השחקן
+            if (currentPriority === "rtp") {
+                // ה-RTP הגבוה ביותר
+                bestMatch = [...targetData].sort((a, b) => parseFloat(b.rtp_score) - parseFloat(a.rtp_score))[0];
+            } else if (currentPriority === "bonus") {
+                // המותג המוביל (בט365 או הראשון במערך שמחזיק בבונוס פרימיום)
+                bestMatch = targetData[0];
+            } else if (currentPriority === "safety") {
+                // ציון בטיחות עליון (המותג האחרון או הגבוה ביותר ברשימה)
+                bestMatch = targetData[targetData.length - 1];
+            }
+
+            // 3. הזרקת הנתונים לקופסת התוצאה הדינמית וחשיפתה באנימציה
+            if (bestMatch) {
+                resName.innerText = bestMatch.casino_name;
+                resBonus.innerText = bestMatch.bonus_text;
+                resRtp.innerText = bestMatch.rtp_score;
+                resLink.href = bestMatch.affiliate_link;
+                
+                // שינוי הכיתוב של כפתור ההפעלה כדי להראות פעולה
+                triggerButton.innerText = "⚡ ENGINE LOCKED! SEE RESULTS BELOW";
+                resultBox.style.display = "block";
+                
+                // גלילה חלקה קטנה אל התוצאה
+                resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                
+                // החזרת הטקסט המקורי אחרי 3 שניות כדי שהגולש יוכל לנסות שוב
+                setTimeout(() => {
+                    if (triggerButton) triggerButton.innerText = "⚡ MATCH MY PERFECT CASINO";
+                }, 3000);
+            }
+        });
+    }
+});
+</script>
 </body>
 </html>
