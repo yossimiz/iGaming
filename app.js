@@ -155,21 +155,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 5. טעינת נתוני ה-JSON של בתי הקזינו
       // 5. טעינת נתוני ה-JSON של בתי הקזינו וזיהוי מיקום מודרני (Fetch)
+    // 5. טעינת נתוני ה-JSON של בתי הקזינו וזיהוי מיקום מאובטח (HTTPS)
     fetch(dataUrl)
         .then(response => response.json())
         .then(data => {
             casinoData = data;
             
-            // שימוש בשרת הגלובלי והחזק של ip-api
-            fetch("https://ip-api.com")
+            // שימוש בשרת המאובטח של ipapi.co שתומך ב-HTTPS מלא
+            fetch("https://ipapi.co")
                 .then(res => res.json())
                 .then(geo => {
-                    if (geo && geo.countryCode) {
-                        userCountry = geo.countryCode.toUpperCase(); // ip-api מחזיר countryCode באותיות גדולות
+                    if (geo && geo.country_code) {
+                        userCountry = geo.country_code.toUpperCase();
+                    } else if (geo && geo.country) {
+                        userCountry = geo.country.toUpperCase();
                     }
                     
                     if (userCountry === "GB") userCountry = "UK";
-                    console.log("Geo Engine Successfully Detected:", userCountry);
+                    console.log("Secure Geo Engine Successfully Detected:", userCountry);
                     window.triggerFilter();
                 })
                 .catch(geoError => {
@@ -184,6 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 loadingElement.innerHTML = `<span style="color: #ef4444;">Failed to sync with live data matrix.</span>`;
             }
         });
+
 
     // 6. האזנה לשינויים ידניים
     if (countrySelect) {
