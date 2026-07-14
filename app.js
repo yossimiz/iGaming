@@ -156,30 +156,30 @@ document.addEventListener("DOMContentLoaded", () => {
     // 5. טעינת נתוני ה-JSON של בתי הקזינו
       // 5. טעינת נתוני ה-JSON של בתי הקזינו וזיהוי מיקום מודרני (Fetch)
     // 5. טעינת נתוני ה-JSON של בתי הקזינו וזיהוי מיקום מאובטח (HTTPS)
+    // 5. Load Casino JSON with Bulletproof Native Geo-Detection
     fetch(dataUrl)
         .then(response => response.json())
         .then(data => {
             casinoData = data;
             
-            // שימוש בשרת המאובטח של ipapi.co שתומך ב-HTTPS מלא
-            fetch("https://ipapi.co")
-                .then(res => res.json())
-                .then(geo => {
-                    if (geo && geo.country_code) {
-                        userCountry = geo.country_code.toUpperCase();
-                    } else if (geo && geo.country) {
-                        userCountry = geo.country.toUpperCase();
-                    }
-                    
-                    if (userCountry === "GB") userCountry = "UK";
-                    console.log("Secure Geo Engine Successfully Detected:", userCountry);
-                    window.triggerFilter();
-                })
-                .catch(geoError => {
-                    console.warn("Geo API failed, using fallback CY:", geoError);
-                    userCountry = "CY"; // רשת ביטחון במקרה חירום
-                    window.triggerFilter();
-                });
+            try {
+                // Instantly reads the exact timezone configured in the user's operating system
+                const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                console.log("Native Browser Timezone Detected:", userTimezone);
+                
+                // If the user is in Israel, set the code to IL. Otherwise, default to CY.
+                if (userTimezone.includes("Jerusalem") || userTimezone.includes("Tel_Aviv")) {
+                    userCountry = "IL";
+                } else {
+                    userCountry = "CY"; // Universal reliable European default
+                }
+                
+                window.triggerFilter();
+            } catch (geoError) {
+                console.warn("Native detection failed, defaulting to CY:", geoError);
+                userCountry = "CY";
+                window.triggerFilter();
+            }
         })
         .catch(error => {
             console.error("Critical System Error Loading JSON:", error);
@@ -187,6 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 loadingElement.innerHTML = `<span style="color: #ef4444;">Failed to sync with live data matrix.</span>`;
             }
         });
+
 
 
     // 6. האזנה לשינויים ידניים
