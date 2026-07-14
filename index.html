@@ -378,22 +378,46 @@ tr:last-child td {
     </div>
 
     <!-- Premium Digital RTP Matrix Scanner Section -->
-    <section class="premium-scanner-section">
-      <div class="scanner-card">
-        
-        <!-- רקע דיגיטלי מונפש שזז כל הזמן -->
-        <div class="scanner-animated-bg"></div>
-        <div class="scanner-laser-line"></div>
+<!-- Live Ticker & Premium Digital RTP Matrix Scanner Container -->
+<section class="premium-scanner-section">
+  
+  <!-- 1. החזרת שני המבזקים הדינמיים המקוריים מעל הווידג'ט -->
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 25px;">
+    
+    <!-- מבזק שמאלי: המשחק החם המשתנה לפי המדינה ב-JS -->
+    <div style="background: linear-gradient(135deg, #1e1333 0%, #0d081a 100%); border: 1px solid #3b2366; border-radius: 12px; padding: 20px; position: relative;">
+      <span style="position: absolute; top: 15px; right: 15px; background: #ff4500; color: #fff; font-size: 9px; font-weight: 800; padding: 3px 8px; border-radius: 20px; letter-spacing: 0.5px;">🔥 HOT NOW</span>
+      <h4 style="margin: 0 0 6px 0; color: #b3c0d4; font-size: 13px; text-transform: uppercase; font-family: monospace;">Trending Slot Matrix</h4>
+      <div id="hot-game-title" style="color: #a855f7; font-size: 16px; font-weight: 700; margin-bottom: 4px;">Sweet Bonanza (Pragmatic Play) 🍬</div>
+      <p style="margin: 0; color: #64748b; font-size: 11px;">Spiking in bets-per-minute and multipliers across European gaming servers.</p>
+    </div>
 
-        <!-- כפתור הנעה לפעולה רחב, יוקרתי ומיושר בשורה אחת -->
-        <div class="scanner-content">
-          <a href="free-games.html" class="lux-scanner-trigger-btn">
-            <span class="live-pulse-dot"></span> ENTER FREE DEMO PLAY PLATFORM →
-          </a>
-        </div>
+    <!-- מבזק ימני: הבונוס המוביל שנשלף אוטומטית מהטבלה ב-JS -->
+    <div style="background: linear-gradient(135deg, #091a14 0%, #040d0a 100%); border: 1px solid #103a2b; border-radius: 12px; padding: 20px; position: relative;">
+      <span style="position: absolute; top: 15px; right: 15px; background: #00ff87; color: #05070a; font-size: 9px; font-weight: 800; padding: 3px 8px; border-radius: 20px; letter-spacing: 0.5px;">🏆 BEST OFFER</span>
+      <h4 style="margin: 0 0 6px 0; color: #b3c0d4; font-size: 13px; text-transform: uppercase; font-family: monospace;">Top Payout Bonus</h4>
+      <div id="best-bonus-casino" style="color: #00ff87; font-size: 16px; font-weight: 700; margin-bottom: 2px;">No Offers Available</div>
+      <div id="best-bonus-text" style="color: #94a3b8; font-size: 13px; font-weight: 500;">Switch region to view legal bonuses.</div>
+    </div>
 
-      </div>
-    </section>
+  </div>
+
+  <!-- 2. ווידג'ט הלייזר האינטראקטיבי שיושב במקום המחשבון המקורי -->
+  <div class="scanner-card">
+    <!-- רקע דיגיטלי מונפש שזז כל הזמן -->
+    <div class="scanner-animated-bg"></div>
+    <div class="scanner-laser-line"></div>
+
+    <!-- כפתור הנעה לפעולה רחב ומיושר -->
+    <div class="scanner-content">
+      <a href="free-games.html" class="lux-scanner-trigger-btn">
+        <span class="live-pulse-dot"></span> ENTER FREE DEMO PLAY PLATFORM →
+      </a>
+    </div>
+  </div>
+
+</section>
+
 
     <div style="margin-bottom: 30px;"></div>
     <!-- Operators Grid Table Section -->
