@@ -3,351 +3,207 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free Demo Slots - SlotMetric</title>
+    <title>Casino Matrix - Free Demo Games</title>
     <style>
-        /* Base Premium Dark Theme */
+        /* עיצוב מטריקס קזינו יוקרתי */
         body {
-            background-color: #0d1117;
-            margin: 0;
-            padding: 0;
-            font-family: system-ui, -apple-system, sans-serif;
+            background-color: #0b0f19;
             color: #ffffff;
-            direction: ltr;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
         }
-
-        /* Top Navigation Bar */
-        .navbar {
-            background-color: #1a1f29;
-            border-bottom: 1px solid #2a3245;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            padding: 15px 20px;
+        h1 {
+            text-align: center;
+            color: #00ffcc;
+            text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+            margin-bottom: 30px;
         }
-        .nav-container {
+        
+        /* גריד של לובי המשחקים */
+        .games-lobby {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
             max-width: 1200px;
             margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
-        .nav-logo {
-            font-size: 22px;
-            font-weight: 800;
-            color: #ffffff;
-            text-decoration: none;
-            letter-spacing: 0.5px;
-        }
-        .logo-highlight {
-            color: #00ff87;
-        }
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-        .nav-item {
-            color: #b3c0d4;
-            text-decoration: none;
-            font-size: 15px;
-            font-weight: 600;
-            transition: color 0.2s ease;
-        }
-        .nav-item:hover, .nav-item.active {
-            color: #00ff87;
-        }
-        .free-games-btn {
-            background: linear-gradient(135deg, #00ff87 0%, #00d16c 100%);
-            color: #0d1117 !important;
-            padding: 8px 16px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 700;
-            box-shadow: 0 4px 15px rgba(0, 255, 135, 0.2);
-        }
-
-        /* Free Games Section Styling */
-        .games-section {
-            max-width: 1200px;
-            margin: 60px auto;
-            padding: 0 20px;
-        }
-        .section-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        .section-header h2 {
-            font-size: 32px;
-            margin-bottom: 10px;
-        }
-        .section-header p {
-            color: #b3c0d4;
-            font-size: 16px;
-        }
-
-        /* גריד קומפקטי של קוביות קטנות שאהבת */
-        .games-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
-        }
-
-        /* עיצוב כרטיס קטן ומהודק */
+        
+        /* כרטיס משחק בלובי */
         .game-card {
-            background-color: #1a1f29;
-            border: 1px solid #2a3245;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            transition: transform 0.2s ease, border-color 0.2s ease;
+            background: linear-gradient(135deg, #141b2d 0%, #0f1423 100%);
+            border: 1px solid #1f293d;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            transition: transform 0.3s, border-color 0.3s;
         }
         .game-card:hover {
-            transform: translateY(-3px);
-            border-color: #00ff87;
+            transform: translateY(-5px);
+            border-color: #00ffcc;
+            box-shadow: 0 4px 20px rgba(0, 255, 204, 0.2);
         }
-
-        /* אזור תמונת המשחק בקובייה */
-        .game-preview-container {
-            position: relative;
-            width: 100%;
-            padding-top: 60%;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+        .game-icon {
+            font-size: 50px;
+            margin-bottom: 10px;
         }
-
-        /* שכבת ערפול וכפתור הפעלה בריחוף עכבר */
-        .game-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(13, 17, 23, 0.7);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.2s ease;
+        .game-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
         }
-        .game-card:hover .game-overlay {
-            opacity: 1;
-        }
-        .inline-play-btn {
-            background-color: #00ff87;
-            color: #0d1117;
-            padding: 8px 16px;
+        .play-btn {
+            background-color: #00ffcc;
+            color: #0b0f19;
             border: none;
-            border-radius: 4px;
-            font-weight: 700;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
             cursor: pointer;
-            font-size: 13px;
-            transition: transform 0.2s;
-        }
-        .inline-play-btn:hover {
-            transform: scale(1.05);
-        }
-
-        /* פרטי המשחק מתחת לקובייה */
-        .game-info {
-            padding: 12px;
-        }
-        .game-info h3 {
-            color: #ffffff;
-            font-size: 15px;
-            margin: 0 0 8px 0;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .game-badges {
-            display: flex;
-            gap: 6px;
-            margin-bottom: 12px;
-        }
-        .badge {
-            font-size: 10px;
-            font-weight: 700;
-            padding: 2px 6px;
-            border-radius: 3px;
-        }
-        .badge.provider { background-color: #2a3245; color: #b3c0d4; }
-        .badge.rtp { background-color: rgba(0, 255, 135, 0.1); color: #00ff87; }
-
-        /* כפתור כסף אמיתי קטן ומשולב */
-        .play-real-btn {
-            display: block;
-            text-align: center;
-            background: linear-gradient(135deg, #ff9900 0%, #ff5500 100%);
-            color: #ffffff;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 12px;
-            padding: 8px;
-            border-radius: 4px;
+            width: 100%;
             transition: background 0.2s;
         }
-        .play-real-btn:hover {
-            background: linear-gradient(135deg, #ffaa11 0%, #ff6611 100%);
+        .play-btn:hover {
+            background-color: #00ccff;
         }
 
-        /* --- עיצוב חלון המשחק הקופץ (Modal) --- */
+        /* חלון פופ-אפ למשחק הדמו המוטמע (כמו Casino Guru) */
         .game-modal {
             display: none;
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(10, 14, 22, 0.95);
-            z-index: 2000;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(5, 8, 16, 0.95);
+            z-index: 100000;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
         }
         .modal-content {
-            position: relative;
             width: 90%;
             max-width: 960px;
-            background-color: #1a1f29;
-            border: 1px solid #2a3245;
+            height: 70vh;
+            background-color: #141b2d;
+            border: 2px solid #00ffcc;
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-        }
-        .modal-header {
-            padding: 15px 20px;
-            background-color: #151922;
-            border-bottom: 1px solid #2a3245;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .modal-header h3 { margin: 0; font-size: 18px; color: #ffffff; }
-        .close-modal {
-            background: none; border: none; color: #b3c0d4;
-            font-size: 24px; cursor: pointer; transition: color 0.2s;
-        }
-        .close-modal:hover { color: #ff5500; }
-        .modal-body {
             position: relative;
-            padding-top: 56.25%; /* יחס קזינו מושלם 16:9 */
-            background-color: #000;
+            box-shadow: 0 0 30px rgba(0, 255, 204, 0.3);
         }
-        .modal-body iframe {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
-
-        @media (max-width: 480px) {
-            .nav-item:not(.free-games-btn) { display: none; }
+        .close-modal-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background-color: #ff3366;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            z-index: 100001;
+        }
+        
+        /* כפתור כסף אמיתי מתחת למשחק (הרווח שלך) */
+        .real-money-bar {
+            margin-top: 15px;
+            text-align: center;
+            width: 90%;
+            max-width: 960px;
+        }
+        .real-money-btn {
+            display: inline-block;
+            background: linear-gradient(90deg, #ffcc00, #ff9900);
+            color: #000;
+            padding: 15px 40px;
+            font-size: 20px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.4);
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); box-shadow: 0 0 25px rgba(255, 204, 0, 0.7); }
+            100% { transform: scale(1); }
         }
     </style>
 </head>
 <body>
 
-    <!-- Navbar -->
-    <nav class="navbar">
-      <div class="nav-container">
-        <a href="index.html" class="nav-logo">Slot<span class="logo-highlight">Metric</span></a>
-        <div class="nav-links">
-          <a href="index.html" class="nav-item">Home</a>
-          <a href="free-games.html" class="nav-item active free-games-btn">Free Games</a>
+    <h1>🎰 CASINO MATRIX - FREE DEMO LOBBY 🎰</h1>
+
+    <!-- לובי המשחקים -->
+    <div class="games-lobby">
+        
+        <!-- משחק 1 -->
+        <div class="game-card">
+            <div class="game-icon">🔮</div>
+            <div class="game-title">Starburst Slot Demo</div>
+            <button class="play-btn" onclick="openGame('https://playngouat.com')">PLAY DEMO</button>
         </div>
-      </div>
-    </nav>
-    <!-- Free Games Main Section -->
-    <section class="games-section">
-      <div class="section-header">
-        <h2>🎰 Free Play Demo Slots</h2>
-        <p>Test your strategies and check live metrics without risking real money.</p>
-      </div>
 
-<div class="games-grid">
-  
-  <!-- קובייה 1: Gates of Olympus -->
-  <div class="game-card">
-    <div class="game-preview-container" style="background-image: url('https://unsplash.com'); background-color: #151922;">
-      <div class="game-overlay">
-        <!-- קישור ישיר לטריילר המשחק הרשמי ביוטיוב ללא חסימות -->
-        <a href="https://youtube.com" target="_blank" class="inline-play-btn" style="text-decoration: none;">⚡ Play Demo</a>
-      </div>
-    </div>
-    <div class="game-info">
-      <h3>Gates of Olympus</h3>
-      <div class="game-badges">
-        <span class="badge provider">Pragmatic</span>
-        <span class="badge rtp">96.50%</span>
-      </div>
-      <a href="#affiliate-link" class="play-real-btn">Play for Real</a>
-    </div>
-  </div>
+        <!-- משחק 2 -->
+        <div class="game-card">
+            <div class="game-icon">🤠</div>
+            <div class="game-title">Book of Dead Demo</div>
+            <button class="play-btn" onclick="openGame('https://playngouat.com')">PLAY DEMO</button>
+        </div>
 
-  <!-- קובייה 2: Sweet Bonanza -->
-  <div class="game-card">
-    <div class="game-preview-container" style="background-image: url('https://unsplash.com'); background-color: #151922;">
-      <div class="game-overlay">
-        <a href="https://youtube.com" target="_blank" class="inline-play-btn" style="text-decoration: none;">⚡ Play Demo</a>
-      </div>
-    </div>
-    <div class="game-info">
-      <h3>Sweet Bonanza</h3>
-      <div class="game-badges">
-        <span class="badge provider">Pragmatic</span>
-        <span class="badge rtp">96.48%</span>
-      </div>
-      <a href="#affiliate-link" class="play-real-btn">Play for Real</a>
-    </div>
-  </div>
+        <!-- משחק 3 -->
+        <div class="game-card">
+            <div class="game-icon">🎡</div>
+            <div class="game-title">Instant Roulette Free</div>
+            <button class="play-btn" onclick="openGame('https://playngouat.com')">PLAY DEMO</button>
+        </div>
 
-  <!-- קובייה 3: Book of Dead -->
-  <div class="game-card">
-    <div class="game-preview-container" style="background-image: url('https://unsplash.com'); background-color: #151922;">
-      <div class="game-overlay">
-        <a href="https://youtube.com" target="_blank" class="inline-play-btn" style="text-decoration: none;">⚡ Play Demo</a>
-      </div>
     </div>
-    <div class="game-info">
-      <h3>Book of Dead</h3>
-      <div class="game-badges">
-        <span class="badge provider">Play'n GO</span>
-        <span class="badge rtp">96.21%</span>
-      </div>
-      <a href="#affiliate-link" class="play-real-btn">Play for Real</a>
-    </div>
-  </div>
 
-</div>
-    </section>
-
-    <!-- רכיב החלון הקופץ הנסתר (Modal) -->
+    <!-- חלון הפופ-אפ להצגת המשחק המוטמע (Iframe) -->
     <div id="gameModal" class="game-modal">
+        <button class="close-modal-btn" onclick="closeGame()">❌ CLOSE GAME</button>
+        
         <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modalGameTitle">Slot Game</h3>
-                <button class="close-modal" onclick="closeGameModal()">&times;</button>
-            </div>
-            <div class="modal-body">
-                <iframe id="modalIframe" src="" allowfullscreen></iframe>
-            </div>
+            <iframe id="gameIframe" src=""></iframe>
+        </div>
+        
+        <!-- כפתור שותפים לכסף אמיתי -->
+        <div class="real-money-bar">
+            <a id="realMoneyLink" href="https://bet365.link" target="_blank" class="real-money-btn">💰 PLAY FOR REAL MONEY WITH BONUS! 💰</a>
         </div>
     </div>
 
-    <!-- מנגנון הפעלה חכם ב-JavaScript -->
     <script>
-        function openGameModal(gameName, demoUrl) {
-            document.getElementById('modalGameTitle').innerText = gameName;
-            document.getElementById('modalIframe').src = demoUrl;
-            document.getElementById('gameModal').style.display = 'flex';
-            document.body.style.overflow = 'hidden'; /* מונע גלילה של הרקע */
-        }
+        const modal = document.getElementById("gameModal");
+        const iframe = document.getElementById("gameIframe");
+        const realMoneyLink = document.getElementById("realMoneyLink");
 
-        function closeGameModal() {
-            document.getElementById('gameModal').style.display = 'none';
-            document.getElementById('modalIframe').src = ''; /* עוצר את סאונד המשחק */
-            document.body.style.overflow = 'auto';
-        }
-
-        /* סגירת החלון בלחיצה מחוץ למשחק */
-        window.onclick = function(event) {
-            const modal = document.getElementById('gameModal');
-            if (event.target === modal) {
-                closeGameModal();
+        // פונקציה לפתיחת משחק והטענת הלינק שלו
+        function openGame(demoUrl) {
+            iframe.src = demoUrl; // טוען את משחק הדמו בתוך ה-Iframe
+            modal.style.display = "flex"; // מציג את החלון מעל הכל
+            
+            // כאן נשלוף באקראי ליק שותפים מהרשימה הקיימת באתר שלך
+            let activeData = (window.filteredData && window.filteredData.length > 0) ? window.filteredData : window.casinoData;
+            if (activeData && activeData.length > 0) {
+                const randomCasino = activeData[Math.floor(Math.random() * activeData.length)];
+                realMoneyLink.href = randomCasino.affiliate_link || "https://bet365.link";
             }
+        }
+
+        // פונקציה לסגירת המשחק וניקוי ה-Iframe (כדי שהמשחק לא ימשיך לרוץ ברקע)
+        function closeGame() {
+            modal.style.display = "none";
+            iframe.src = ""; 
         }
     </script>
 
