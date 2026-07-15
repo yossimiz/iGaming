@@ -620,80 +620,44 @@ document.addEventListener("DOMContentLoaded", () => {
     let spinCount = 0;
     let nextRequiredWin = Math.floor(Math.random() * 3) + 2; 
 
-    // הזרקת האנימציה הפיזיקלית של הר הגעש - ללא תגיות סטייל חיצוניות שיכולות לשבור את הדף
-    if (!document.getElementById("volcano-keyframes")) {
-        const keyframes = `
-            @keyframes volcanoPhysics {
-                0% {
-                    transform: translate(-50%, 0) scale(0.4) rotate(0deg);
-                    opacity: 0;
-                }
-                10% {
-                    opacity: 1;
-                }
-                /* שיא הגובה של המזרקה - המטבע מאט ומסתובב בנחת */
-                45% {
-                    transform: translate(calc(-50% + var(--x1)), var(--y1)) scale(1.1) rotate(var(--rot1));
-                }
-                /* נפילה חופשית איטית למטה אל מחוץ למסך */
-                100% {
-                    transform: translate(calc(-50% + var(--x2)), 110vh) scale(0.9) rotate(var(--rot2));
-                    opacity: 0;
-                }
-            }
-        `;
-        const styleSheet = document.createElement("style");
-        styleSheet.id = "volcano-keyframes";
-        styleSheet.innerText = keyframes;
-        document.head.appendChild(styleSheet);
-    }
-
+    // פונקציה נקייה ליצירת מטבעות הר געש מסתובבים ואיטיים
     function runVolcanoCoins() {
-        // רשימת המטבעות והסמלים המדויקים שמופיעים אצלך בעיצוב
-        const icons = ["🪙", "💰", "🥈"]; 
-        const totalCoins = 85; 
-
-        for (let i = 0; i < totalCoins; i++) {
+        const icons = ["🪙", "🥈", "💰"];
+        
+        for (let i = 0; i < 80; i++) {
             setTimeout(() => {
                 const coin = document.createElement("div");
                 coin.innerText = icons[Math.floor(Math.random() * icons.length)];
                 
-                // הגדרת מאפייני המטבע לפני הזריקה
+                // הגדרת מיקום התחלתי בתחתית המסך
                 coin.style.position = "fixed";
-                coin.style.bottom = "-60px"; // פורץ מלמטה כמו לוע הר געש
-                coin.style.left = "50%"; // מרכז המסך
-                coin.style.fontSize = "38px"; 
+                coin.style.bottom = "-50px";
+                coin.style.left = "50%";
+                coin.style.fontSize = "38px";
                 coin.style.pointerEvents = "none";
                 coin.style.zIndex = "99999999";
+                coin.style.transition = "transform 2.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 2.5s";
+                coin.style.opacity = "1";
                 
-                // חישוב מסלול קשת (מזרקה) אצילי ואיטי
-                const x1 = (Math.random() * 360 - 180) + "px";   // פיזור לצדדים בשיא
-                const y1 = -(Math.random() * 55 + 40) + "vh";    // גובה פריצה (מגיע עד למעלה)
-                const x2 = (Math.random() * 120vw - 60vw) + "px"; // פיזור רחב בנפילה חופשית
-                
-                // זמן תעופה ארוך ואיטי (בין 2.4 ל-3.0 שניות מלאות) כדי שיהיה זמן לראות אותם בכיף!
-                const dur = (Math.random() * 0.6 + 2.4) + "s"; 
-                
-                // סיבובים עצמיים (המטבע ישלים 2 עד 4 סיבובים מלאים באוויר בזמן הטלטול)
-                const rot1 = (Math.random() * 360 + 360) + "deg";
-                const rot2 = (Math.random() * 1080 + 720) + "deg";
-
-                // הזרקת המשתנים הפיזיקליים לתוך המטבע
-                coin.style.setProperty("--x1", x1);
-                coin.style.setProperty("--y1", y1);
-                coin.style.setProperty("--x2", x2);
-                coin.style.setProperty("--dur", dur);
-                coin.style.setProperty("--rot1", rot1);
-                coin.style.setProperty("--rot2", rot2);
-                
-                // הפעלת האנימציה הפיזיקלית
-                coin.style.animation = "volcanoPhysics var(--dur) cubic-bezier(0.25, 1, 0.4, 1) forwards";
-
                 document.body.appendChild(coin);
                 
-                // מחיקה נקייה מהדף בסיום הנפילה לחלוטין
-                setTimeout(() => coin.remove(), 3500); 
-            }, i * 15); // קצב יציאה מהיר של מזרקה רציפה
+                // חישוב מסלול פיזיקלי איטי ומסובב (אפקט הר געש ומזרקה)
+                const targetX = Math.random() * 800 - 400; // פיזור לצדדים
+                const targetY = -(Math.random() * 60 + 35); // גובה טיסה באחוזים
+                const rotation = Math.random() * 1440 - 720; // סיבוב מוגבר של המטבע סביב עצמו
+                
+                // הפעלת התנועה הדרגתית מיד לאחר היצירה
+                requestAnimationFrame(() => {
+                    coin.style.transform = `translate(${targetX}px, ${targetY}vh) rotate(${rotation}deg)`;
+                });
+                
+                // התפוגגות ומחיקה מהמסך לאחר 2.5 שניות של תעופה אצילית
+                setTimeout(() => {
+                    coin.style.opacity = "0";
+                    setTimeout(() => coin.remove(), 500);
+                }, 2000);
+                
+            }, i * 20); // קצב יציאה מהיר ליצירת אפקט התפרצות רציף
         }
     }
 
@@ -757,7 +721,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 
                 if (winPanel) winPanel.style.display = "block";
                 
-                // פריצת מזרקת הר געש מושלמת, איטית ומסתובבת ברגע הבינגו!
+                // שחרור הר הגעש האיטי והמסתובב ברגע הניצחון המבוקר
                 if (isWinRound) {
                     runVolcanoCoins();
                 }
