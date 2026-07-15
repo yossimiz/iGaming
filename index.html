@@ -580,164 +580,208 @@
 <!-- Fully Fixed Slots Logic with Native CSS Coin Fountain -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-    // איתור בטוח של האלמנטים של המכונה שלך
-    const r1 = document.getElementById("s-reel1") || document.getElementById("reel1");
-    const r2 = document.getElementById("s-reel2") || document.getElementById("reel2");
-    const r3 = document.getElementById("s-reel3") || document.getElementById("reel3");
-    const trigger = document.getElementById("slots-action-trigger") || document.querySelector("button");
-    const winPanel = document.getElementById("slots-win-display") || document.getElementById("win-display");
+    const r1 = document.getElementById("s-reel1");
+    const r2 = document.getElementById("s-reel2");
+    const r3 = document.getElementById("s-reel3");
+    const trigger = document.getElementById("slots-action-trigger");
+    const winPanel = document.getElementById("slots-win-display");
+    const canvas = document.getElementById("silver-coin-canvas");
     
-    if (!trigger) return;
+    if (!trigger || !r1 || !r2 || !r3 || !canvas) return;
     
-    let spinCount = 0;
-    let nextRequiredWin = Math.floor(Math.random() * 2) + 2; // קובע בינגו לסיבוב 2, 3 או 4
+    const ctx = canvas.getContext("2d");
     let isSpinning = false;
+    let coins = [];
+    let animationFrameId;
 
-    // הזרקת הסטייל של מזרקת המטבעות עם תיקון שגיאות מלא
-    if (!document.getElementById("volcano-css")) {
-        const style = document.createElement("style");
-        style.id = "volcano-css";
-        style.innerHTML = `
-            @keyframes volcanoExplosion {
-                0% {
-                    transform: translate(0, 0) scale(0.5);
-                    opacity: 0;
-                }
-                15% {
-                    opacity: 1;
-                }
-                50% {
-                    transform: translate(var(--startX), var(--peakY)) scale(1.3);
-                }
-                100% {
-                    transform: translate(var(--endX), 80vh) scale(1);
-                    opacity: 0;
-                }
-            }
-            .volcano-coin {
-                position: fixed;
-                bottom: -60px;
-                left: 50%;
-                font-size: 35px;
-                pointer-events: none;
-                z-index: 999999 !important;
-                animation: volcanoExplosion var(--duration) cubic-bezier(0.25, 1, 0.5, 1) forwards;
-            }
-        `;
-        document.head.appendChild(style);
+    // מונים פנימיים לשליטה מוחלטת על קצב הזכיות (סיבוב 2, 3 או 4 גג)
+    let spinCount = 0;
+    let nextRequiredWin = Math.floor(Math.random() * 3) + 2; 
+
+    function resizeCanvas() {
+        canvas.width = 480;  
+        canvas.height = 450; 
     }
+    resizeCanvas();
 
-    // פונקציית פיצוץ המטבעות
-    function launchVolcanoCoins() {
-        const coinIcons = ["🪙", "🥈", "💰"];
-        for (let i = 0; i < 70; i++) {
-            setTimeout(() => {
-                const coin = document.createElement("div");
-                coin.className = "volcano-coin";
-                coin.innerText = coinIcons[Math.floor(Math.random() * coinIcons.length)];
-                
-                // הגדרת משתני האנימציה
-                const startX = (Math.random() * 100 - 50) + "px";
-                const peakY = -(Math.random() * 60 + 35) + "vh"; // עף גבוה למעלה
-                const endX = (Math.random() * 100vw - 50vw) + "px"; // מתפזר לצדדים
-                const duration = (Math.random() * 0.7 + 1.2) + "s";
-
-                coin.style.setProperty("--startX", startX);
-                coin.style.setProperty("--peakY", peakY);
-                coin.style.setProperty("--endX", endX);
-                coin.style.setProperty("--duration", duration);
-
-                document.body.appendChild(coin);
-
-                // מחיקה אוטומטית מהדף בסיום התעופה
-                setTimeout(() => coin.remove(), 2000);
-            }, i * 20);
+    // מחלקת המטבעות - שונתה למנוע פיזיקלי של התפרצות הר געש מלמטה למעלה
+    class SilverCoin {
+        constructor() {
+            // המטבעות משוגרים ממרכז תחתית הקנבס
+            this.x = canvas.width / 2 + (Math.random() * 60 - 30);
+            this.y = canvas.height - 10;
+            this.radius = Math.random() * 3 + 7;
+            // כוח זריקה חזק כלפי מעלה (מהירות שלילית בציר Y)
+            this.speedY = -(Math.random() * 7 + 10); 
+            // פיזור רחב ימינה ושמאלה ליצירת מראה של מזרקת הר געש
+            this.speedX = Math.random() * 8 - 4; 
+            // כוח משיכה קבוע שיושך את המטבעות חזרה למטה לאחר השיא
+            this.gravity = 0.4;
+            this.rotation = Math.random() * Math.PI * 2;
+            this.rotationSpeed = Math.random() * 0.15 - 0.075;
+            this.opacity = 1;
+        }
+        update() {
+            this.speedY += this.gravity; // החלת כוח משיכה
+            this.y += this.speedY;
+            this.x += this.speedX;
+            this.rotation += this.rotationSpeed;
+            // התפוגגות עדינה כשהם נופלים חזרה לתחתית
+            if (this.speedY > 0 && this.y > canvas.height - 40) {
+                this.opacity -= 0.04;
+            }
+        }
+        draw() {
+            ctx.save();
+            ctx.translate(this.x, this.y);
+            ctx.rotate(this.rotation);
+            ctx.globalAlpha = Math.max(0, this.opacity);
+            
+            ctx.beginPath();
+            ctx.ellipse(0, 0, this.radius, this.radius * 0.55, 0, 0, Math.PI * 2);
+            
+            let gradient = ctx.createLinearGradient(-this.radius, -this.radius, this.radius, this.radius);
+            gradient.addColorStop(0, "#ffffff");
+            gradient.addColorStop(0.3, "#cfd8dc");
+            gradient.addColorStop(0.7, "#90a4ae");
+            gradient.addColorStop(1, "#37474f");
+            
+            ctx.fillStyle = gradient;
+            ctx.fill();
+            
+            ctx.strokeStyle = "#78909c";
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.ellipse(0, 0, this.radius * 0.65, this.radius * 0.35, 0, 0, Math.PI * 2);
+            ctx.strokeStyle = "rgba(255,255,255,0.4)";
+            ctx.stroke();
+            
+            ctx.restore();
         }
     }
 
-    // הפעלת לחיצה על כפתור הסיבוב
+    function spawnSilverCoins() {
+        coins = [];
+        // כמות של 80 מטבעות להתפרצות עשירה ומלאה
+        for (let i = 0; i < 80; i++) {
+            setTimeout(() => {
+                if (winPanel.style.display === "block") {
+                    coins.push(new SilverCoin());
+                }
+            }, i * 15); // קצב יציאה מהיר של לוע הר געש
+        }
+        cancelAnimationFrame(animationFrameId);
+        animateSilverCoins();
+    }
+
+    function animateSilverCoins() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let hasActiveCoins = false;
+        
+        coins.forEach(coin => {
+            coin.update();
+            coin.draw();
+            if (coin.opacity > 0 && coin.y < canvas.height + 50) {
+                hasActiveCoins = true;
+            }
+        });
+        
+        if (hasActiveCoins) {
+            animationFrameId = requestAnimationFrame(animateSilverCoins);
+        } else {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+    }
+
     trigger.addEventListener("click", () => {
         if (isSpinning) return;
         
-        spinCount++;
+        spinCount++; // קידום מונה הסיבובים בכל לחיצה
+        
+        let activeData = (window.filteredData && window.filteredData.length > 0) ? window.filteredData : window.casinoData;
+        
+        if (!activeData || activeData.length === 0) {
+            activeData = [
+                { "casino_name": "Bet365 Casino", "bonus_text": "Stake £10 and get 50 Free Spins", "affiliate_link": "https://bet365.link" },
+                { "casino_name": "Vulkan Vegas", "bonus_text": "100% Up to €1,500 + 150 Free Spins", "affiliate_link": "https://vpartners.link" },
+                { "casino_name": "888 Casino", "bonus_text": "100% Up To £100 + 88 Free Spins", "affiliate_link": "https://vpartners.link" }
+            ];
+        }
+
         isSpinning = true;
         trigger.disabled = true;
-        
-        const originalText = trigger.innerText;
-        trigger.innerText = "SPINNING...";
-        
-        if (winPanel) winPanel.style.display = "none";
+        trigger.innerText = "SYNCHRONIZING Feeds...";
+        winPanel.style.display = "none";
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        // האם הסיבוב הנוכחי הוא סיבוב זכייה מבוקר?
+        r1.classList.add("run-spin");
+        r2.classList.add("run-spin");
+        r3.classList.add("run-spin");
+
+        // קביעת מצב הזכייה המבוקר
         const isWinRound = (spinCount >= nextRequiredWin);
-
-        // הפעלת האנימציה הוויזואלית של הגלגלים
-        if (r1) r1.classList.add("run-spin");
-        if (r2) r2.classList.add("run-spin");
-        if (r3) r3.classList.add("run-spin");
-
-        // בחירת תוצאת הסמלים
+        
+        // הגדרת תוכן הגלגלים הסופי
         let finalReel1, finalReel2, finalReel3;
         if (isWinRound) {
-            // זכייה: 3 סמלים תואמים לחלוטין
+            // בינגו! שלושת הגלגלים יקבלו את אותו הסמל בדיוק
             const winSymbols = ["<div>777</div>", "<div>👑</div>", "<div>💎</div>"];
             const luckySymbol = winSymbols[Math.floor(Math.random() * winSymbols.length)];
             finalReel1 = luckySymbol;
             finalReel2 = luckySymbol;
             finalReel3 = luckySymbol;
             
-            // איפוס מונים והגרלת היעד הבא (שוב בין 2 ל-4)
+            // איפוס והגרלה מחדש לסיבוב הבא (בין 2 ל-4)
             spinCount = 0;
             nextRequiredWin = Math.floor(Math.random() * 3) + 2;
         } else {
-            // הפסד מותח: סמלים שונים
+            // הפסד מותח: הגלגלים נעצרים על סמלים שונים לחלוטין
             finalReel1 = "<div>💎</div>";
             finalReel2 = "<div>👑</div>";
             finalReel3 = "<div>777</div>";
         }
 
-        // שליפת הנתונים מטבלת הקזינו שלך
-        let activeData = (window.filteredData && window.filteredData.length > 0) ? window.filteredData : window.casinoData;
-        const selectedCasino = (activeData && activeData.length > 0) ? activeData[Math.floor(Math.random() * activeData.length)] : null;
+        const randomIndex = Math.floor(Math.random() * activeData.length);
+        const selectedCasino = activeData[randomIndex];
 
-        // עצירה הדרגתית של הגלגלים בזה אחר זה
-        setTimeout(() => {
-            if (r1) { r1.classList.remove("run-spin"); r1.innerHTML = finalReel1; }
-        }, 1000);
+        // עצירה מדורגת קלאסית עם עדכון הסמלים האמיתי
+        setTimeout(() => { 
+            r1.classList.remove("run-spin"); 
+            r1.innerHTML = finalReel1 + finalReel1 + finalReel1;
+        }, 1300);
         
-        setTimeout(() => {
-            if (r2) { r2.classList.remove("run-spin"); r2.innerHTML = finalReel2; }
-        }, 1400);
+        setTimeout(() => { 
+            r2.classList.remove("run-spin"); 
+            r2.innerHTML = finalReel2 + finalReel2 + finalReel2;
+        }, 1900);
         
-        setTimeout(() => {
-            if (r3) { r3.classList.remove("run-spin"); r3.innerHTML = finalReel3; }
+        setTimeout(() => { 
+            r3.classList.remove("run-spin");
+            r3.innerHTML = finalReel3 + finalReel3 + finalReel3;
             
-            // הצגת חלונית הזכייה התחתונה
-            if (selectedCasino && winPanel) {
-                const titleEl = document.getElementById("slots-panel-title") || winPanel.querySelector("h3") || winPanel.querySelector("div");
-                const detailEl = document.getElementById("slots-panel-detail") || winPanel.querySelector("p");
-                const linkEl = document.getElementById("slots-panel-link") || winPanel.querySelector("a");
-                
-                if (titleEl) titleEl.innerText = selectedCasino.casino_name + (isWinRound ? " 🏆" : "");
-                if (detailEl) detailEl.innerText = selectedCasino.bonus_text || "Special Offer";
-                if (linkEl) linkEl.href = selectedCasino.affiliate_link || "#";
+            if (selectedCasino) {
+                document.getElementById("slots-panel-title").innerText = selectedCasino.casino_name + (isWinRound ? " 🏆" : "");
+                document.getElementById("slots-panel-detail").innerText = selectedCasino.bonus_text || "Premium Bonus Link Verified";
+                document.getElementById("slots-panel-link").href = selectedCasino.affiliate_link || "#";
                 
                 winPanel.style.display = "block";
+                
+                // המטבעות יתפרצו מהתחתית כמו הר געש רק כאשר יש 3 סמלים תואמים!
+                if (isWinRound) {
+                    spawnSilverCoins();
+                }
             }
             
-            // אם זה סיבוב בינגו – שחרר את הר הגעש!
-            if (isWinRound) {
-                launchVolcanoCoins();
-            }
-            
-            // החזרת הכפתור למצב פעיל
             trigger.disabled = false;
-            trigger.innerText = originalText;
+            trigger.innerText = "SPIN ENGINE";
             isSpinning = false;
-        }, 1800);
+        }, 2500);
     });
 });
 </script>
+
 
 
 
