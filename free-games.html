@@ -23,8 +23,8 @@
         /* גריד של לובי המשחקים */
         .games-lobby {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
             max-width: 1200px;
             margin: 0 auto;
         }
@@ -34,7 +34,7 @@
             background: linear-gradient(135deg, #141b2d 0%, #0f1423 100%);
             border: 1px solid #1f293d;
             border-radius: 12px;
-            padding: 15px;
+            padding: 20px;
             text-align: center;
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
             transition: transform 0.3s, border-color 0.3s;
@@ -45,23 +45,25 @@
             box-shadow: 0 4px 20px rgba(0, 255, 204, 0.2);
         }
         .game-icon {
-            font-size: 50px;
-            margin-bottom: 10px;
+            font-size: 55px;
+            margin-bottom: 12px;
         }
         .game-title {
-            font-size: 18px;
+            font-size: 19px;
             font-weight: bold;
-            margin-bottom: 15px;
+            margin-bottom: 18px;
+            color: #e2e8f0;
         }
         .play-btn {
             background-color: #00ffcc;
             color: #0b0f19;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 20px;
             border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
             width: 100%;
+            font-size: 15px;
             transition: background 0.2s;
         }
         .play-btn:hover {
@@ -76,16 +78,16 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background-color: rgba(5, 8, 16, 0.95);
+            background-color: rgba(5, 8, 16, 0.96);
             z-index: 100000;
             justify-content: center;
             align-items: center;
             flex-direction: column;
         }
         .modal-content {
-            width: 90%;
-            max-width: 960px;
-            height: 70vh;
+            width: 92%;
+            max-width: 980px;
+            height: 72vh;
             background-color: #141b2d;
             border: 2px solid #00ffcc;
             border-radius: 12px;
@@ -100,31 +102,35 @@
         }
         .close-modal-btn {
             position: absolute;
-            top: 15px;
-            right: 20px;
+            top: 12px;
+            right: 15px;
             background-color: #ff3366;
             color: white;
             border: none;
-            padding: 8px 15px;
+            padding: 8px 16px;
             font-weight: bold;
             border-radius: 6px;
             cursor: pointer;
             z-index: 100001;
+            font-size: 14px;
+        }
+        .close-modal-btn:hover {
+            background-color: #ff0044;
         }
         
         /* כפתור כסף אמיתי מתחת למשחק (הרווח שלך) */
         .real-money-bar {
-            margin-top: 15px;
+            margin-top: 18px;
             text-align: center;
-            width: 90%;
-            max-width: 960px;
+            width: 92%;
+            max-width: 980px;
         }
         .real-money-btn {
             display: inline-block;
             background: linear-gradient(90deg, #ffcc00, #ff9900);
             color: #000;
-            padding: 15px 40px;
-            font-size: 20px;
+            padding: 16px 45px;
+            font-size: 21px;
             font-weight: bold;
             text-decoration: none;
             border-radius: 8px;
@@ -133,7 +139,7 @@
         }
         @keyframes pulse {
             0% { transform: scale(1); }
-            50% { transform: scale(1.03); box-shadow: 0 0 25px rgba(255, 204, 0, 0.7); }
+            50% { transform: scale(1.02); box-shadow: 0 0 25px rgba(255, 204, 0, 0.7); }
             100% { transform: scale(1); }
         }
     </style>
@@ -145,25 +151,25 @@
     <!-- לובי המשחקים -->
     <div class="games-lobby">
         
-        <!-- משחק 1 -->
+        <!-- משחק 1: Gates of Olympus (Pragmatic Play Demo) -->
         <div class="game-card">
-            <div class="game-icon">🔮</div>
-            <div class="game-title">Starburst Slot Demo</div>
-            <button class="play-btn" onclick="openGame('https://playngouat.com')">PLAY DEMO</button>
+            <div class="game-icon">⚡</div>
+            <div class="game-title">Gates of Olympus</div>
+            <button class="play-btn" onclick="openGame('https://pragmaticplay.net')">PLAY DEMO</button>
         </div>
 
-        <!-- משחק 2 -->
+        <!-- משחק 2: Sweet Bonanza (Pragmatic Play Demo) -->
         <div class="game-card">
-            <div class="game-icon">🤠</div>
-            <div class="game-title">Book of Dead Demo</div>
-            <button class="play-btn" onclick="openGame('https://playngouat.com')">PLAY DEMO</button>
+            <div class="game-icon">🍭</div>
+            <div class="game-title">Sweet Bonanza</div>
+            <button class="play-btn" onclick="openGame('https://pragmaticplay.net')">PLAY DEMO</button>
         </div>
 
-        <!-- משחק 3 -->
+        <!-- משחק 3: Sugar Rush (Pragmatic Play Demo) -->
         <div class="game-card">
-            <div class="game-icon">🎡</div>
-            <div class="game-title">Instant Roulette Free</div>
-            <button class="play-btn" onclick="openGame('https://playngouat.com')">PLAY DEMO</button>
+            <div class="game-icon">🍬</div>
+            <div class="game-title">Sugar Rush</div>
+            <button class="play-btn" onclick="openGame('https://pragmaticplay.net')">PLAY DEMO</button>
         </div>
 
     </div>
@@ -173,7 +179,7 @@
         <button class="close-modal-btn" onclick="closeGame()">❌ CLOSE GAME</button>
         
         <div class="modal-content">
-            <iframe id="gameIframe" src=""></iframe>
+            <iframe id="gameIframe" src="" allowfullscreen></iframe>
         </div>
         
         <!-- כפתור שותפים לכסף אמיתי -->
@@ -187,12 +193,11 @@
         const iframe = document.getElementById("gameIframe");
         const realMoneyLink = document.getElementById("realMoneyLink");
 
-        // פונקציה לפתיחת משחק והטענת הלינק שלו
         function openGame(demoUrl) {
-            iframe.src = demoUrl; // טוען את משחק הדמו בתוך ה-Iframe
-            modal.style.display = "flex"; // מציג את החלון מעל הכל
+            iframe.src = demoUrl; 
+            modal.style.display = "flex"; 
             
-            // כאן נשלוף באקראי ליק שותפים מהרשימה הקיימת באתר שלך
+            // שליפת לינק שותפים דינמי מהטבלה הקיימת באתר שלך
             let activeData = (window.filteredData && window.filteredData.length > 0) ? window.filteredData : window.casinoData;
             if (activeData && activeData.length > 0) {
                 const randomCasino = activeData[Math.floor(Math.random() * activeData.length)];
@@ -200,7 +205,6 @@
             }
         }
 
-        // פונקציה לסגירת המשחק וניקוי ה-Iframe (כדי שהמשחק לא ימשיך לרוץ ברקע)
         function closeGame() {
             modal.style.display = "none";
             iframe.src = ""; 
