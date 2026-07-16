@@ -25,22 +25,7 @@
             line-height: 1.5;
         }
 
-        .navbar {
-            background-color: #0e1726;
-            border-bottom: 1px solid var(--border-color);
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .navbar-logo {
-            font-size: 1.3rem;
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            background: linear-gradient(to right, #3b82f6, #10b981);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+
         .system-badge {
             display: flex;
             align-items: center;
@@ -166,144 +151,6 @@
 
 </head>
 <body>
-<!-- Top Navigation Bar - Centered Menu Version -->
-<nav class="navbar" style="background-color: #0b0f19; border-bottom: 1px solid #1f293d; padding: 15px 20px;">
-    <div class="nav-container" style="max-width: 1100px; margin: 0 auto; display: flex !important; justify-content: space-between !important; align-items: center !important; width: 100%;">
-        
-        <!-- Brand Logo (Left Side) -->
-        <div style="flex: 1; display: flex; justify-content: flex-start;">
-            <a href="index.html" class="nav-logo" style="font-size: 24px; font-weight: 800; color: #ffffff; text-decoration: none; letter-spacing: 0.5px; white-space: nowrap;">
-                Slot<span class="logo-highlight" style="color: var(--accent-color);">Metric</span>
-            </a>
-        </div>
-
-        <!-- Navigation Menu (Perfectly Centered) -->
-        <div class="nav-links" style="display: flex !important; align-items: center !important; gap: 32px !important; justify-content: center !important;">
-            <a href="index.html" class="nav-item active" style="display: inline-block !important; color: var(--accent-color) !important; text-decoration: none !important; font-size: 14px !important; font-weight: 600;">Live Tracker</a>
-            <a href="games.html" class="nav-item" style="display: inline-block !important; color: #f8fafc !important; text-decoration: none !important; font-size: 14px !important; font-weight: 500; transition: color 0.2s !important; white-space: nowrap;" onmouseover="this.style.color='var(--accent-color)'" onmouseout="this.style.color='#f8fafc'">Top Slots</a>
-            <a href="#casino-table" class="nav-item" style="display: inline-block !important; color: #f8fafc !important; text-decoration: none !important; font-size: 14px !important; font-weight: 500; transition: color 0.2s !important; white-space: nowrap;" onmouseover="this.style.color='var(--accent-color)'" onmouseout="this.style.color='#f8fafc'">Best Bonuses</a>
-        </div>
-        
-        <!-- Invisible Balancer (Right Side - Keeps the Menu Perfectly Centered) -->
-        <div style="flex: 1; display: flex; justify-content: flex-end;"></div>
-        
-    </div>
-</nav>
-
-
-
-
-
-
-<style>
-/* Premium Dark Mode Navbar Style */
-.navbar {
-  background-color: #1a1f29; /* Deep Casino-Guru style dark blue */
-  border-bottom: 1px solid #2a3245;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  padding: 15px 20px;
-  font-family: system-ui, -apple-system, sans-serif;
-  direction: ltr; /* Ensures international left-to-right alignment */
-}
-
-.nav-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-/* Logo Design */
-.nav-logo {
-  font-size: 22px;
-  font-weight: 800;
-  color: #ffffff;
-  text-decoration: none;
-  letter-spacing: 0.5px;
-}
-
-.logo-highlight {
-  color: #00ff87; /* Our signature RTP neon green */
-}
-
-/* Navigation Links */
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-.nav-item {
-  color: #b3c0d4;
-  text-decoration: none;
-  font-size: 15px;
-  font-weight: 600;
-  transition: color 0.2s ease;
-}
-
-.nav-item:hover {
-  color: #ffffff;
-}
-
-.nav-item.active {
-  color: #00ff87;
-}
-
-/* Glowing High-CTR Free Games Button */
-.free-games-btn {
-  background: linear-gradient(135deg, #00ff87 0%, #00d16c 100%);
-  color: #0d1117 !important;
-  padding: 8px 16px;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 4px 15px rgba(0, 255, 135, 0.2);
-  transition: transform 0.2s, box-shadow 0.2s !important;
-}
-
-.free-games-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(0, 255, 135, 0.4);
-}
-
-/* Active breathing pulse next to text */
-.pulse-dot {
-  width: 8px;
-  height: 8px;
-  background-color: #0d1117;
-  border-radius: 50%;
-  display: inline-block;
-  animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-  0% { transform: scale(0.9); opacity: 1; }
-  50% { transform: scale(1.2); opacity: 0.5; }
-  100% { transform: scale(0.9); opacity: 1; }
-}
-
-/* Mobile Responsive Optimization */
-@media (max-width: 480px) {
-  .nav-container {
-    flex-direction: row;
-    gap: 10px;
-  }
-  .nav-item:not(.free-games-btn) {
-    display: none; /* Hides secondary links on mobile to keep focus on Free Games */
-  }
-  .nav-logo {
-    font-size: 18px;
-  }
-  .free-games-btn {
-    padding: 6px 12px;
-    font-size: 13px;
-  }
-}
-</style>
 
 <div id="age-gate" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0b0f19; z-index: 9999; display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px; box-sizing: border-box;">
     <div style="background: #151f32; padding: 30px; border-radius: 16px; border: 1px solid #22314d; max-width: 420px; width: 100%; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);">
@@ -317,7 +164,166 @@
     </div>
 </div>
 
-<!-- Sub-Header / System Stats Bar (Elegant Mobile Scroll Version) -->
+<!-- ================================================================= -->
+<!-- TOP NAVIGATION BAR (PREMIUM DESKTOP CENTER & MOBILE OVERLAY DROP) -->
+<!-- ================================================================= -->
+<div style="width: 100%; background-color: #0b0f19; border-bottom: 1px solid var(--border-color); padding: 15px 20px; box-sizing: border-box; position: relative; z-index: 999999;">
+    
+    <style>
+        .premium-nav-container {
+            max-width: 1150px !important;
+            margin: 0 auto !important;
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
+        .premium-logo-area {
+            flex: 1 !important;
+            display: flex !important;
+            justify-content: flex-start !important;
+            z-index: 1000001 !important;
+        }
+        .premium-balancer-area {
+            flex: 1 !important;
+            display: flex !important;
+            justify-content: flex-end !important;
+        }
+        .premium-menu-overlay {
+            display: flex !important;
+            align-items: center !important;
+            gap: 32px !important;
+            justify-content: center !important;
+        }
+        .premium-nav-link {
+            color: #f8fafc !important;
+            text-decoration: none !important;
+            font-size: 14px !important;
+            font-weight: 500 !important;
+            white-space: nowrap !important;
+            transition: color 0.2s !important;
+        }
+        .premium-nav-link.active {
+            color: var(--accent-color) !important;
+            font-weight: 600 !important;
+        }
+        .premium-trigger-btn {
+            display: none;
+            background: none !important;
+            border: none !important;
+            cursor: pointer !important;
+            padding: 8px !important;
+            z-index: 1000001 !important;
+            flex-direction: column !important;
+            gap: 5px !important;
+        }
+        .premium-trigger-btn span {
+            display: block !important;
+            width: 22px !important;
+            height: 2px !important;
+            background-color: #ffffff !important;
+            border-radius: 2px !important;
+            transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease !important;
+        }
+
+        @media (max-width: 768px) {
+            .premium-trigger-btn {
+                display: flex !important;
+            }
+            .premium-balancer-area {
+                display: none !important;
+            }
+            .premium-menu-overlay {
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+                background-color: #0b0f19 !important;
+                flex-direction: column !important;
+                justify-content: center !important;
+                align-items: center !important;
+                gap: 24px !important;
+                z-index: 1000000 !important;
+                opacity: 0 !important;
+                visibility: hidden !important;
+                transform: translateY(-20px) !important;
+                transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease !important;
+            }
+            .premium-menu-overlay.is-open {
+                opacity: 1 !important;
+                visibility: visible !important;
+                transform: translateY(0) !important;
+            }
+            .premium-nav-link {
+                font-size: 20px !important;
+                padding: 10px 40px !important;
+                width: 100% !important;
+                text-align: center !important;
+            }
+            .premium-trigger-btn.is-open span:nth-child(1) {
+                transform: translateY(7px) rotate(45deg) !important;
+                background-color: var(--accent-color) !important;
+            }
+            .premium-trigger-btn.is-open span:nth-child(2) {
+                opacity: 0 !important;
+            }
+            .premium-trigger-btn.is-open span:nth-child(3) {
+                transform: translateY(-7px) rotate(-45deg) !important;
+                background-color: var(--accent-color) !important;
+            }
+        }
+    </style>
+
+    <div class="premium-nav-container">
+        <div class="premium-logo-area">
+            <a href="index.html" style="font-size: 24px; font-weight: 800; color: #ffffff; text-decoration: none; letter-spacing: 0.5px; white-space: nowrap;">
+                Slot<span style="color: var(--accent-color);">Metric</span>
+            </a>
+        </div>
+
+        <div class="premium-menu-overlay" id="premiumMenu">
+            <a href="index.html" class="premium-nav-link active">Live Tracker</a>
+            <a href="games.html" class="premium-nav-link" onmouseover="this.style.color='var(--accent-color)'" onmouseout="this.style.color='#f8fafc'">Top Slots</a>
+            <a href="#casino-table" class="premium-nav-link" onmouseover="this.style.color='var(--accent-color)'" onmouseout="this.style.color='#f8fafc'">Best Bonuses</a>
+        </div>
+        
+        <div class="premium-balancer-area" style="justify-content: flex-end;">
+            <button class="premium-trigger-btn" id="premiumMenuBtn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const premiumMenuBtn = document.getElementById('premiumMenuBtn');
+    const premiumMenu = document.getElementById('premiumMenu');
+
+    premiumMenuBtn.addEventListener('click', () => {
+        premiumMenuBtn.classList.toggle('is-open');
+        premiumMenu.classList.toggle('is-open');
+        if (premiumMenu.classList.contains('is-open')) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+    });
+
+    document.querySelectorAll('.premium-nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            premiumMenuBtn.classList.remove('is-open');
+            premiumMenu.classList.remove('is-open');
+            document.body.style.overflow = '';
+        });
+    });
+</script>
+<!-- ================================================================= -->
+
+    <!-- Sub-Header / System Stats Bar (Elegant Mobile Scroll Version) -->
 <div style="width: 100%; font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif; box-sizing: border-box; padding: 0 15px;">
     
     <style>
