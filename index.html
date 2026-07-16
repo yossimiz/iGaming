@@ -317,27 +317,92 @@
     </div>
 </div>
 
-<!-- Sub-Header / System Stats Bar (Perfectly Aligned to Container & Logo) -->
-<div class="stats-ticker" style="background: transparent; border-bottom: none; padding: 0; margin: 10px auto 15px auto; max-width: 1150px; width: 100%; box-sizing: border-box;">
+<!-- Sub-Header / System Stats Bar (Fully Responsive Layout) -->
+<div class="stats-ticker-wrapper" style="width: 100%; font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif; box-sizing: border-box; padding: 0 15px;">
     
-    <!-- Inner Content Box: Mirrors the exact layout structure of your .container class -->
-    <div style="background-color: #111827; border: 1px solid var(--border-color); border-radius: 12px; padding: 12px 25px; display: flex !important; justify-content: space-between !important; align-items: center !important; width: 100%; box-sizing: border-box; gap: 15px;">
+    <!-- CSS מובנה שמטפל בהבדלים בין מחשב למובייל בצורה חלקה -->
+    <style>
+        .stats-responsive-container {
+            max-width: 1150px;
+            margin: 12px auto 15px auto;
+            padding: 10px 20px;
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            gap: 15px;
+            width: 100%;
+            box-sizing: border-box;
+            background-color: #0b0f19;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+        }
+        .stats-left-side {
+            display: flex !important;
+            align-items: center !important;
+            gap: 20px !important;
+            flex-wrap: nowrap !important;
+        }
+        .stats-items-grid {
+            display: flex !important;
+            gap: 20px !important;
+            flex-wrap: nowrap !important;
+        }
+
+        /* 📱 התאמה מוחלטת למסכי מובייל (מתחת ל-768 פיקסלים) */
+        @media (max-width: 768px) {
+            .stats-responsive-container {
+                flex-direction: column !important;
+                text-align: center !important;
+                padding: 15px !important;
+                gap: 12px !important;
+            }
+            .stats-left-side {
+                flex-direction: column !important;
+                width: 100% !important;
+                gap: 10px !important;
+            }
+            /* הסרת קו ההפרדה האנכי במובייל כי התוכן הופך לטור */
+            .stats-separator {
+                display: none !important;
+            }
+            /* הפיכת הנתונים לרשת נקייה של 2 שורות במובייל במקום להימתח הצידה */
+            .stats-items-grid {
+                display: grid !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 10px 15px !important;
+                width: 100% !important;
+                justify-items: center !important;
+            }
+            .stats-item {
+                font-size: 11px !important;
+                text-align: center !important;
+            }
+            .system-badge {
+                margin-top: 4px !important;
+            }
+        }
+    </style>
+
+    <!-- התיבה עצמה המושפעת מחוקי ה-CSS שלמעלה -->
+    <div class="stats-responsive-container">
         
-        <!-- Left Side: Brand Logo & Live Stats (Locked tightly on a single row) -->
-        <div style="display: flex !important; align-items: center !important; gap: 20px !important; flex-wrap: nowrap !important; overflow: hidden;">
-            <!-- Brand Title - Formatted to start exactly aligned with the main logo boundary -->
-            <div class="navbar-logo" style="font-size: 0.85rem; font-weight: 800; color: #00ffcc; letter-spacing: 0.05em; text-transform: uppercase; white-space: nowrap; background: none; -webkit-text-fill-color: initial;">
+        <!-- Left Side: Brand Logo & Live Stats -->
+        <div class="stats-left-side">
+            <!-- Brand Title -->
+            <div class="navbar-logo" style="font-size: 13px; font-weight: 800; color: #00ffcc; letter-spacing: 0.5px; text-transform: uppercase; white-space: nowrap;">
                 SLOTMETRIC
             </div>
             
-            <!-- Separator Line -->
-            <div style="width: 1px; height: 12px; background-color: var(--border-color); flex-shrink: 0;"></div>
+            <!-- Separator Line (Hidden on Mobile) -->
+            <div class="stats-separator" style="width: 1px; height: 12px; background-color: var(--border-color); flex-shrink: 0;"></div>
 
-            <!-- Ticker Items (Using white-space: nowrap to prevent any vertical row breaking) -->
-            <div class="stats-item" style="font-size: 0.78rem; color: var(--secondary-text); white-space: nowrap;">Scanned Networks: <strong style="color: var(--primary-text);">42 Regulated Brokers</strong></div>
-            <div class="stats-item" style="font-size: 0.78rem; color: var(--secondary-text); white-space: nowrap;">Global RTP Avg: <strong style="color: var(--accent-color);">96.48%</strong></div>
-            <div class="stats-item" style="font-size: 0.78rem; color: var(--secondary-text); white-space: nowrap;">Active Jackpots Pool: <strong style="color: #ef4444;">€14,842,910</strong></div>
-            <div class="stats-item" style="font-size: 0.78rem; color: var(--secondary-text); white-space: nowrap;">Data Sync: <strong style="color: var(--secondary-text);">Every 60 Mins</strong></div>
+            <!-- Ticker Items Grid (Flexible Row on Desktop, 2x2 Grid on Mobile) -->
+            <div class="stats-items-grid">
+                <div class="stats-item" style="font-size: 11px; color: var(--secondary-text); white-space: nowrap;">Scanned Networks: <strong style="color: var(--primary-text);">42 Regulated Brokers</strong></div>
+                <div class="stats-item" style="font-size: 11px; color: var(--secondary-text); white-space: nowrap;">Global RTP Avg: <strong style="color: var(--accent-color);">96.48%</strong></div>
+                <div class="stats-item" style="font-size: 11px; color: var(--secondary-text); white-space: nowrap;">Active Jackpots: <strong style="color: #ef4444;">€14,842,910</strong></div>
+                <div class="stats-item" style="font-size: 11px; color: var(--secondary-text); white-space: nowrap;">Data Sync: <strong style="color: var(--secondary-text);">Every 60 Mins</strong></div>
+            </div>
         </div>
 
         <!-- Right Side: System Badge -->
@@ -348,6 +413,7 @@
 
     </div>
 </div>
+
 
 
 
