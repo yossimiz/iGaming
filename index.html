@@ -317,91 +317,94 @@
     </div>
 </div>
 
-<!-- Sub-Header / System Stats Bar (Fully Responsive Layout) -->
-<div class="stats-ticker-wrapper" style="width: 100%; font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif; box-sizing: border-box; padding: 0 15px;">
+<!-- Sub-Header / System Stats Bar (Anti-Conflict Responsive Layout) -->
+<div style="width: 100%; font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif; box-sizing: border-box; padding: 0 15px;">
     
-    <!-- CSS מובנה שמטפל בהבדלים בין מחשב למובייל בצורה חלקה -->
+    <!-- CSS ייחודי שדורס כל הגדרה קודמת בקובץ שלך -->
     <style>
-        .stats-responsive-container {
-            max-width: 1150px;
-            margin: 12px auto 15px auto;
-            padding: 10px 20px;
+        .custom-stats-bar {
+            max-width: 1150px !important;
+            margin: 12px auto 15px auto !important;
+            padding: 10px 20px !important;
             display: flex !important;
             justify-content: space-between !important;
             align-items: center !important;
-            gap: 15px;
-            width: 100%;
-            box-sizing: border-box;
-            background-color: #0b0f19;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
+            gap: 15px !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+            background-color: #0b0f19 !important;
+            border: 1px solid var(--border-color) !important;
+            border-radius: 12px !important;
+            overflow: hidden !important;
+            white-space: normal !important; /* מבטל את השורה הארוכה במובייל */
         }
-        .stats-left-side {
+        .custom-left-row {
             display: flex !important;
             align-items: center !important;
             gap: 20px !important;
             flex-wrap: nowrap !important;
         }
-        .stats-items-grid {
+        .custom-items-grid {
             display: flex !important;
             gap: 20px !important;
             flex-wrap: nowrap !important;
         }
+        .custom-item-text {
+            font-size: 11px !important;
+            color: var(--secondary-text) !important;
+            white-space: nowrap !important; /* שומר על כל נתון כמשפט אחד */
+        }
 
-        /* 📱 התאמה מוחלטת למסכי מובייל (מתחת ל-768 פיקסלים) */
+        /* 📱 כפייה מוחלטת למסכי מובייל (מתחת ל-768 פיקסלים) */
         @media (max-width: 768px) {
-            .stats-responsive-container {
+            .custom-stats-bar {
                 flex-direction: column !important;
                 text-align: center !important;
-                padding: 15px !important;
+                padding: 15px 10px !important;
                 gap: 12px !important;
             }
-            .stats-left-side {
+            .custom-left-row {
                 flex-direction: column !important;
                 width: 100% !important;
                 gap: 10px !important;
             }
-            /* הסרת קו ההפרדה האנכי במובייל כי התוכן הופך לטור */
-            .stats-separator {
-                display: none !important;
+            .custom-hide-mobile {
+                display: none !important; /* מעלים את קו ההפרדה האנכי */
             }
-            /* הפיכת הנתונים לרשת נקייה של 2 שורות במובייל במקום להימתח הצידה */
-            .stats-items-grid {
+            .custom-items-grid {
                 display: grid !important;
-                grid-template-columns: repeat(2, 1fr) !important;
-                gap: 10px 15px !important;
+                grid-template-columns: repeat(2, 1fr) !important; /* מסדר בטבלה של 2x2 במובייל */
+                gap: 10px 10px !important;
                 width: 100% !important;
                 justify-items: center !important;
             }
-            .stats-item {
+            .custom-item-text {
                 font-size: 11px !important;
                 text-align: center !important;
-            }
-            .system-badge {
-                margin-top: 4px !important;
+                white-space: normal !important; /* מאפשר מילים לרדת שורה בתוך הריבוע שלו במובייל */
             }
         }
     </style>
 
-    <!-- התיבה עצמה המושפעת מחוקי ה-CSS שלמעלה -->
-    <div class="stats-responsive-container">
+    <!-- התיבה המשודרגת עם השמות החדשים לחלוטין -->
+    <div class="custom-stats-bar">
         
         <!-- Left Side: Brand Logo & Live Stats -->
-        <div class="stats-left-side">
+        <div class="custom-left-row">
             <!-- Brand Title -->
-            <div class="navbar-logo" style="font-size: 13px; font-weight: 800; color: #00ffcc; letter-spacing: 0.5px; text-transform: uppercase; white-space: nowrap;">
+            <div class="navbar-logo" style="font-size: 13px; font-weight: 800; color: #00ffcc; letter-spacing: 0.5px; text-transform: uppercase; white-space: nowrap; background: none; -webkit-text-fill-color: initial;">
                 SLOTMETRIC
             </div>
             
             <!-- Separator Line (Hidden on Mobile) -->
-            <div class="stats-separator" style="width: 1px; height: 12px; background-color: var(--border-color); flex-shrink: 0;"></div>
+            <div class="custom-hide-mobile" style="width: 1px; height: 12px; background-color: var(--border-color); flex-shrink: 0;"></div>
 
-            <!-- Ticker Items Grid (Flexible Row on Desktop, 2x2 Grid on Mobile) -->
-            <div class="stats-items-grid">
-                <div class="stats-item" style="font-size: 11px; color: var(--secondary-text); white-space: nowrap;">Scanned Networks: <strong style="color: var(--primary-text);">42 Regulated Brokers</strong></div>
-                <div class="stats-item" style="font-size: 11px; color: var(--secondary-text); white-space: nowrap;">Global RTP Avg: <strong style="color: var(--accent-color);">96.48%</strong></div>
-                <div class="stats-item" style="font-size: 11px; color: var(--secondary-text); white-space: nowrap;">Active Jackpots: <strong style="color: #ef4444;">€14,842,910</strong></div>
-                <div class="stats-item" style="font-size: 11px; color: var(--secondary-text); white-space: nowrap;">Data Sync: <strong style="color: var(--secondary-text);">Every 60 Mins</strong></div>
+            <!-- Ticker Items Grid -->
+            <div class="custom-items-grid">
+                <div class="custom-item-text">Scanned Networks: <strong style="color: var(--primary-text);">42 Regulated Brokers</strong></div>
+                <div class="custom-item-text">Global RTP Avg: <strong style="color: var(--accent-color);">96.48%</strong></div>
+                <div class="custom-item-text">Active Jackpots: <strong style="color: #ef4444;">€14,842,910</strong></div>
+                <div class="custom-item-text">Data Sync: <strong style="color: var(--secondary-text);">Every 60 Mins</strong></div>
             </div>
         </div>
 
@@ -413,6 +416,7 @@
 
     </div>
 </div>
+
 
 
 
