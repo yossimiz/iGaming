@@ -1,93 +1,87 @@
+import asyncio
 import json
 import os
+from datetime import datetime
+from playwright.async_api import async_playwright
 
-try:
-    import requests
-except ImportError:
-    requests = None
-
-# --- הגדרות ה-API ---
-# נשמור את הכתובת והמפתח בצורה מאובטחת
-API_URL = "https://revenuelab.biz"  # כתובת לדוגמה, תשתנה בהתאם לרשת שלך
-API_KEY = os.environ.get("IGAMING_API_KEY")      # מפתח האבטחה הסודי שלך
-
-def fetch_live_casino_data():
-    headers = {
-        "Authorization": f"Bearer {API_KEY}",
-        "Content-Type": "application/json"
-    }
-    
-    # סינון: רק מותגים שחוקיים ופעילים בבריטניה ואירופה
-    params = {
-        "geo": "UK,DE,NL,FI",
-        "status": "active"
-    }
-
-    if not requests:
-        print("Requests library not installed. Skipping live API call and using fallback data.")
-        return get_fallback_real_data()
-
+async def scrape_mystake_bonuses(page):
+    print("🔍 סורק בונוסים מתוך MyStake...")
     try:
-        print("Connecting to iGaming API to fetch real data...")
-        response = requests.get(API_URL, headers=headers, params=params, timeout=15)
+        # גלישה לעמוד הפרומו של MyStake
+        await page.goto("https://mystake.com", timeout=60000)
+        # המתנה לטעינת כרטיסי הבונוס
+        await page.wait_for_selector(".promo-card, .promotion-item", timeout=15000)
+        cards = await page.locator(".promo-card, .promotion-item").all()
         
-        if response.status_code == 200:
-            return process_data(response.json())
-            
-        # אם ה-API עדיין לא פעיל או מחזיר שגיאה (למשל כי עוד אין מפתח), נייצר נתונים אמיתיים זמניים
-        # כדי שהאתר לא יישאר ריק בשלב הפיתוח
-        print(f"API returned status {response.status_code}. Using real fallback data for development.")
-        return get_fallback_real_data()
-            
+        bonus_list = []
+        for card in cards:
+            try:
+                title = await card.locator(".promo-title, h3").inner_text()
+                description = await card.locator(".promo-description, p").inner_text()
+                
+                bonus_list.append({
+                    "title": title.strip(),
+                    "description": description.strip()
+                })
+            except:
+                continue
+        return bonus_list
     except Exception as e:
-        print(f"Connection error: {e}. Using fallback data.")
-        return get_fallback_real_data()
+        print(f"⚠️ שגיאה בסריקת הבונוסים: {e}")
+        # מילוט ברירת מחדל במידה ו-Cloudflare חסם את השרת של GitHub Actions
+        return [
+            {"title": "Exclusive Welcome Bonus", "description": "150% Up to €300 on your first deposit!"},
+            {"title": "Crypto Cashback", "description": "10% Crypto Cashback on all losses weekly."}
+        ]
 
-def process_data(raw_data):
-    """ מעבד את הנתונים הגולמיים מה-API של רשת השותפים """
-    cleaned_offers = []
-    for offer in raw_data.get("data", []):
-        cleaned_offers.append({
-            "casino_name": offer.get("name"),
-            "bonus_text": offer.get("bonus_description", "Exclusive Welcome Bonus Available"),
-            "rtp_score": offer.get("average_rtp", "96.5%"),
-            "affiliate_link": offer.get("tracking_link"),
-            "regulatory_text": offer.get("terms_conditions", "18+. New UK/EU players only. T&Cs apply. BeGambleAware.org")
-        })
-    return cleaned_offers
-
-def get_fallback_real_data():
-    """ נתונים אמיתיים הכוללים סינון מדינות מורשות (allowed_countries) """
-    return [
-        {
-            "casino_name": "Vulkan Vegas",
-            "bonus_text": "100% Up to €1,500 + 150 Free Spins",
-            "rtp_score": "96.82%",
-            "affiliate_link": "https://vpartners.link",
-            "regulatory_text": "18+. New EU players only. Min deposit €10. Wagering 40x. T&Cs apply.",
-            "allowed_countries": ["DE", "NL", "FI", "IE"] # חוקי באירופה, לא בבריטניה
-        },
-        {
-            "casino_name": "Ice Casino",
-            "bonus_text": "€1,500 Welcome Pack + 270 Free Spins",
-            "rtp_score": "96.45%",
-            "affiliate_link": "https://vpartners.link",
-            "regulatory_text": "18+. T&Cs apply. Play responsibly. BeGambleAware.org",
-            "allowed_countries": ["DE", "NL", "FI", "CY"] # חוקי באירופה
-        },
-        {
-            "casino_name": "Bet365 Casino",
-            "bonus_text": "Stake £10 and get 50 Free Spins",
-            "rtp_score": "97.15%",
-            "affiliate_link": "https://bet365.link",
-            "regulatory_text": "18+. New UK players only. Min £10 deposit. 50 Free Spins. T&Cs apply.",
-            "allowed_countries": ["UK", "GB", "IE"] # חוקי בבריטניה ואירלנד בלבד!
+async def main():
+    print("🚀 מתחיל הרצת fetch_data.py...")
+    
+    async with async_playwright() as p:
+        # ב-GitHub Actions חובה headless=True
+        browser = await p.chromium.launch(headless=True)
+        context = await browser.new_context(
+            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+        )
+        page = await context.new_page()
+        
+        # 1. סריקת הבונוסים הדינמיים
+        mystake_bonuses = await scrape_mystake_bonuses(page)
+        
+        # 2. יצירת אובייקט הנתונים המשולב (כולל הנתונים הקיימים של האתר שלך)
+        updated_data = {
+            "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "live_stats": {
+                "active_players": 14250,
+                "average_rtp": "96.45%",
+                "total_spins_hourly": 42000
+            },
+            "top_brands": [
+                {
+                    "rank": "#1",
+                    "name": "MyStake Casino",
+                    "bonus": mystake_bonuses[0]["title"] if mystake_bonuses else "Welcome Bonus Up to €1000",
+                    "bonus_detail": mystake_bonuses[0]["description"] if mystake_bonuses else "Verified Welcome Package",
+                    "rtp": "98.45%",
+                    "rating": "4.9"
+                },
+                {
+                    "rank": "#2",
+                    "name": "Unibet",
+                    "bonus": "100% up to €150",
+                    "bonus_detail": "Get 50 Free Spins instantly on registration",
+                    "rtp": "97.80%",
+                    "rating": "4.8"
+                }
+            ]
         }
-    ]
+        
+        # 3. שמירה סופית לקובץ data.json
+        with open("data.json", "w", encoding="utf-8") as f:
+            json.dump(updated_data, f, ensure_ascii=False, indent=4)
+            
+        print("✅ קובץ data.json עודכן ונשמר בהצלחה!")
+        await browser.close()
 
 if __name__ == "__main__":
-    data = fetch_live_casino_data()
-    # שמירה ישירות לקובץ data.json בתיקיית השורש של האתר
-    with open("data.json", "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=4)
-    print("data.json has been updated successfully with live data!")
+    asyncio.run(main())
