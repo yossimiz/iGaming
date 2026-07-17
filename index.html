@@ -165,23 +165,30 @@
 </div>
 
 <!-- ================================================================= -->
-<!-- TOP NAVIGATION BAR (FIXED INDEPENDENT MOBILE MENU VERSION)         -->
+<!-- TOP NAVIGATION BAR (WITH BRAND ICON & TOP GAMES UPDATED)          -->
 <!-- ================================================================= -->
 <div style="width: 100%; background-color: #0b0f19; border-bottom: 1px solid #22314d; padding: 15px 20px; box-sizing: border-box; position: relative; z-index: 999999; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
     
     <div style="max-width: 1150px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; width: 100%; box-sizing: border-box;">
         
-        <!-- לוגו האתר (שמאל) -->
-        <div style="z-index: 1000001;">
+        <!-- לוגו האתר עם אייקון מטריצה/נתונים יוקרתי (שמאל) -->
+        <div style="z-index: 1000001; display: flex; align-items: center; gap: 8px;">
+            <!-- Premium SVG Data/Slot Icon -->
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://w3.org" style="color: #10b981; flex-shrink: 0;">
+                <path d="M4 13V19C4 20.1046 4.89543 21 6 21H18C19.1046 21 20 20.1046 20 19V13M4 13L11.2929 5.70711C11.6834 5.31658 12.3166 5.31658 12.7071 5.70711L20 13M4 13H20" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="8" cy="13" r="1.5" fill="currentColor"/>
+                <circle cx="12" cy="11" r="1.5" fill="currentColor"/>
+                <circle cx="16" cy="14" r="1.5" fill="currentColor"/>
+            </svg>
             <a href="index.html" style="font-size: 24px; font-weight: 800; color: #ffffff; text-decoration: none; letter-spacing: 0.5px; white-space: nowrap;">
                 Slot<span style="color: #10b981;">Metric</span>
             </a>
         </div>
 
-        <!-- תפריט הניווט (אמצע במחשב, נפתח למסך מלא במובייל) -->
+        <!-- תפריט הניווט - עודכן מ-Top Slots ל-Top Games (אמצע במחשב) -->
         <div id="premiumMenu" class="custom-mobile-menu" style="display: flex; align-items: center; gap: 32px; justify-content: center;">
             <a href="index.html" class="p-nav-link" style="color: #10b981; font-weight: 600; text-decoration: none; font-size: 14px; white-space: nowrap;">Live Tracker</a>
-            <a href="games.html" class="p-nav-link" style="color: #f8fafc; font-weight: 500; text-decoration: none; font-size: 14px; white-space: nowrap;" onmouseover="this.style.color='#10b981'" onmouseout="this.style.color='#f8fafc'">Top Slots</a>
+            <a href="games.html" class="p-nav-link" style="color: #f8fafc; font-weight: 500; text-decoration: none; font-size: 14px; white-space: nowrap;" onmouseover="this.style.color='#10b981'" onmouseout="this.style.color='#f8fafc'">Top Games</a>
             <a href="#casino-table" class="p-nav-link" style="color: #f8fafc; font-weight: 500; text-decoration: none; font-size: 14px; white-space: nowrap;" onmouseover="this.style.color='#10b981'" onmouseout="this.style.color='#f8fafc'">Best Bonuses</a>
         </div>
         
@@ -196,7 +203,6 @@
         
     </div>
 
-    <!-- חוקים ספציפיים למובייל שיעבדו בלי התנגשויות -->
     <style>
         @media (max-width: 768px) {
             .custom-mobile-menu {
@@ -211,8 +217,6 @@
                 align-items: center !important;
                 gap: 30px !important;
                 z-index: 1000000 !important;
-                
-                /* מצב סגור */
                 opacity: 0 !important;
                 visibility: hidden !important;
                 transform: translateY(-20px) !important;
@@ -227,8 +231,6 @@
                 font-size: 22px !important;
                 padding: 10px !important;
             }
-            
-            /* אפקט הפיכה ל-X */
             #premiumMenuBtn.is-open .line-1 {
                 transform: translateY(7px) rotate(45deg) !important;
                 background-color: #10b981 !important;
@@ -243,14 +245,13 @@
         }
         @media (min-width: 769px) {
             #premiumMenuBtn {
-                display: none !important; /* מסתיר את הכפתור לגמרי במחשב */
+                display: none !important;
             }
         }
     </style>
 </div>
 
 <script>
-    // הפעלת התפריט בלחיצה
     document.addEventListener("DOMContentLoaded", function() {
         const btn = document.getElementById('premiumMenuBtn');
         const menu = document.getElementById('premiumMenu');
@@ -268,7 +269,6 @@
                 }
             });
 
-            // סגירה בלחיצה על קישור
             document.querySelectorAll('.p-nav-link').forEach(link => {
                 link.addEventListener('click', () => {
                     btn.classList.remove('is-open');
@@ -280,6 +280,7 @@
     });
 </script>
 <!-- ================================================================= -->
+
 
 <!-- Sub-Header / System Stats Bar (Unified Single-Row Mobile Scroll Version) -->
 <div style="width: 100%; font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif; box-sizing: border-box; padding: 0 15px;">
