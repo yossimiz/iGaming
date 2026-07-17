@@ -14,11 +14,10 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    # 2. התקנת סביבת פייתון מעודכנת
+    # 2. התקנת סביבת פייתון מעודכנת (נקייה ללא משתני קאש שגויים)
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-cache: 'pip'
         python-version: '3.11'
 
     # 3. התקנת החבילות הנדרשות לפרויקט
@@ -27,7 +26,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install playwright
 
-    # 4. שלב קריטי: התקנת דפדפן הכרומיום הרשמי של Playwright בשרת האובונטו
+    # 4. התקנת דפדפן הכרומיום הרשמי של Playwright בשרת
     - name: Install Playwright Browsers
       run: python -m playwright install chromium --with-deps
 
