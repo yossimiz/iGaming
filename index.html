@@ -1253,6 +1253,32 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
+<!-- קוד JavaScript לתיקון הפעלת תפריט המובייל -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    // 1. מציאת כפתור התפריט (ההמבורגר) ואלמנט התפריט עצמו
+    // שים לב: אם המחלקות אצלך בקוד שונות (למשל navbar-toggle או mobile-menu), שנה את השמות כאן בהתאם
+    const menuToggle = document.querySelector(".menu-toggle") || document.querySelector(".nav-toggle") || document.querySelector("#mobile-menu-btn");
+    const navMenu = document.querySelector(".nav-menu") || document.querySelector(".navbar-links") || document.querySelector("#nav-links");
+
+    // 2. הוספת אירוע לחיצה (Click) שיפתח ויסגור את התפריט
+    if (menuToggle && navMenu) {
+        menuToggle.addEventListener("click", function (e) {
+            e.stopPropagation(); // מונע באגים של לחיצות כפולות
+            navMenu.classList.toggle("active");
+            menuToggle.classList.toggle("is-active");
+        });
+
+        // 3. סגירת התפריט באופן אוטומטי אם הגולש לוחץ מחוץ לתפריט
+        document.addEventListener("click", function (e) {
+            if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+                navMenu.classList.remove("active");
+                menuToggle.classList.remove("is-active");
+            }
+        });
+    }
+});
+</script>
 
 
 </body>
