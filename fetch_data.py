@@ -1,75 +1,90 @@
-// ================================================================= 
-// FETCH_DATA.JS - INDEPENDENT GEO ENGINE & LIVE DATA SYNC          
-// ================================================================= 
+import asyncio
+import json
+import os
+from datetime import datetime
+from playwright.async_api import async_playwright
 
-async function runGlobalDataSyncEngine() {
-    console.log("🚀 [Data Sync] Initializing Geo & File Fetch...");
-    let detectedCountry = "UNKNOWN";
+async def scrape_mystake_bonuses(page):
+    print("🔍 Scanning bonuses from MyStake...")
+    try:
+        await page.goto("https://mystake.com", timeout=60000)
+        await page.wait_for_selector(".promo-card, .promotion-item", timeout=15000)
+        cards = await page.locator(".promo-card, .promotion-item").all()
+        
+        bonus_list = []
+        for card in cards:
+            try:
+                title = await card.locator(".promo-title, h3").inner_text()
+                description = await card.locator(".promo-description, p").inner_text()
+                
+                bonus_list.append({
+                    "title": title.strip(),
+                    "description": description.strip()
+                })
+            except:
+                continue
+        return bonus_list
+    except Exception as e:
+        print(f"⚠️ Scraping failed: {e}")
+        # גיבוי קבוע במידה והאתר חסם את השרת של גיטהאב
+        return [
+            {"title": "Exclusive Welcome Bonus", "description": "150% Up to €300 on your first deposit!"},
+            {"title": "Crypto Cashback", "description": "10% Crypto Cashback on all losses weekly."}
+        ]
+
+async def main():
+    print("🚀 Initializing fetch_data.py...")
     
-    // 1. זיהוי מיקום מאובטח דרך שרתים התואמים את פרוטוקול GitHub Pages
-    const geoSources = [
-        'https://ipapi.co',
-        'https://ipwhois.app'
-    ];
-
-    for (const url of geoSources) {
-        try {
-            const response = await fetch(url);
-            if (response.ok) {
-                const ipData = await response.json();
-                const code = (ipData.country_code || ipData.country || '').toString().trim().toUpperCase();
-                if (code) {
-                    detectedCountry = code === 'GB' ? 'UK' : code;
-                    console.log(`🌍 [Geo Found] Country detected via ${url}:`, detectedCountry);
-                    break;
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(headless=True)
+        context = await browser.new_context(
+            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+        )
+        page = await context.new_page()
+        
+        # 1. הרצת הסורק לקבלת מערך הבונוסים
+        mystake_bonuses = await scrape_mystake_bonuses(page)
+        
+        # חילוץ הבונוס הראשון מתוך המערך בצורה בטוחה כדי למנוע את קריסת הסקריפט
+        first_bonus_title = mystake_bonuses[0]["title"] if len(mystake_bonuses) > 0 else "Welcome Bonus Up to €1000"
+        first_bonus_desc = mystake_bonuses[0]["description"] if len(mystake_bonuses) > 0 else "Verified Welcome Package"
+        
+        # 2. בניית מבנה הנתונים המשולב עבור data.json
+        updated_data = {
+            "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "live_stats": {
+                "active_players": 14250,
+                "average_rtp": "96.45%",
+                "total_spins_hourly": 42000
+            },
+            "top_brands": [
+                {
+                    "rank": "#1",
+                    "name": "MyStake Casino",
+                    "bonus": first_bonus_title,
+                    "bonus_detail": first_bonus_desc,
+                    "rtp": "98.45%",
+                    "rating": "4.9",
+                    "allowed_countries": ["DE", "NL", "FI", "IE", "UK", "CY"]
+                },
+                {
+                    "rank": "#2",
+                    "name": "Unibet",
+                    "bonus": "100% up to €150",
+                    "bonus_detail": "Get 50 Free Spins instantly on registration",
+                    "rtp": "97.80%",
+                    "rating": "4.8",
+                    "allowed_countries": ["DE", "NL", "FI", "IE", "UK", "CY"]
                 }
-            }
-        } catch (err) {
-            console.warn(`⚠️ [Geo Source Failed]: ${url}`);
+            ]
         }
-    }
-
-    // מערכת מילוט (Fallback) לפי אזור זמן במידה ושרתי ה-IP נחסמו
-    if (detectedCountry === "UNKNOWN") {
-        try {
-            const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
-            if (/Jerusalem|Tel_Aviv/i.test(tz)) {
-                detectedCountry = 'IL';
-            } else {
-                detectedCountry = 'DE'; 
-            }
-        } catch (e) {
-            detectedCountry = 'DE';
-        }
-    }
-
-    // עדכון קוד המדינה על המסך במידה וקיים אינדיקטור
-    const countryLabel = document.getElementById('display-country');
-    if (countryLabel) {
-        countryLabel.innerText = detectedCountry;
-    }
-
-    // 2. משיכת קובץ ה-JSON הדינמי שהפייתון וה-Actions מייצרים ברקע
-    try {
-        const jsonResponse = await fetch('data.json');
-        if (jsonResponse.ok) {
-            const jsonData = await jsonResponse.json();
-            console.log("📥 [JSON Loaded] Scraped data attached successfully:", jsonData);
+        
+        # 3. שמירה לקובץ data.json
+        with open("data.json", "w", encoding="utf-8") as f:
+            json.dump(updated_data, f, ensure_ascii=False, indent=4)
             
-            // הזנת הבונוסים שנסרקו לתוך מערך המותגים הראשי של המשחק
-            if (jsonData.top_brands && typeof casinoData !== 'undefined') {
-                casinoData = jsonData.top_brands;
-            }
-        }
-    } catch (jsonErr) {
-        console.log("ℹ️ [Notice] data.json not active yet. Running fallback lists.");
-    }
+        print("✅ data.json updated and compiled successfully!")
+        await browser.close()
 
-    // 3. הפעלת מנגנון הסינון הקיים בתוך app.js עבור המדינה שנמצאה
-    if (typeof window.updateCasinoDataByCountry === "function") {
-        window.updateCasinoDataByCountry(detectedCountry);
-    }
-}
-
-// הפעלת מנוע הנתונים והמיקום מיד עם עליית הדף
-document.addEventListener("DOMContentLoaded", runGlobalDataSyncEngine);
+if __name__ == "__main__":
+    asyncio.run(main())
