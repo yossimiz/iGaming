@@ -281,84 +281,85 @@
 </script>
 <!-- ================================================================= -->
 
-<!-- Sub-Header / System Stats Bar (100% Flattened Clean Ticker) -->
+<!-- Sub-Header / System Stats Bar (100% Frameless & Clean Background Version) -->
 <div style="width: 100%; font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif; box-sizing: border-box; padding: 0 15px;">
     
+    <!-- הוספת סגנונות ממוקדים - ללא רקע (background: transparent) וללא מסגרת (border: none) -->
     <style>
-        .clean-stats-ticker {
+        .frameless-stats-ticker {
             max-width: 1150px !important;
-            margin: 12px auto 15px auto !important;
-            padding: 10px 20px !important;
+            margin: 15px auto 15px auto !important;
+            padding: 5px 0 !important; /* ריפוד קטן לטקסט חופשי */
             display: flex !important;
             justify-content: space-between !important;
             align-items: center !important;
             gap: 15px !important;
             width: 100% !important;
             box-sizing: border-box !important;
-            background-color: #0b0f19 !important;
-            border: 1px solid var(--border-color) !important;
-            border-radius: 12px !important;
+            background: transparent !important; /* הסרת הרקע הכהה לחלוטין */
+            border: none !important;             /* הסרת המסגרת לחלוטין */
+            box-shadow: none !important;         /* ביטול צללים */
         }
-        .clean-left-row {
+        .frameless-left-row {
             display: flex !important;
             align-items: center !important;
             gap: 20px !important;
             flex-wrap: nowrap !important;
         }
-        .clean-items-inline {
+        .frameless-items-inline {
             display: flex !important;
-            gap: 24px !important; /* רווח נקי ואוורירי בין הנתונים */
+            gap: 24px !important;
             flex-wrap: nowrap !important;
         }
-        .clean-text-node {
+        .frameless-text-node {
             font-size: 11px !important;
             color: var(--secondary-text) !important;
             white-space: nowrap !important;
-            background: none !important; /* ביטול מוחלט של קוביית הרקע */
-            padding: 0 !important;        /* ביטול מוחלט של הריפוד של הקובייה */
-            border: none !important;       /* ביטול מוחלט של גבולות הקובייה */
+            background: none !important;
+            padding: 0 !important;
+            border: none !important;
         }
 
-        /* 📱 התאמה נקייה וחלקה למובייל */
+        /* 📱 התאמה נקייה למובייל - הנתונים בשורה רצה והתג מיושר */
         @media (max-width: 768px) {
-            .clean-stats-ticker {
+            .frameless-stats-ticker {
                 flex-direction: column !important;
                 gap: 12px !important;
-                padding: 12px 15px !important;
+                padding: 5px 0 !important;
+                align-items: flex-start !important; /* יישור נוח לתחילת השורה */
             }
-            .clean-left-row {
+            .frameless-left-row {
                 width: 100% !important;
-                overflow-x: auto !important; /* מאפשר גלילה אופקית חלקה של השורה במובייל */
+                overflow-x: auto !important; /* מאפשר להחליק את שורת הנתונים הצידה */
                 flex-direction: row !important;
                 justify-content: flex-start !important;
                 gap: 15px !important;
-                padding-bottom: 2px !important;
+                padding-bottom: 5px !important;
                 
-                /* הסתרת סרגל הגלילה של הדפדפן */
+                /* הסתרת סרגל גלילה */
                 -ms-overflow-style: none !important;
                 scrollbar-width: none !important;
             }
-            .clean-left-row::-webkit-scrollbar {
+            .frameless-left-row::-webkit-scrollbar {
                 display: none !important;
             }
-            .clean-items-inline {
+            .frameless-items-inline {
                 display: flex !important;
                 flex-direction: row !important;
                 gap: 20px !important;
             }
-            .system-badge {
-                width: 100% !important;
-                justify-content: center !important;
-                font-size: 11px !important;
-                padding: 5px !important;
+            .frameless-mobile-badge {
+                width: auto !important; /* התג לא יימתח, אלא יישאר סולידי ודק */
+                align-self: center !important; /* ממרכז את התג הירוק מתחת לשורת הטקסט */
             }
         }
     </style>
 
-    <div class="clean-stats-ticker">
+    <!-- התיבה המשודרגת כשהיא פתוחה וחופשית על רקע האתר -->
+    <div class="frameless-stats-ticker">
         
-        <!-- Left Side: Brand Logo & Live Stats Line -->
-        <div class="clean-left-row">
+        <!-- Left Side: Brand Logo & Live Stats Row -->
+        <div class="frameless-left-row">
             <!-- Brand Title -->
             <div class="navbar-logo" style="font-size: 12px; font-weight: 800; color: #00ffcc; letter-spacing: 0.5px; text-transform: uppercase; white-space: nowrap; background: none; -webkit-text-fill-color: initial;">
                 SLOTMETRIC
@@ -367,23 +368,24 @@
             <!-- Separator Line -->
             <div style="width: 1px; height: 12px; background-color: var(--border-color); flex-shrink: 0;"></div>
 
-            <!-- Ticker Items (Pure inline text with zero container boxes) -->
-            <div class="clean-items-inline">
-                <div class="clean-text-node">Scanned Networks: <strong style="color: var(--primary-text);">42 Regulated Brokers</strong></div>
-                <div class="clean-text-node">Global RTP Avg: <strong style="color: #10b981;">96.48%</strong></div>
-                <div class="clean-text-node">Active Jackpots: <strong style="color: #ef4444;">€14,842,910</strong></div>
-                <div class="clean-text-node">Data Sync: <strong style="color: var(--secondary-text);">Every 60 Mins</strong></div>
+            <!-- Ticker Items (Inline Text) -->
+            <div class="frameless-items-inline">
+                <div class="frameless-text-node">Scanned Networks: <strong style="color: var(--primary-text);">42 Regulated Brokers</strong></div>
+                <div class="frameless-text-node">Global RTP Avg: <strong style="color: #10b981;">96.48%</strong></div>
+                <div class="frameless-text-node">Active Jackpots: <strong style="color: #ef4444;">€14,842,910</strong></div>
+                <div class="frameless-text-node">Data Sync: <strong style="color: var(--secondary-text);">Every 60 Mins</strong></div>
             </div>
         </div>
 
         <!-- Right Side: System Badge -->
-        <div class="system-badge" style="flex-shrink: 0; padding: 4px 12px; border-radius: 20px; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); font-size: 0.8rem; font-weight: 600; color: #10b981; display: flex !important; align-items: center !important; gap: 6px; box-sizing: border-box;">
+        <div class="system-badge frameless-mobile-badge" style="flex-shrink: 0; padding: 4px 12px; border-radius: 20px; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); font-size: 0.8rem; font-weight: 600; color: #10b981; display: flex !important; align-items: center !important; gap: 6px; box-sizing: border-box;">
             <span style="width: 6px; height: 6px; background-color: #10b981; border-radius: 50%; display: inline-block; box-shadow: 0 0 6px #10b981;"></span>
             System Operational
         </div>
 
     </div>
 </div>
+
 
 
 
