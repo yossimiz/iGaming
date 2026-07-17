@@ -36,5 +36,53 @@
             "GB",
             "IE"
         ]
+    },
+    {
+        "casino_name": "William Hill Casino",
+        "bonus_text": "£30 Free Bets for New UK Customers",
+        "rtp_score": "96.70%",
+        "affiliate_link": "https://williamhill.link",
+        "regulatory_text": "18+. UK & IE players only. New customers. T&Cs apply.",
+        "allowed_countries": [
+            "UK",
+            "GB"
+        ]
+    },
+    {
+        "casino_name": "LeoVegas Casino",
+        "bonus_text": "€100 + 100 Free Spins Welcome Pack",
+        "rtp_score": "96.90%",
+        "affiliate_link": "https://leovegas.link",
+        "regulatory_text": "18+. UK & EU customers only. Min deposit €10. T&Cs apply.",
+        "allowed_countries": [
+            "UK",
+            "IE",
+            "SE",
+            "NO"
+        ]
+    },
+    {
+        "casino_name": "PlayOJO Casino",
+        "bonus_text": "50 Free Spins with No Wagering",
+        "rtp_score": "96.60%",
+        "affiliate_link": "https://playojo.link",
+        "regulatory_text": "18+. Available in CY, IE, and select EU markets only. T&Cs apply.",
+        "allowed_countries": [
+            "CY",
+            "IE",
+            "NL"
+        ]
+    },
+    {
+        "casino_name": "Casumo Casino",
+        "bonus_text": "€200 + 20 Free Spins",
+        "rtp_score": "96.70%",
+        "affiliate_link": "https://casumo.link",
+        "regulatory_text": "18+. Cyprus & EU players only. Min deposit €10. T&Cs apply.",
+        "allowed_countries": [
+            "CY",
+            "FI",
+            "SE"
+        ]
     }
 ]
