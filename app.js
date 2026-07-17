@@ -1,35 +1,146 @@
 // משתנים גלובליים כדי שפונקציית ה-Callback תוכל לגשת אליהם מכל מקום
-let casinoData = []; 
-let filteredData = []; 
+let casinoData = [];
+let filteredData = [];
 let userCountry = "UNKNOWN";
+
+const fallbackCasinoData = [
+    {
+        casino_name: "Vulkan Vegas",
+        bonus_text: "100% Up to €1,500 + 150 Free Spins",
+        rtp_score: "96.82%",
+        affiliate_link: "https://vpartners.link",
+        regulatory_text: "18+. New EU players only. Min deposit €10. Wagering 40x. T&Cs apply.",
+        allowed_countries: ["DE", "NL", "FI", "IE"]
+    },
+    {
+        casino_name: "Ice Casino",
+        bonus_text: "€1,500 Welcome Pack + 270 Free Spins",
+        rtp_score: "96.45%",
+        affiliate_link: "https://vpartners.link",
+        regulatory_text: "18+. T&Cs apply. Play responsibly. BeGambleAware.org",
+        allowed_countries: ["DE", "NL", "FI", "CY"]
+    },
+    {
+        casino_name: "Bet365 Casino",
+        bonus_text: "Stake £10 and get 50 Free Spins",
+        rtp_score: "97.15%",
+        affiliate_link: "https://bet365.link",
+        regulatory_text: "18+. New UK players only. Min £10 deposit. 50 Free Spins. T&Cs apply.",
+        allowed_countries: ["UK", "GB", "IE"]
+    },
+    {
+        casino_name: "William Hill Casino",
+        bonus_text: "£30 Free Bets for New UK Customers",
+        rtp_score: "96.70%",
+        affiliate_link: "https://williamhill.link",
+        regulatory_text: "18+. UK & IE players only. New customers. T&Cs apply.",
+        allowed_countries: ["UK", "GB"]
+    },
+    {
+        casino_name: "LeoVegas Casino",
+        bonus_text: "€100 + 100 Free Spins Welcome Pack",
+        rtp_score: "96.90%",
+        affiliate_link: "https://leovegas.link",
+        regulatory_text: "18+. UK & EU players only. Min deposit €10. T&Cs apply.",
+        allowed_countries: ["UK", "IE", "SE", "NO"]
+    },
+    {
+        casino_name: "PlayOJO Casino",
+        bonus_text: "50 Free Spins with No Wagering",
+        rtp_score: "96.60%",
+        affiliate_link: "https://playojo.link",
+        regulatory_text: "18+. Available in CY, IE, and select EU markets only. T&Cs apply.",
+        allowed_countries: ["CY", "IE", "UK"]
+    },
+    {
+        casino_name: "Casumo Casino",
+        bonus_text: "€200 + 20 Free Spins",
+        rtp_score: "96.70%",
+        affiliate_link: "https://casumo.link",
+        regulatory_text: "18+. Cyprus & EU players only. Min deposit €10. T&Cs apply.",
+        allowed_countries: ["CY", "FI", "SE", "NO"]
+    }
+];
 
 // 1. פונקציית ה-Callback הרשמית בשיטת ה-JSONP החינמית והמאובטחת
 window.processIP = function(data) {
-    // השירות מחזיר שדה בשם country_code או country
     if (data && data.country_code) {
         userCountry = data.country_code.toUpperCase();
     } else if (data && data.country) {
         userCountry = data.country.toUpperCase();
-    } else {
+    }
+
+    if (!userCountry) {
         userCountry = "UNKNOWN";
     }
-    
+
     if (userCountry === "GB") userCountry = "UK";
     console.log("JSONP Engine Successfully Detected Geo:", userCountry);
-    
-    // הפעלת סינון האתר מיד עם קבלת המדינה מה-IP
+
     if (typeof window.triggerFilter === "function") {
         window.triggerFilter();
     }
 };
 
+async function detectCountryFromIP(displayCountryElement) {
+    const geoSources = [
+        'https://ipapi.co/json/',
+        'https://geolocation-db.com/json/',
+        'https://ipwhois.app/json/'
+    ];
+
+    for (const url of geoSources) {
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`Geo lookup failed: ${response.status} from ${url}`);
+            }
+
+            const ipData = await response.json();
+            const countryCode = (ipData.country_code || ipData.country || ipData.countryCode || ipData.countryCode3 || '').toString().trim().toUpperCase();
+
+            if (countryCode) {
+                userCountry = countryCode === 'GB' ? 'UK' : countryCode;
+                console.log(`IP geo lookup succeeded with ${url}:`, userCountry);
+                break;
+            }
+        } catch (geoError) {
+            console.warn(`Geo lookup failed for ${url}:`, geoError);
+        }
+    }
+
+    if (!userCountry || userCountry === 'UNKNOWN') {
+        try {
+            const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+            console.warn('Using timezone fallback for geo:', userTimezone);
+            if (/Jerusalem|Tel_Aviv|Asia\/Jerusalem/i.test(userTimezone)) {
+                userCountry = 'IL';
+            } else {
+                userCountry = 'ALL';
+            }
+        } catch (timezoneError) {
+            console.warn('Timezone fallback failed, defaulting to GLOBAL:', timezoneError);
+            userCountry = 'ALL';
+        }
+    }
+
+    if (displayCountryElement) {
+        displayCountryElement.innerText = userCountry === 'ALL' ? 'GLOBAL' : userCountry;
+    }
+
+    if (typeof window.triggerFilter === "function") {
+        window.triggerFilter();
+    }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
-    const dataUrl = "data.json"; 
+    const dataUrl = "./data.json"; 
     const loadingElement = document.getElementById("loading");
     const tableElement = document.getElementById("casino-table");
     const tableBody = document.getElementById("table-body");
     const sortSelect = document.getElementById("sort-select");
     const countrySelect = document.getElementById("country-select");
+    const refreshSelect = document.getElementById("refresh-select");
     const displayCountry = document.getElementById("display-country");
     
     const ageGate = document.getElementById("age-gate");
@@ -121,18 +232,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // סינון המותגים אך ורק לפי המדינה שזוהתה, ללא הגבלת RTP קשיחה בטבלה
                // סינון חכם ומאובטח המנקה רווחים ותווים נסתרים (Trim) מה-JSON
+        const normalizedCountry = userCountry ? userCountry.trim().toUpperCase() : 'ALL';
         filteredData = casinoData.filter(item => {
-            if (!item.allowed_countries) return false;
+            if (!item.allowed_countries) return true;
             
             // מנקה רווחים, ירידות שורה ותווים נסתרים מכל המדינות ב-JSON והופך לאותיות גדולות
             const cleanCountries = item.allowed_countries.map(c => c.trim().replace(/[\r\n]/g, "").toUpperCase());
             
+            if (normalizedCountry === 'ALL' || normalizedCountry === 'UNKNOWN' || normalizedCountry === '') {
+                return true;
+            }
+
             // תרגום אחיד לבריטניה
-            if (userCountry === "UK" || userCountry === "GB" || userCountry === "UNITED KINGDOM") {
+            if (normalizedCountry === "UK" || normalizedCountry === "GB" || normalizedCountry === "UNITED KINGDOM") {
                 return cleanCountries.includes("UK") || cleanCountries.includes("GB");
             }
             
-            return cleanCountries.includes(userCountry.trim().toUpperCase());
+            return cleanCountries.includes(normalizedCountry);
         });
 
 
@@ -170,6 +286,8 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
 
+        console.log(`Filtering ${casinoData.length} total casino records for country ${userCountry}. ${filteredData.length} matches found.`);
+
         if (loadingElement) loadingElement.style.display = "none";
         if (tableElement) tableElement.style.display = "table";
         
@@ -180,37 +298,121 @@ document.addEventListener("DOMContentLoaded", () => {
       // 5. טעינת נתוני ה-JSON של בתי הקזינו וזיהוי מיקום מודרני (Fetch)
     // 5. טעינת נתוני ה-JSON של בתי הקזינו וזיהוי מיקום מאובטח (HTTPS)
     // 5. Load Casino JSON with Bulletproof Native Geo-Detection
-    fetch(dataUrl)
-        .then(response => response.json())
-        .then(data => {
-            casinoData = data;
-            
-            try {
-                // Instantly reads the exact timezone configured in the user's operating system
-                const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-                console.log("Native Browser Timezone Detected:", userTimezone);
-                
-                // If the user is in Israel, set the code to IL. Otherwise, default to CY.
-                if (userTimezone.includes("Jerusalem") || userTimezone.includes("Tel_Aviv")) {
-                    userCountry = "IL";
-                } else {
-                    userCountry = "CY"; // Universal reliable European default
-                }
-                
-                window.triggerFilter();
-            } catch (geoError) {
-                console.warn("Native detection failed, defaulting to CY:", geoError);
-                userCountry = "CY";
-                window.triggerFilter();
-            }
-        })
-        .catch(error => {
-            console.error("Critical System Error Loading JSON:", error);
-            if (loadingElement) {
-                loadingElement.innerHTML = `<span style="color: #ef4444;">Failed to sync with live data matrix.</span>`;
-            }
-        });
+    async function loadCasinoData() {
+        let sourceLabel = "LOCAL";
+        let loaded = false;
 
+        if (REMOTE_FEED_URL && window.navigator.onLine) {
+            try {
+                const remoteResponse = await fetch(REMOTE_FEED_URL, {
+                    cache: 'no-store',
+                    mode: 'cors',
+                    credentials: 'omit'
+                });
+
+                if (remoteResponse.ok) {
+                    const remoteData = await remoteResponse.json();
+                    if (Array.isArray(remoteData) && remoteData.length > 0) {
+                        casinoData = remoteData;
+                        loaded = true;
+                        sourceLabel = "ONLINE";
+                        console.log(`Loaded ${casinoData.length} casino records from remote feed.`);
+                    }
+                } else {
+                    console.warn(`Remote feed returned ${remoteResponse.status}, falling back to local data.`);
+                }
+            } catch (remoteError) {
+                console.warn("Online feed fetch failed, falling back to local data.", remoteError);
+            }
+        }
+
+        if (!loaded) {
+            try {
+                const response = await fetch(dataUrl, { cache: 'no-store' });
+                if (!response.ok) {
+                    throw new Error(`Failed loading data.json: ${response.status}`);
+                }
+                casinoData = await response.json();
+                if (!Array.isArray(casinoData) || casinoData.length === 0) {
+                    throw new Error("Loaded data.json is empty or invalid");
+                }
+                loaded = true;
+                console.log(`Loaded ${casinoData.length} casino records from local data.json`);
+            } catch (error) {
+                console.warn("Could not load valid data.json locally, using fallback data.", error);
+                casinoData = fallbackCasinoData;
+                sourceLabel = "FALLBACK";
+                console.log(`Fallback casino feed loaded with ${casinoData.length} records`);
+            }
+        }
+
+        if (!Array.isArray(casinoData) || casinoData.length === 0) {
+            casinoData = fallbackCasinoData;
+            sourceLabel = "FALLBACK";
+        }
+
+        const feedSource = document.getElementById("feed-source");
+        if (feedSource) {
+            feedSource.innerText = sourceLabel;
+            feedSource.dataset.source = sourceLabel;
+        }
+
+        if (countrySelect && countrySelect.value !== "AUTO") {
+            const manualValue = countrySelect.value.toUpperCase();
+            if (manualValue === "UK" || manualValue === "GB") {
+                userCountry = "UK";
+            } else if (manualValue === "CY") {
+                userCountry = "CY";
+            } else if (manualValue === "DE") {
+                userCountry = "DE";
+            } else {
+                userCountry = manualValue;
+            }
+
+            if (displayCountry) displayCountry.innerText = userCountry;
+            if (typeof window.triggerFilter === "function") {
+                window.triggerFilter();
+            }
+
+            return;
+        }
+
+        try {
+            await detectCountryFromIP(displayCountry);
+        } catch (geoError) {
+            console.warn("Geo detection failed, using fallback.", geoError);
+            if (!userCountry || userCountry === 'UNKNOWN') {
+                userCountry = 'ALL';
+            }
+            if (displayCountry) displayCountry.innerText = userCountry === 'ALL' ? 'GLOBAL' : userCountry;
+            if (typeof window.triggerFilter === "function") {
+                window.triggerFilter();
+            }
+        }
+    }
+
+    loadCasinoData();
+
+    let refreshTimerId = null;
+    function scheduleRefresh() {
+        if (refreshTimerId) {
+            clearInterval(refreshTimerId);
+            refreshTimerId = null;
+        }
+
+        const intervalValue = refreshSelect ? parseInt(refreshSelect.value, 10) : 60000;
+        if (intervalValue > 0) {
+            refreshTimerId = setInterval(loadCasinoData, intervalValue);
+        }
+    }
+
+    scheduleRefresh();
+
+    if (refreshSelect) {
+        refreshSelect.addEventListener('change', () => {
+            scheduleRefresh();
+        });
+    }
 
 
     // 6. האזנה לשינויים ידניים - גרסה חסינת תקלות HTML
