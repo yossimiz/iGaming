@@ -721,21 +721,60 @@ onmousedown="
 
 
     <div class="controls">
-        <div style="color: var(--secondary-text); font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 6px;">
-            Target Feed: <span id="display-country" style="color: var(--accent-color); background: rgba(16, 185, 129, 0.1); padding: 3px 8px; border-radius: 4px; font-weight: 700; border: 1px solid rgba(16, 185, 129, 0.15);">Detecting...</span>
+        <div style="color: var(--secondary-text); font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+            <span>Target Feed: <span id="display-country" style="color: var(--accent-color); background: rgba(16, 185, 129, 0.1); padding: 3px 8px; border-radius: 4px; font-weight: 700; border: 1px solid rgba(16, 185, 129, 0.15);">Detecting...</span></span>
+            <span>Feed Source: <span id="feed-source" style="color: #38bdf8; background: rgba(56, 189, 248, 0.1); padding: 3px 8px; border-radius: 4px; font-weight: 700; border: 1px solid rgba(56, 189, 248, 0.15);">LOCAL</span></span>
         </div>
         <div style="display: flex; gap: 10px; flex-wrap: wrap; width: 100%; margin-top: 10px;">
-            <select id="country-select" style="flex: 1;">
+            <select id="country-select" style="flex: 1; min-width: 180px;">
                 <option value="AUTO">🌍 Auto Detect Region</option>
-                <option value="CY">🇨🇾 Cyprus Feed</option>
-               <option value="UK">GB United Kingdom</option>
-                <option value="DE">🇩🇪 Germany Feed</option>
-                <option value="IL">🇮🇱 Israel (Restricted)</option>
+                <option value="GB">🇬🇧 United Kingdom</option>
+                <option value="AT">🇦🇹 Austria</option>
+                <option value="BE">🇧🇪 Belgium</option>
+                <option value="BG">🇧🇬 Bulgaria</option>
+                <option value="HR">🇭🇷 Croatia</option>
+                <option value="CY">🇨🇾 Cyprus</option>
+                <option value="CZ">🇨🇿 Czech Republic</option>
+                <option value="DK">🇩🇰 Denmark</option>
+                <option value="EE">🇪🇪 Estonia</option>
+                <option value="FI">🇫🇮 Finland</option>
+                <option value="FR">🇫🇷 France</option>
+                <option value="DE">🇩🇪 Germany</option>
+                <option value="GR">🇬🇷 Greece</option>
+                <option value="HU">🇭🇺 Hungary</option>
+                <option value="IE">🇮🇪 Ireland</option>
+                <option value="IT">🇮🇹 Italy</option>
+                <option value="LV">🇱🇻 Latvia</option>
+                <option value="LT">🇱🇹 Lithuania</option>
+                <option value="LU">🇱🇺 Luxembourg</option>
+                <option value="MT">🇲🇹 Malta</option>
+                <option value="NL">🇳🇱 Netherlands</option>
+                <option value="PL">🇵🇱 Poland</option>
+                <option value="PT">🇵🇹 Portugal</option>
+                <option value="RO">🇷🇴 Romania</option>
+                <option value="SK">🇸🇰 Slovakia</option>
+                <option value="SI">🇸🇮 Slovenia</option>
+                <option value="ES">🇪🇸 Spain</option>
+                <option value="SE">🇸🇪 Sweden</option>
+                <option value="NO">🇳🇴 Norway</option>
+                <option value="CH">🇨🇭 Switzerland</option>
+                <option value="IS">🇮🇸 Iceland</option>
+                <option value="ME">🇲🇪 Montenegro</option>
+                <option value="RS">🇷🇸 Serbia</option>
+                <option value="UA">🇺🇦 Ukraine</option>
+                <option value="RO">🇷🇴 Romania</option>
             </select>
-            <select id="sort-select" style="flex: 1;">
+            <select id="sort-select" style="flex: 1; min-width: 180px;">
                 <option value="default">Sort Data: Default Matrix</option>
                 <option value="rtp-desc">⚡ Payout (Highest RTP)</option>
                 <option value="name-asc">🔤 Alphabetical (A-Z)</option>
+            </select>
+            <select id="refresh-select" style="flex: 1; min-width: 180px;">
+                <option value="15000">Refresh every 15s</option>
+                <option value="30000">Refresh every 30s</option>
+                <option value="60000" selected>Refresh every 60s</option>
+                <option value="120000">Refresh every 120s</option>
+                <option value="0">Disable auto refresh</option>
             </select>
         </div>
     </div>
