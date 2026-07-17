@@ -1,37 +1,44 @@
-name: Hourly Casino Data Update
+name: Update Dynamic Casino Data
 
 on:
-  workflow_dispatch: # משאיר את כפתור ההרצה הידנית שלך פעיל
+  workflow_dispatch: # מאפשר לך להפעיל את הריצה ידנית מתי שתרצה
   schedule:
-    - cron: '0 * * * *' # פקודה קשיחה שמפעילה את הסקריפט אוטומטית בכל שעה עגולה
+    - cron: '0 * * * *' # מפעיל את הסריקה אוטומטית בכל שעה עגולה
 
 jobs:
   update-data:
     runs-on: ubuntu-latest
+
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v3
+    # 1. משיכת הקוד מהרפוזיטורי
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
+    # 2. התקנת סביבת פייתון מעודכנת
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
-        python-version: '3.x'
+        python-cache: 'pip'
+        python-version: '3.11'
 
-    - name: Install Dependencies
+    # 3. התקנת החבילות הנדרשות לפרויקט
+    - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install requests
+        pip install playwright
 
-    - name: Run Data Fetcher Script
-      env:
-        IGAMING_API_KEY: ${{ secrets.IGAMING_API_KEY }} # משיכת מפתח האבטחה הסודי
+    # 4. שלב קריטי: התקנת דפדפן הכרומיום הרשמי של Playwright בשרת האובונטו
+    - name: Install Playwright Browsers
+      run: python -m playwright install chromium --with-deps
+
+    # 5. הרצת סקריפט הסריקה שכתבנו
+    - name: Run Fetch Data Script
       run: python fetch_data.py
 
-    - name: Commit and Push if data changed
+    # 6. שמירה וביצוע Commit אוטומטי של קובץ data.json החדש ישירות לאתר
+    - name: Commit and Push update
       run: |
-        git config --global user.name "GitHub Action"
-        git config --global user.name "actions@github.com"
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@://github.com"
         git add data.json
-        git diff-index --quiet HEAD || git commit -m "Automated hourly data update [skip ci]"
-        git push
-
+        git diff --quiet && git diff --staged --quiet || (git commit -m "🔄 Live Casino Feed Auto-Updated [Skip CI]" && git push)
