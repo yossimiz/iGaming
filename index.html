@@ -1253,32 +1253,61 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-<!-- קוד JavaScript לתיקון הפעלת תפריט המובייל -->
+<!-- קוד JavaScript חסין תקלות לפתיחת התפריט במובייל -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    // 1. מציאת כפתור התפריט (ההמבורגר) ואלמנט התפריט עצמו
-    // שים לב: אם המחלקות אצלך בקוד שונות (למשל navbar-toggle או mobile-menu), שנה את השמות כאן בהתאם
-    const menuToggle = document.querySelector(".menu-toggle") || document.querySelector(".nav-toggle") || document.querySelector("#mobile-menu-btn");
-    const navMenu = document.querySelector(".nav-menu") || document.querySelector(".navbar-links") || document.querySelector("#nav-links");
+    const menuBtn = document.getElementById("mobile-menu-trigger") || document.querySelector(".mobile-menu-btn");
+    
+    // סורק ומאתר כל רשימת קישורים אפשרית באתר שלך
+    const navMenu = document.querySelector(".nav-links") || 
+                    document.querySelector("nav ul") || 
+                    document.querySelector(".navbar-links") || 
+                    document.querySelector(".header-menu") ||
+                    document.querySelector("nav div");
 
-    // 2. הוספת אירוע לחיצה (Click) שיפתח ויסגור את התפריט
-    if (menuToggle && navMenu) {
-        menuToggle.addEventListener("click", function (e) {
-            e.stopPropagation(); // מונע באגים של לחיצות כפולות
-            navMenu.classList.toggle("active");
-            menuToggle.classList.toggle("is-active");
+    if (menuBtn && navMenu) {
+        menuBtn.addEventListener("click", function (e) {
+            e.stopPropagation();
+            
+            // בודק אם התפריט פתוח כרגע
+            const isOpen = navMenu.style.display === "flex" || navMenu.classList.contains("open");
+            
+            if (!isOpen) {
+                // כופה פתיחה מוחלטת עם תצוגת Flex ורקע מתאים
+                navMenu.style.setProperty("display", "flex", "important");
+                navMenu.style.setProperty("position", "absolute", "important");
+                navMenu.style.setProperty("top", "70px", "important");
+                navMenu.style.setProperty("left", "0", "important");
+                navMenu.style.setProperty("width", "100%", "important");
+                navMenu.style.setProperty("background", "#111622", "important");
+                navMenu.style.setProperty("flex-direction", "column", "important");
+                navMenu.style.setProperty("padding", "20px 0", "important");
+                navMenu.style.setProperty("gap", "15px", "important");
+                navMenu.style.setProperty("text-align", "center", "important");
+                navMenu.style.setProperty("z-index", "10000", "important");
+                
+                navMenu.classList.add("open");
+                menuBtn.classList.add("is-active");
+            } else {
+                // סגירה וכיווץ של התפריט
+                navMenu.style.setProperty("display", "none", "important");
+                navMenu.classList.remove("open");
+                menuBtn.classList.remove("is-active");
+            }
         });
 
-        // 3. סגירת התפריט באופן אוטומטי אם הגולש לוחץ מחוץ לתפריט
+        // סגירת התפריט אוטומטית אם המשתמש לוחץ על שטח ריק במסך
         document.addEventListener("click", function (e) {
-            if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
-                navMenu.classList.remove("active");
-                menuToggle.classList.remove("is-active");
+            if (navMenu && !navMenu.contains(e.target) && !menuBtn.contains(e.target)) {
+                navMenu.style.setProperty("display", "none", "important");
+                navMenu.classList.remove("open");
+                menuBtn.classList.remove("is-active");
             }
         });
     }
 });
 </script>
+
 
 
 </body>
