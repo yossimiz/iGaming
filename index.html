@@ -489,8 +489,53 @@
 
     </div>
     
-    <!-- כפתור הפעלה אלגנטי ומהודק -->
-    <button class="slots-trigger-action-btn" id="slots-action-trigger">SPIN ENGINE</button>
+   <!-- כפתור הפעלה אלגנטי ומהודק עם אפקטי ניאון ואנימציה -->
+<style>
+    @keyframes spinEnginePulse {
+        0% {
+            box-shadow: 0 0 15px rgba(0, 230, 118, 0.4), 0 0 30px rgba(0, 230, 118, 0.2);
+        }
+        50% {
+            box-shadow: 0 0 30px rgba(0, 230, 118, 0.8), 0 0 60px rgba(0, 230, 118, 0.4);
+        }
+        100% {
+            box-shadow: 0 0 15px rgba(0, 230, 118, 0.4), 0 0 30px rgba(0, 230, 118, 0.2);
+        }
+    }
+</style>
+
+<button class="slots-trigger-action-btn" id="slots-action-trigger" style="
+    background: linear-gradient(135deg, #00e676 0%, #00b0ff 100%);
+    color: #0b0e14;
+    border: none;
+    padding: 16px 50px;
+    font-size: 18px;
+    font-weight: 800;
+    border-radius: 50px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    box-shadow: 0 0 20px rgba(0, 230, 118, 0.5);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: spinEnginePulse 2s infinite ease-in-out;
+    outline: none;
+"
+onmouseover="
+    this.style.transform = 'scale(1.08) translateY(-3px)';
+    this.style.background = 'linear-gradient(135deg, #00ff87 0%, #60efff 100%)';
+    this.style.boxShadow = '0 15px 30px rgba(0, 230, 118, 0.6), 0 0 40px rgba(0, 176, 255, 0.4)';
+"
+onmouseout="
+    this.style.transform = 'scale(1) translateY(0)';
+    this.style.background = 'linear-gradient(135deg, #00e676 0%, #00b0ff 100%)';
+    this.style.boxShadow = '0 0 20px rgba(0, 230, 118, 0.5)';
+"
+onmousedown="
+    this.style.transform = 'scale(0.98) translateY(0)';
+">
+    ⚡ SPIN ENGINE ⚡
+</button>
+
   </div>
 
   <!-- תיבת הזכייה שקופצת בעיצוב נקי מתחת לווידג'ט -->
