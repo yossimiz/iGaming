@@ -281,37 +281,36 @@
 </script>
 <!-- ================================================================= -->
 
-<!-- Sub-Header / System Stats Bar (100% Frameless & Clean Background Version) -->
+<!-- Sub-Header / System Stats Bar (Unified Single-Row Mobile Scroll Version) -->
 <div style="width: 100%; font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif; box-sizing: border-box; padding: 0 15px;">
     
-    <!-- הוספת סגנונות ממוקדים - ללא רקע (background: transparent) וללא מסגרת (border: none) -->
     <style>
-        .frameless-stats-ticker {
+        .unified-stats-ticker {
             max-width: 1150px !important;
             margin: 15px auto 15px auto !important;
-            padding: 5px 0 !important; /* ריפוד קטן לטקסט חופשי */
+            padding: 5px 0 !important;
             display: flex !important;
-            justify-content: space-between !important;
             align-items: center !important;
-            gap: 15px !important;
             width: 100% !important;
             box-sizing: border-box !important;
-            background: transparent !important; /* הסרת הרקע הכהה לחלוטין */
-            border: none !important;             /* הסרת המסגרת לחלוטין */
-            box-shadow: none !important;         /* ביטול צללים */
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
         }
-        .frameless-left-row {
+        .unified-scroll-row {
             display: flex !important;
             align-items: center !important;
             gap: 20px !important;
             flex-wrap: nowrap !important;
+            width: 100% !important;
         }
-        .frameless-items-inline {
+        .unified-items-inline {
             display: flex !important;
             gap: 24px !important;
+            align-items: center !important;
             flex-wrap: nowrap !important;
         }
-        .frameless-text-node {
+        .unified-text-node {
             font-size: 11px !important;
             color: var(--secondary-text) !important;
             white-space: nowrap !important;
@@ -319,47 +318,44 @@
             padding: 0 !important;
             border: none !important;
         }
+        /* נקודה ירוקה מהבהבת קלות בשביל הסטטוס החי */
+        .live-status-dot {
+            width: 6px;
+            height: 6px;
+            background-color: #10b981;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+            box-shadow: 0 0 6px #10b981;
+            vertical-align: middle;
+        }
 
-        /* 📱 התאמה נקייה למובייל - הנתונים בשורה רצה והתג מיושר */
+        /* 📱 אופטימיזציה למובייל - הכל כולל הסטטוס נכנס לשורה אופקית אחת */
         @media (max-width: 768px) {
-            .frameless-stats-ticker {
-                flex-direction: column !important;
-                gap: 12px !important;
+            .unified-stats-ticker {
                 padding: 5px 0 !important;
-                align-items: flex-start !important; /* יישור נוח לתחילת השורה */
+                flex-direction: row !important; /* משאיר אותו כשורה ולא טור */
             }
-            .frameless-left-row {
-                width: 100% !important;
-                overflow-x: auto !important; /* מאפשר להחליק את שורת הנתונים הצידה */
-                flex-direction: row !important;
-                justify-content: flex-start !important;
-                gap: 15px !important;
+            .unified-scroll-row {
+                overflow-x: auto !important; /* מאפשר להחליק את כל השורה יחד עם הסטטוס */
                 padding-bottom: 5px !important;
-                
-                /* הסתרת סרגל גלילה */
                 -ms-overflow-style: none !important;
                 scrollbar-width: none !important;
             }
-            .frameless-left-row::-webkit-scrollbar {
+            .unified-scroll-row::-webkit-scrollbar {
                 display: none !important;
             }
-            .frameless-items-inline {
-                display: flex !important;
-                flex-direction: row !important;
+            .unified-items-inline {
                 gap: 20px !important;
-            }
-            .frameless-mobile-badge {
-                width: auto !important; /* התג לא יימתח, אלא יישאר סולידי ודק */
-                align-self: center !important; /* ממרכז את התג הירוק מתחת לשורת הטקסט */
             }
         }
     </style>
 
-    <!-- התיבה המשודרגת כשהיא פתוחה וחופשית על רקע האתר -->
-    <div class="frameless-stats-ticker">
+    <div class="unified-stats-ticker">
         
-        <!-- Left Side: Brand Logo & Live Stats Row -->
-        <div class="frameless-left-row">
+        <!-- Whole Row becomes one unified scrollable line on Mobile -->
+        <div class="unified-scroll-row">
+            
             <!-- Brand Title -->
             <div class="navbar-logo" style="font-size: 12px; font-weight: 800; color: #00ffcc; letter-spacing: 0.5px; text-transform: uppercase; white-space: nowrap; background: none; -webkit-text-fill-color: initial;">
                 SLOTMETRIC
@@ -368,23 +364,26 @@
             <!-- Separator Line -->
             <div style="width: 1px; height: 12px; background-color: var(--border-color); flex-shrink: 0;"></div>
 
-            <!-- Ticker Items (Inline Text) -->
-            <div class="frameless-items-inline">
-                <div class="frameless-text-node">Scanned Networks: <strong style="color: var(--primary-text);">42 Regulated Brokers</strong></div>
-                <div class="frameless-text-node">Global RTP Avg: <strong style="color: #10b981;">96.48%</strong></div>
-                <div class="frameless-text-node">Active Jackpots: <strong style="color: #ef4444;">€14,842,910</strong></div>
-                <div class="frameless-text-node">Data Sync: <strong style="color: var(--secondary-text);">Every 60 Mins</strong></div>
+            <!-- All Ticker Items + System Status combined inside the scroll zone -->
+            <div class="unified-items-inline">
+                <!-- 🟢 System Status is now part of the text loop -->
+                <div class="unified-text-node" style="color: #10b981 !important; font-weight: 600;">
+                    <span class="live-status-dot"></span>System Operational
+                </div>
+                
+                <div style="width: 1px; height: 12px; background-color: rgba(255,255,255,0.1); flex-shrink: 0;"></div>
+                
+                <div class="unified-text-node">Scanned Networks: <strong style="color: var(--primary-text);">42 Regulated Brokers</strong></div>
+                <div class="unified-text-node">Global RTP Avg: <strong style="color: #10b981;">96.48%</strong></div>
+                <div class="unified-text-node">Active Jackpots: <strong style="color: #ef4444;">€14,842,910</strong></div>
+                <div class="unified-text-node">Data Sync: <strong style="color: var(--secondary-text);">Every 60 Mins</strong></div>
             </div>
+            
         </div>
-
-        <!-- Right Side: System Badge -->
-        <div class="system-badge frameless-mobile-badge" style="flex-shrink: 0; padding: 4px 12px; border-radius: 20px; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); font-size: 0.8rem; font-weight: 600; color: #10b981; display: flex !important; align-items: center !important; gap: 6px; box-sizing: border-box;">
-            <span style="width: 6px; height: 6px; background-color: #10b981; border-radius: 50%; display: inline-block; box-shadow: 0 0 6px #10b981;"></span>
-            System Operational
-        </div>
-
+        
     </div>
 </div>
+
 
 
 
