@@ -671,153 +671,91 @@
         </table>
     </div>
 <!-- ================================================================= -->
-<!-- START OF HOT REVIEWED GAMES (FULLY ANIMATED GIFS & LIVE DEMOS)   -->
+<!-- START OF HOT REVIEWED GAMES GRID (FIXED IMAGES & DEMO LINKS)     -->
 <!-- ================================================================= -->
-<div style="max-width: 1150px; margin: 40px auto 20px auto; padding: 0 15px; font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif; box-sizing: border-box;">
-    
-    <!-- כותרת האזור בסגנון מטריקס יוקרתי -->
-    <h3 style="color: #10b981; text-shadow: 0 0 12px rgba(16, 185, 129, 0.3); border-bottom: 1px solid #22314d; padding-bottom: 12px; margin-bottom: 25px; font-size: 1.4rem; font-weight: bold; display: flex; align-items: center; gap: 10px;">
-        🔥 Hot Reviewed Games
-    </h3>
-    
-    <!-- סגנונות עיצוב יוקרתיים ואנימציות לכרטיסים (אפקט ריחוף וזום לתמונה) -->
-    <style>
-        .premium-game-card {
-            background: linear-gradient(135deg, #151f32 0%, #0e1624 100%); 
-            border: 1px solid #22314d; 
-            border-radius: 12px; 
-            padding: 16px; 
-            text-align: center; 
-            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
-            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .premium-game-card:hover {
-            transform: translateY(-6px) !important;
-            border-color: #10b981 !important;
-            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.15) !important;
-        }
-        .game-img-wrapper {
-            width: 100%;
-            height: 125px;
-            border-radius: 8px;
-            margin-bottom: 12px;
-            overflow: hidden;
-            border: 1px solid #22314d;
-            background-color: #0b0f19;
-            position: relative;
-        }
-        .game-img-asset {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-        .premium-game-card:hover .game-img-asset {
-            transform: scale(1.05);
-        }
-        .game-btn-launch {
-            background-color: #10b981; 
-            color: #0b0f19; 
-            border: none; 
-            padding: 11px 15px; 
-            border-radius: 8px; 
-            font-weight: 700; 
-            cursor: pointer; 
-            width: 100%; 
-            font-size: 13px; 
-            letter-spacing: 0.5px;
-            transition: background 0.2s, transform 0.1s;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
-        }
-        .game-btn-launch:hover {
-            background-color: #059669;
-        }
-        .game-btn-launch:active {
-            transform: scale(0.98);
-        }
-    </style>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; width: 100%; max-width: 1150px; margin: 20px auto; padding: 0 15px; font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif; box-sizing: border-box; direction: ltr; text-align: left;">
 
-    <!-- רשת דינמית רספונסיבית שמתאימה את עצמה למחשב ולמובייל בצורה מושלמת -->
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; width: 100%; box-sizing: border-box;">
-        
-        <!-- Game 1: Gates of Olympus (Animated GIF) -->
-        <div class="premium-game-card">
-            <div>
-                <div class="game-img-wrapper">
-                    <img src="https://giphy.com" onerror="this.src='https://unsplash.com'; this.onerror=null;" alt="Gates of Olympus" class="game-img-asset">
-                </div>
-                <div style="font-size: 16px; font-weight: 700; margin-bottom: 4px; color: #ffffff;">Gates of Olympus</div>
-                <div style="color: #f59e0b; font-size: 13px; margin-bottom: 6px; font-weight: 600;">⭐⭐⭐⭐⭐ <span style="color: #94a3b8; font-size: 11px; font-weight: 400;">(4.9)</span></div>
-                <a href="gates-of-olympus-review.html" style="color: #10b981; font-size: 13px; text-decoration: none; display: block; margin-bottom: 12px; font-weight: 600;">📊 Read Full Review →</a>
-                
-                <div style="display: flex; justify-content: space-around; font-size: 11px; color: #94a3b8; margin-bottom: 15px; background: rgba(16,185,129,0.03); padding: 6px; border-radius: 6px; border: 1px dashed rgba(16,185,129,0.15);">
-                    <span>RTP: <strong style="color: #ffffff;">96.50%</strong></span>
-                    <span>Risk: <strong style="color: #ef4444;">High</strong></span>
-                </div>
-            </div>
-            <!-- קישור רשמי ישיר לשרת הדמו המאובטח של פראגמטיק פליי -->
-            <button class="game-btn-launch" onclick="window.open('https://pragmaticplay.net', '_blank')">LAUNCH DEMO</button>
+    <!-- משחק 1: Gates of Olympus -->
+    <div style="background: #131926; border: 1px solid #222d42; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; height: 100%; transition: border-color 0.3s ease;">
+        <div style="position: relative; width: 100%; padding-top: 65%; background: #0b0e14;">
+            <img src="https://pragmaticplay.net" alt="Gates of Olympus" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
         </div>
-
-        <!-- Game 2: Sweet Bonanza (Animated GIF) -->
-        <div class="premium-game-card">
-            <div>
-                <div class="game-img-wrapper">
-                    <img src="https://giphy.com" onerror="this.src='https://unsplash.com'; this.onerror=null;" alt="Sweet Bonanza" class="game-img-asset">
-                </div>
-                <div style="font-size: 16px; font-weight: 700; margin-bottom: 4px; color: #ffffff;">Sweet Bonanza</div>
-                <div style="color: #f59e0b; font-size: 13px; margin-bottom: 6px; font-weight: 600;">⭐⭐⭐⭐⭐ <span style="color: #94a3b8; font-size: 11px; font-weight: 400;">(4.8)</span></div>
-                <a href="sweet-bonanza-review.html" style="color: #10b981; font-size: 13px; text-decoration: none; display: block; margin-bottom: 12px; font-weight: 600;">📊 Read Full Review →</a>
-                
-                <div style="display: flex; justify-content: space-around; font-size: 11px; color: #94a3b8; margin-bottom: 15px; background: rgba(16,185,129,0.03); padding: 6px; border-radius: 6px; border: 1px dashed rgba(16,185,129,0.15);">
-                    <span>RTP: <strong style="color: #ffffff;">96.48%</strong></span>
-                    <span>Risk: <strong style="color: #f59e0b;">Med-High</strong></span>
-                </div>
+        <div style="padding: 16px; display: flex; flex-direction: column; gap: 10px; flex-grow: 1;">
+            <h3 style="color: #ffffff; font-size: 16px; font-weight: 700; margin: 0;">Gates of Olympus</h3>
+            <div style="color: #ecc94b; font-size: 13px;">⭐⭐⭐⭐⭐ <span style="color: #718096; font-size: 11px;">(4.9)</span></div>
+            <a href="#" style="color: #4299e1; font-size: 12px; text-decoration: none; font-weight: 600;">📖 Read Full Review →</a>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px; font-size: 12px;">
+                <span style="color: #718096;">RTP: <strong style="color: #48bb78; background: rgba(72, 187, 120, 0.1); padding: 2px 6px; border-radius: 4px;">96.50%</strong></span>
+                <span style="color: #718096;">Risk: <strong style="color: #ef4444;">High</strong></span>
             </div>
-            <button class="game-btn-launch" onclick="window.open('https://pragmaticplay.net', '_blank')">LAUNCH DEMO</button>
+            <a href="https://pragmaticplay.net" target="_blank" style="display: block; text-align: center; background: #00e676; color: #0b0e14; text-decoration: none; padding: 10px; border-radius: 6px; font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 8px;">
+                LAUNCH DEMO
+            </a>
         </div>
-
-        <!-- Game 3: Sugar Rush (Animated GIF) -->
-        <div class="premium-game-card">
-            <div>
-                <div class="game-img-wrapper">
-                    <img src="https://giphy.com" onerror="this.src='https://unsplash.com'; this.onerror=null;" alt="Sugar Rush" class="game-img-asset">
-                </div>
-                <div style="font-size: 16px; font-weight: 700; margin-bottom: 4px; color: #ffffff;">Sugar Rush</div>
-                <div style="color: #f59e0b; font-size: 13px; margin-bottom: 6px; font-weight: 600;">⭐⭐⭐⭐⭐ <span style="color: #94a3b8; font-size: 11px; font-weight: 400;">(4.7)</span></div>
-                <a href="sugar-rush-review.html" style="color: #10b981; font-size: 13px; text-decoration: none; display: block; margin-bottom: 12px; font-weight: 600;">📊 Read Full Review →</a>
-                
-                <div style="display: flex; justify-content: space-around; font-size: 11px; color: #94a3b8; margin-bottom: 15px; background: rgba(16,185,129,0.03); padding: 6px; border-radius: 6px; border: 1px dashed rgba(16,185,129,0.15);">
-                    <span>RTP: <strong style="color: #ffffff;">96.50%</strong></span>
-                    <span>Risk: <strong style="color: #ef4444;">High</strong></span>
-                </div>
-            </div>
-            <button class="game-btn-launch" onclick="window.open('https://pragmaticplay.net', '_blank')">LAUNCH DEMO</button>
-        </div>
-
-        <!-- Game 4: Big Bass Bonanza (Animated GIF) -->
-        <div class="premium-game-card">
-            <div>
-                <div class="game-img-wrapper">
-                    <img src="https://giphy.com" onerror="this.src='https://unsplash.com'; this.onerror=null;" alt="Big Bass Bonanza" class="game-img-asset">
-                </div>
-                <div style="font-size: 16px; font-weight: 700; margin-bottom: 4px; color: #ffffff;">Big Bass Bonanza</div>
-                <div style="color: #f59e0b; font-size: 13px; margin-bottom: 6px; font-weight: 600;">⭐⭐⭐⭐⭐ <span style="color: #94a3b8; font-size: 11px; font-weight: 400;">(4.8)</span></div>
-                <a href="big-bass-bonanza-review.html" style="color: #10b981; font-size: 13px; text-decoration: none; display: block; margin-bottom: 12px; font-weight: 600;">📊 Read Full Review →</a>
-                
-                <div style="display: flex; justify-content: space-around; font-size: 11px; color: #94a3b8; margin-bottom: 15px; background: rgba(16,185,129,0.03); padding: 6px; border-radius: 6px; border: 1px dashed rgba(16,185,129,0.15);">
-                    <span>RTP: <strong style="color: #ffffff;">96.71%</strong></span>
-                    <span>Risk: <strong style="color: #10b981;">Medium</strong></span>
-                </div>
-            </div>
-            <button class="game-btn-launch" onclick="window.open('https://pragmaticplay.net', '_blank')">LAUNCH DEMO</button>
-        </div>
-
     </div>
+
+    <!-- משחק 2: Sweet Bonanza -->
+    <div style="background: #131926; border: 1px solid #222d42; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; height: 100%;">
+        <div style="position: relative; width: 100%; padding-top: 65%; background: #0b0e14;">
+            <img src="https://pragmaticplay.net" alt="Sweet Bonanza" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div style="padding: 16px; display: flex; flex-direction: column; gap: 10px; flex-grow: 1;">
+            <h3 style="color: #ffffff; font-size: 16px; font-weight: 700; margin: 0;">Sweet Bonanza</h3>
+            <div style="color: #ecc94b; font-size: 13px;">⭐⭐⭐⭐⭐ <span style="color: #718096; font-size: 11px;">(4.8)</span></div>
+            <a href="#" style="color: #4299e1; font-size: 12px; text-decoration: none; font-weight: 600;">📖 Read Full Review →</a>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px; font-size: 12px;">
+                <span style="color: #718096;">RTP: <strong style="color: #48bb78; background: rgba(72, 187, 120, 0.1); padding: 2px 6px; border-radius: 4px;">96.48%</strong></span>
+                <span style="color: #718096;">Risk: <strong style="color: #ed8936;">Med-High</strong></span>
+            </div>
+            <a href="https://pragmaticplay.net" target="_blank" style="display: block; text-align: center; background: #00e676; color: #0b0e14; text-decoration: none; padding: 10px; border-radius: 6px; font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 8px;">
+                LAUNCH DEMO
+            </a>
+        </div>
+    </div>
+
+    <!-- משחק 3: Sugar Rush -->
+    <div style="background: #131926; border: 1px solid #222d42; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; height: 100%;">
+        <div style="position: relative; width: 100%; padding-top: 65%; background: #0b0e14;">
+            <img src="https://pragmaticplay.net" alt="Sugar Rush" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div style="padding: 16px; display: flex; flex-direction: column; gap: 10px; flex-grow: 1;">
+            <h3 style="color: #ffffff; font-size: 16px; font-weight: 700; margin: 0;">Sugar Rush</h3>
+            <div style="color: #ecc94b; font-size: 13px;">⭐⭐⭐⭐⭐ <span style="color: #718096; font-size: 11px;">(4.7)</span></div>
+            <a href="#" style="color: #4299e1; font-size: 12px; text-decoration: none; font-weight: 600;">📖 Read Full Review →</a>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px; font-size: 12px;">
+                <span style="color: #718096;">RTP: <strong style="color: #48bb78; background: rgba(72, 187, 120, 0.1); padding: 2px 6px; border-radius: 4px;">96.50%</strong></span>
+                <span style="color: #718096;">Risk: <strong style="color: #ef4444;">High</strong></span>
+            </div>
+            <a href="https://pragmaticplay.net" target="_blank" style="display: block; text-align: center; background: #00e676; color: #0b0e14; text-decoration: none; padding: 10px; border-radius: 6px; font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 8px;">
+                LAUNCH DEMO
+            </a>
+        </div>
+    </div>
+
+    <!-- משחק 4: Big Bass Bonanza -->
+    <div style="background: #131926; border: 1px solid #222d42; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; height: 100%;">
+        <div style="position: relative; width: 100%; padding-top: 65%; background: #0b0e14;">
+            <img src="https://pragmaticplay.net" alt="Big Bass Bonanza" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div style="padding: 16px; display: flex; flex-direction: column; gap: 10px; flex-grow: 1;">
+            <h3 style="color: #ffffff; font-size: 16px; font-weight: 700; margin: 0;">Big Bass Bonanza</h3>
+            <div style="color: #ecc94b; font-size: 13px;">⭐⭐⭐⭐⭐ <span style="color: #718096; font-size: 11px;">(4.8)</span></div>
+            <a href="#" style="color: #4299e1; font-size: 12px; text-decoration: none; font-weight: 600;">📖 Read Full Review →</a>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px; font-size: 12px;">
+                <span style="color: #718096;">RTP: <strong style="color: #48bb78; background: rgba(72, 187, 120, 0.1); padding: 2px 6px; border-radius: 4px;">96.71%</strong></span>
+                <span style="color: #718096;">Risk: <strong style="color: #3182ce;">Medium</strong></span>
+            </div>
+            <a href="https://pragmaticplay.net" target="_blank" style="display: block; text-align: center; background: #00e676; color: #0b0e14; text-decoration: none; padding: 10px; border-radius: 6px; font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 8px;">
+                LAUNCH DEMO
+            </a>
+        </div>
+    </div>
+
 </div>
+<!-- ================================================================= -->
+<!-- END OF HOT REVIEWED GAMES GRID                                   -->
+<!-- ================================================================= -->
+
 <!-- ================================================================= -->
 <!-- END OF HOT REVIEWED GAMES -->
 <!-- ================================================================= -->
