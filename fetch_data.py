@@ -1,6 +1,10 @@
-import requests
 import json
 import os
+
+try:
+    import requests
+except ImportError:
+    requests = None
 
 # --- הגדרות ה-API ---
 # נשמור את הכתובת והמפתח בצורה מאובטחת
@@ -18,6 +22,10 @@ def fetch_live_casino_data():
         "geo": "UK,DE,NL,FI",
         "status": "active"
     }
+
+    if not requests:
+        print("Requests library not installed. Skipping live API call and using fallback data.")
+        return get_fallback_real_data()
 
     try:
         print("Connecting to iGaming API to fetch real data...")
