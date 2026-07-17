@@ -1,40 +1,52 @@
-[
-    {
-        "casino_name": "Vulkan Vegas",
-        "bonus_text": "100% Up to €1,500 + 150 Free Spins",
-        "rtp_score": "96.82%",
-        "affiliate_link": "https://vpartners.link",
-        "regulatory_text": "18+. New EU players only. Min deposit €10. Wagering 40x. T&Cs apply.",
-        "allowed_countries": [
-            "DE",
-            "NL",
-            "FI",
-            "IE"
-        ]
+{
+    "last_updated": "2026-07-17 16:59:16",
+    "live_stats": {
+        "active_players": 14250,
+        "average_rtp": "96.45%",
+        "total_spins_hourly": 42000
     },
-    {
-        "casino_name": "Ice Casino",
-        "bonus_text": "€1,500 Welcome Pack + 270 Free Spins",
-        "rtp_score": "96.45%",
-        "affiliate_link": "https://vpartners.link",
-        "regulatory_text": "18+. T&Cs apply. Play responsibly. BeGambleAware.org",
-        "allowed_countries": [
-            "DE",
-            "NL",
-            "FI",
-            "CY"
-        ]
-    },
-    {
-        "casino_name": "Bet365 Casino",
-        "bonus_text": "Stake £10 and get 50 Free Spins",
-        "rtp_score": "97.15%",
-        "affiliate_link": "https://bet365.link",
-        "regulatory_text": "18+. New UK players only. Min £10 deposit. 50 Free Spins. T&Cs apply.",
-        "allowed_countries": [
-            "UK",
-            "GB",
-            "IE"
-        ]
-    }
-]
+    "top_brands": [
+        {
+            "rank": "#1",
+            "name": "MyStake Casino",
+            "bonus": "Exclusive Welcome Bonus",
+            "bonus_text": "Exclusive Welcome Bonus",
+            "bonus_detail": "150% Up to €300 on your first deposit!",
+            "casino_name": "MyStake Casino",
+            "rtp_score": "98.45%",
+            "affiliate_link": "https://mystake.link",
+            "allowed_countries": [
+                "DE",
+                "NL",
+                "FI",
+                "IE",
+                "UK",
+                "GB",
+                "CY",
+                "IL",
+                "ALL"
+            ]
+        },
+        {
+            "rank": "#2",
+            "name": "Unibet",
+            "bonus": "100% up to €150",
+            "bonus_text": "100% up to €150",
+            "bonus_detail": "Get 50 Free Spins instantly on registration",
+            "casino_name": "Unibet",
+            "rtp_score": "97.80%",
+            "affiliate_link": "https://unibet.link",
+            "allowed_countries": [
+                "DE",
+                "NL",
+                "FI",
+                "IE",
+                "UK",
+                "GB",
+                "CY",
+                "IL",
+                "ALL"
+            ]
+        }
+    ]
+}
