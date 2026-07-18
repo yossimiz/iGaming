@@ -1,5 +1,5 @@
 // ================================================================= 
-// FETCH_DATA.JS - ULTRA SAFE SINGLE-POINT DATA INJECTION ENGINE     
+// FETCH_DATA.JS - ULTRA ENFORCED DIRECT CASINO TABLE RENDER         
 // ================================================================= 
 
 window.userCountry = "CY";
@@ -42,20 +42,18 @@ async function runGlobalDataSyncEngine() {
                 window.casinoData = jsonData.top_brands;
                 window.fallbackCasinoData = jsonData.top_brands;
                 if (typeof casinoData !== 'undefined') casinoData = jsonData.top_brands;
-                console.log("📥 [JSON] Live dynamic data injected into the application.");
+                print("📥 [JSON Loaded] Scraped dynamic data attached successfully.");
             }
         }
     } catch (jsonErr) {}
 
     // 3. 🎯 עדכון תוויות UI ממוקד ובניית שורות הטבלה בבטחה
     setTimeout(() => {
-        // א. עדכון שקט של תיבת הבחירה (Select) למדינה האמיתית של הגולש
         const countrySelect = document.getElementById('country-select');
         if (countrySelect) {
             countrySelect.value = detectedCountry === 'UK' ? 'GB' : detectedCountry;
         }
 
-        // ב. העלמת כיתובי טעינה ממוקדים בלבד
         const uiLabels = document.querySelectorAll('h3, div, span, p');
         uiLabels.forEach(el => {
             if (el.innerText === 'Loading Matrix...') el.innerText = 'Matrix Engine Active';
@@ -64,12 +62,12 @@ async function runGlobalDataSyncEngine() {
             if (el.innerText === 'Loading Package...') el.innerText = 'Exclusive 150% Welcome Pack';
             
             // העלמת משפט הסטטוס התקוע בצורה בטוחה
-            if (el.innerText && el.innerText.includes('Syncing secure iGaming cryptographic matrix...')) {
+            if (el.innerText && el.innerText.includes('Syncing secure iGaming')) {
                 el.style.setProperty('display', 'none', 'important');
             }
         });
 
-        // ג. הפעלת פונקציות הצינור המקוריות שרשומות אצלך ב-app.js
+        // הפעלת פונקציות הסינון בתוך app.js
         if (typeof window.updateCasinoDataByCountry === "function") {
             window.updateCasinoDataByCountry(detectedCountry);
         }
@@ -77,13 +75,12 @@ async function runGlobalDataSyncEngine() {
             window.triggerFilter();
         }
 
-        // ד. בנייה ממוקדת של שורות הטבלה ישירות מתוך ה-JSON של הפייתון
+        // בנייה ממוקדת של שורות הטבלה ישירות מתוך ה-JSON של הפייתון
         renderLiveTableRows(detectedCountry);
-
     }, 300); 
 }
 
-// פונקציה ממוקדת שבונה את שורות המותגים ומזריקה אותן אך ורק לתוך ה-tbody הקיים
+// פונקציה ממוקדת שמזריקה את שורות המותגים ומציגה את הטבלה בכפייה
 function renderLiveTableRows(country) {
     const tableBody = document.getElementById('table-body') || document.querySelector('tbody');
     if (!tableBody) return;
@@ -96,7 +93,7 @@ function renderLiveTableRows(country) {
         const countries = brand.allowed_countries || [];
         if (countries.includes(country) || countries.includes('ALL')) {
             tableHTML += `
-                <tr style="background: #131926; border-bottom: 1px solid #222d42;">
+                <tr style="background: #131926; border-bottom: 1px solid #222d42; display: table-row !important;">
                     <td style="padding: 15px; color: #ffffff; font-weight: 700; text-align: left; border: none;">👑 ${brand.casino_name || brand.name}</td>
                     <td style="padding: 15px; color: #00e676; font-weight: 700; text-align: left; border: none;">🎁 ${brand.bonus_text || brand.bonus}</td>
                     <td style="padding: 15px; color: #ecc94b; text-align: left; border: none;">⭐⭐⭐⭐⭐ (${brand.rating || '4.9'})</td>
@@ -112,11 +109,17 @@ function renderLiveTableRows(country) {
     if (tableHTML) {
         tableBody.innerHTML = tableHTML;
         
-        // חשיפת הטבלה והסרת מסך הטעינה
+        // העלמת הודעת הטעינה באופן סופי
         const loadingText = document.getElementById('loading');
-        if (loadingText) loadingText.style.display = 'none';
+        if (loadingText) loadingText.style.setProperty('display', 'none', 'important');
+        
+        // כפיית חשיפת הטבלה כולה על המסך תוך ביטול ה-display: none הישן
         const casinoTable = document.getElementById('casino-table');
-        if (casinoTable) casinoTable.style.display = 'table';
+        if (casinoTable) {
+            casinoTable.style.setProperty('display', 'table', 'important');
+            casinoTable.style.setProperty('visibility', 'visible', 'important');
+            casinoTable.style.setProperty('width', '100%', 'important');
+        }
     }
 }
 
