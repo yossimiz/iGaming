@@ -1,7 +1,3 @@
-// ================================================================= 
-// FETCH_DATA.JS - PREMIUM EU FULL-WIDTH TABLE INJECTION ENGINE    
-// ================================================================= 
-
 window.userCountry = "CY";
 window.casinoData = [];
 
@@ -48,15 +44,17 @@ async function runGlobalDataSyncEngine() {
             countrySelect.value = detectedCountry === 'UK' ? 'GB' : detectedCountry;
         }
 
-        // עדכון תוויות המטריצה הראשיות בלבד
-        const matrixStatus = document.getElementById('matrix-status-text');
-        if (matrixStatus) matrixStatus.innerText = 'Matrix Engine Active';
+        // חילוץ הבונוס החי של MyStake מתוך קובץ ה-JSON לסנכרון הקופסה המאוחדת
+        const activeList = (window.casinoData && window.casinoData.length > 0) ? window.casinoData : [];
+        const liveBrand = activeList.find(b => b.name === "MyStake Casino" || b.casino_name === "MyStake Casino") || activeList[0];
 
-        const matrixBrand = document.getElementById('matrix-brand-text');
-        if (matrixBrand) matrixBrand.innerText = 'MyStake Casino';
+        if (liveBrand) {
+            const matrixBrand = document.getElementById('matrix-brand-text');
+            if (matrixBrand) matrixBrand.innerText = (liveBrand.casino_name || liveBrand.name) + " 🏆";
 
-        const matrixPackage = document.getElementById('matrix-package-text');
-        if (matrixPackage) matrixPackage.innerText = 'Exclusive 150% Welcome Pack';
+            const matrixPackage = document.getElementById('matrix-package-text');
+            if (matrixPackage) matrixPackage.innerText = liveBrand.bonus_text || liveBrand.bonus;
+        }
 
         const loadingBox = document.getElementById('loading');
         if (loadingBox) {
@@ -85,13 +83,8 @@ function renderLiveTableRows(country) {
     sourceList.forEach(brand => {
         const countries = brand.allowed_countries || [];
         if (countries.includes(country) || countries.includes('ALL')) {
-            
-            // שחזור מדויק של הטקסט המשפטי והלוגו לפי העיצוב המקורי בתמונה שלך
             const regText = brand.regulatory_text || "18+. T&Cs apply. Play responsibly. BeGambleAware.org";
-            const highlightText = brand.operator_highlights || "● Verified App";
-            const ratingStars = brand.rating || "96.45%";
             
-            // בניית שורה רחבה ומקורית (מיושרת בול תחת 5 הכותרות המקוריות של האתר שלך)
             tableHTML += `
                 <tr style="border-bottom: 1px solid #1a2232; background: #0f1420; transition: background 0.2s;">
                     <td style="padding: 20px 15px; color: #ffffff; font-weight: 700; font-size: 15px; text-align: left; border: none;">👑 ${brand.casino_name || brand.name}</td>
@@ -102,7 +95,7 @@ function renderLiveTableRows(country) {
                     <td style="padding: 20px 15px; color: #10b981; font-weight: 700; font-size: 15px; text-align: left; border: none;">${brand.rtp_score || brand.rtp}</td>
                     <td style="padding: 20px 15px; text-align: right; border: none; vertical-align: top;">
                         <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 6px;">
-                            <a href="${brand.affiliate_link || '#'}" target="_blank" style="background: #2563eb; color: #ffffff; text-decoration: none; padding: 10px 24px; border-radius: 6px; font-weight: 700; font-size: 13px; letter-spacing: 0.5px; text-transform: none; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2); display: inline-block; text-align: center;">Claim Access</a>
+                            <a href="${brand.affiliate_link || '#'}" target="_blank" style="background: #2563eb; color: #ffffff; text-decoration: none; padding: 10px 24px; border-radius: 6px; font-weight: 700; font-size: 13px; letter-spacing: 0.5px; text-shadow: none; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2); display: inline-block; text-align: center;">Claim Access</a>
                             <span style="color: #4a5568; font-size: 10px; font-weight: 500; text-align: right; max-width: 160px; line-height: 1.3; display: block;">${regText}</span>
                         </div>
                     </td>
@@ -113,7 +106,6 @@ function renderLiveTableRows(country) {
 
     if (tableHTML) {
         tableBody.innerHTML = tableHTML;
-        
         const casinoTable = document.getElementById('casino-table');
         if (casinoTable) {
             casinoTable.style.setProperty('display', 'table', 'important');
