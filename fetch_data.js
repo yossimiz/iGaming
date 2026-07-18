@@ -1,5 +1,5 @@
 // ================================================================= 
-// FETCH_DATA.JS - INDEPENDENT GEO ENGINE WITH NO UI OVERRIDES       
+// FETCH_DATA.JS - ZERO UI INTERFERENCE ENGINE (PROER ISOLATION)    
 // ================================================================= 
 
 window.userCountry = "CY";
@@ -29,11 +29,11 @@ async function runGlobalDataSyncEngine() {
     window.userCountry = detectedCountry;
     if (typeof userCountry !== 'undefined') userCountry = detectedCountry;
 
-    // עדכון קוד המדינה בתיבת הסטטוס על המסך
+    // עדכון קוד המדינה בתיבת הסטטוס התחתונה על המסך
     const countryLabel = document.getElementById('display-country');
     if (countryLabel) countryLabel.innerText = detectedCountry;
 
-    // 2. משיכת קובץ ה-JSON הדינמי שנוצר על ידי שרת הפייתון
+    // 2. משיכת קובץ ה-JSON הדינמי שנוצר על ידי שרת הפייתון עבור הטבלה
     try {
         const jsonResponse = await fetch('data.json');
         if (jsonResponse.ok) {
@@ -42,12 +42,12 @@ async function runGlobalDataSyncEngine() {
                 window.casinoData = jsonData.top_brands;
                 window.fallbackCasinoData = jsonData.top_brands;
                 if (typeof casinoData !== 'undefined') casinoData = jsonData.top_brands;
-                console.log("📥 [JSON] Live dynamic data loaded into global memory.");
+                console.log("📥 [JSON] Live dynamic data loaded safely into table memory.");
             }
         }
     } catch (jsonErr) {}
 
-    // 3. 🎯 עדכון תוויות UI ממוקד בלבד - ללא דריסת התיבות העליונות!
+    // 3. 🎯 עדכון רשתות הסינון והטבלה בלבד - ללא שום נגיעה בבלוק העליון!
     setTimeout(() => {
         // עדכון שקט של תיבת הבחירה (Select) למדינה האמיתית של הגולש
         const countrySelect = document.getElementById('country-select');
@@ -61,7 +61,7 @@ async function runGlobalDataSyncEngine() {
             loadingBox.style.setProperty('display', 'none', 'important');
         }
 
-        // הפעלת פונקציות הסינון בתוך app.js
+        // הפעלת פונקציות הסינון בתוך app.js עבור גלגל ה-Slot והמטריצות הפנימיות שלהן
         if (typeof window.updateCasinoDataByCountry === "function") {
             window.updateCasinoDataByCountry(detectedCountry);
         }
@@ -69,7 +69,7 @@ async function runGlobalDataSyncEngine() {
             window.triggerFilter();
         }
 
-        // בנייה וחשיפה של שורות הטבלה התחתונה מה-JSON
+        // בנייה וחשיפה של שורות הטבלה התחתונה בלבד
         renderLiveTableRows(detectedCountry);
     }, 300); 
 }
