@@ -15,27 +15,36 @@
         .ticker-bar { background: #111622; border-bottom: 1px solid #1a202c; padding: 12px 20px; font-size: 12px; font-weight: 600; color: #718096; }
         .ticker-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
         .main-lobby { max-width: 1200px; margin: 40px auto; padding: 0 20px; text-align: center; }
-        .hero-title { font-size: 36px; font-weight: 800; margin-bottom: 10px; letter-spacing: -0.5px; }
-        .hero-desc { color: #718096; font-size: 16px; margin-bottom: 40px; }
-        .matrix-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 800px; margin: 0 auto 30px auto; }
-        .matrix-box { background: #111622; border: 1px solid #1a202c; border-radius: 12px; padding: 24px; text-align: left; position: relative; }
-        .badge { position: absolute; top: 20px; right: 20px; font-size: 10px; font-weight: 800; padding: 4px 8px; border-radius: 20px; text-transform: uppercase; }
+        .hero-title { font-size: 38px; font-weight: 800; margin-bottom: 12px; letter-spacing: -0.5px; text-align: left; max-width: 1200px; margin-left: auto; margin-right: auto; }
+        .hero-desc { color: #718096; font-size: 16px; margin-bottom: 40px; text-align: left; max-width: 1200px; margin-left: auto; margin-right: auto; }
+        
+        /* קופסת המעטפת הכהה המאוחדת הגדולה - בדיוק כמו בצילום המסך שלך */
+        .unified-matrix-card { background: #101523; border: 1px solid #1a2436; border-radius: 16px; padding: 35px; width: 100%; max-width: 1200px; margin: 0 auto 30px auto; }
+        
+        .matrix-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 35px; }
+        .matrix-section { text-align: left; position: relative; padding-right: 20px; }
+        .badge { position: absolute; top: 0; right: 0; font-size: 10px; font-weight: 800; padding: 4px 10px; border-radius: 4px; text-transform: uppercase; }
         .badge.hot { background: #ef4444; color: #fff; }
         .badge.best { background: #00e676; color: #0b0e14; }
-        .matrix-label { color: #718096; font-size: 13px; font-weight: 600; text-transform: uppercase; margin-bottom: 6px; }
-        .matrix-val { font-size: 20px; font-weight: 700; color: #ffffff; margin-bottom: 4px; }
-        .matrix-sub { color: #4a5568; font-size: 13px; }
-        .slot-machine { background: #111622; border: 1px solid #1a202c; border-radius: 16px; padding: 30px; max-width: 800px; margin: 0 auto 40px auto; position: relative; }
-        .reels-container { background: #0b0e14; border: 1px solid #1a202c; border-radius: 12px; padding: 30px; display: flex; justify-content: center; gap: 40px; font-size: 48px; font-weight: 800; margin-bottom: 30px; }
+        .matrix-label { color: #718096; font-size: 14px; font-weight: 600; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 0.5px; }
+        .matrix-val { font-size: 24px; font-weight: 700; color: #ffffff; margin-bottom: 8px; }
+        .matrix-sub { color: #4e5d78; font-size: 14px; margin-bottom: 16px; line-height: 1.4; }
+        .matrix-btn { display: inline-block; padding: 10px 20px; border-radius: 6px; font-weight: 700; font-size: 13px; text-decoration: none; transition: transform 0.2s; }
+        .matrix-btn.purple { background: #8b5cf6; color: #ffffff; }
+        .matrix-btn.green { background: #10b981; color: #ffffff; }
+        .matrix-btn:hover { transform: translateY(-2px); }
+        
+        .inner-slot-box { background: #0b0f19; border: 1px solid #161f30; border-radius: 12px; padding: 30px; max-width: 500px; margin: 0 auto; }
+        .reels-container { display: flex; justify-content: center; gap: 40px; font-size: 48px; font-weight: 800; margin-bottom: 25px; }
         .reel { min-width: 60px; text-align: center; }
         @keyframes spinEnginePulse {
             0% { box-shadow: 0 0 15px rgba(0, 230, 118, 0.4); }
             50% { box-shadow: 0 0 30px rgba(0, 230, 118, 0.8); }
             100% { box-shadow: 0 0 15px rgba(0, 230, 118, 0.4); }
         }
-        .filter-controls { display: flex; gap: 15px; max-width: 1200px; margin: 0 auto 20px auto; }
+        .filter-controls { display: flex; gap: 15px; max-width: 1200px; margin: 0 auto 25px auto; }
         .select-box { flex: 1; background: #111622; border: 1px solid #1a202c; color: #ffffff; padding: 12px 16px; border-radius: 8px; font-size: 14px; font-weight: 600; outline: none; cursor: pointer; }
-        @media (max-width: 768px) { .matrix-container, .filter-controls { grid-template-columns: 1fr; flex-direction: column; } header { flex-direction: column; gap: 15px; } }
+        @media (max-width: 768px) { .matrix-grid { grid-template-columns: 1fr; } .filter-controls { flex-direction: column; } }
     </style>
 </head>
 <body>
@@ -59,46 +68,57 @@
     <main class="main-lobby">
         <h1 class="hero-title">Live RTP Casino Tracker</h1>
         <p class="hero-desc">Real-time data engine monitoring verified payouts across EU & UK jurisdictions.</p>
-        <div class="matrix-container">
-            <div class="matrix-box">
-                <span class="badge hot">🔥 Hot Now</span>
-                <div class="matrix-label">Trending Slot Matrix</div>
-                <div class="matrix-val" id="matrix-status-text">Loading Matrix...</div>
-                <div class="matrix-sub">Spiking in bets per minute across European gaming servers.</div>
+        <!-- התחלת הקופסה המאוחדת הגדולה מקצה לקצה לפי התמונה שלך -->
+        <div class="unified-matrix-card">
+            
+            <!-- גריד שתי תיבות הסטטוס הפנימיות -->
+            <div class="matrix-grid">
+                <div class="matrix-section" style="border-right: 1px solid #1a2436; padding-right: 25px;">
+                    <span class="badge hot">🔥 Hot Now</span>
+                    <div class="matrix-label">Trending Slot Matrix</div>
+                    <div class="matrix-val" id="matrix-status-text">Gates of Olympus (Pragmatic Play) ⚡</div>
+                    <div class="matrix-sub">Spiking in bets-per-minute and multipliers across European gaming servers.</div>
+                    <a href="#" class="matrix-btn purple">Launch Slot Demo →</a>
+                </div>
+                <div class="matrix-section" style="padding-left: 10px;">
+                    <span class="badge best">💎 Best Offer</span>
+                    <div class="matrix-label">Top Payout Bonus</div>
+                    <div class="matrix-val" id="matrix-brand-text">Casumo Casino 🏆</div>
+                    <div class="matrix-sub" id="matrix-package-text">€200 + 20 Free Spins</div>
+                    <a href="#" class="matrix-btn green">Claim Premium Match →</a>
+                </div>
             </div>
-            <div class="matrix-box">
-                <span class="badge best">💎 Best Offer</span>
-                <div class="matrix-label">Top Payout Bonus</div>
-                <div class="matrix-val" id="matrix-brand-text">Loading Brand...</div>
-                <div class="matrix-sub" id="matrix-package-text">Loading Package...</div>
+
+            <!-- מכונת ה-Slot הפנימית התחתונה באותו הבלוק -->
+            <div class="inner-slot-box">
+                <div class="reels-container">
+                    <div class="reel" id="reel1">💎</div>
+                    <div class="reel" id="reel2">👑</div>
+                    <div class="reel" id="reel3">777</div>
+                </div>
+                <button id="slots-action-trigger" style="
+                    background: linear-gradient(135deg, #00e676 0%, #00b0ff 100%);
+                    color: #0b0e14;
+                    border: none;
+                    padding: 16px 50px;
+                    font-size: 18px;
+                    font-weight: 800;
+                    border-radius: 50px;
+                    cursor: pointer;
+                    text-transform: uppercase;
+                    letter-spacing: 2px;
+                    box-shadow: 0 0 20px rgba(0, 230, 118, 0.5);
+                    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                    animation: spinEnginePulse 2s infinite ease-in-out;
+                    outline: none;
+                ">
+                    ⚡ SPIN ENGINE ⚡
+                </button>
             </div>
-        </div>
-        <div class="slot-machine">
-            <div class="reels-container">
-                <div class="reel" id="reel1">💎</div>
-                <div class="reel" id="reel2">👑</div>
-                <div class="reel" id="reel3">777</div>
-            </div>
-            <button id="slots-action-trigger" style="
-                background: linear-gradient(135deg, #00e676 0%, #00b0ff 100%);
-                color: #0b0e14;
-                border: none;
-                padding: 16px 50px;
-                font-size: 18px;
-                font-weight: 800;
-                border-radius: 50px;
-                cursor: pointer;
-                text-transform: uppercase;
-                letter-spacing: 2px;
-                box-shadow: 0 0 20px rgba(0, 230, 118, 0.5);
-                transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-                animation: spinEnginePulse 2s infinite ease-in-out;
-                outline: none;
-            ">
-                ⚡ SPIN ENGINE ⚡
-            </button>
-        </div>
-        <div class="slots-success-panel" id="slots-win-display" style="display: none; border: 1px solid #00e676 !important; border-radius: 12px !important; background: #131926 !important; padding: 20px !important; text-align: center !important; box-shadow: 0 0 20px rgba(0, 230, 118, 0.15) !important; max-width: 800px; margin: 0 auto 30px auto;">
+
+        </div> <!-- סגירת הקופסה המאוחדת הגדולה -->
+
+        <div class="slots-success-panel" id="slots-win-display" style="display: none; border: 1px solid #00e676 !important; border-radius: 12px !important; background: #131926 !important; padding: 20px !important; text-align: center !important; box-shadow: 0 0 20px rgba(0, 230, 118, 0.15) !important; max-width: 1200px; margin: 0 auto 30px auto;">
             <div style="color: #00e676 !important; font-size: 12px !important; font-weight: 700 !important; letter-spacing: 1px !important; margin-bottom: 8px !important;">🔥 OPERATOR MATCH SECURED</div>
             <h3 id="slots-panel-title" style="color: #ffffff !important; font-size: 20px !important; font-weight: 700 !important; margin-bottom: 6px !important;">Bet365 Casino</h3>
             <p id="slots-panel-detail" style="color: #a0aec0 !important; font-size: 14px !important; margin-bottom: 16px !important;">Stake £10 and get 50 Free Spins</p>
