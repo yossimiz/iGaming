@@ -1,10 +1,10 @@
 // ================================================================= 
-// 1. DATA FEEDS & CORE ENGINE (CLEAN MATRIX VERSION)               
+// 1. DATA FEEDS & CORE ENGINE (CLEAN ORIGINAL APP.JS STRUCTURE)     
 // ================================================================= 
 
 let casinoData = [];
 let filteredData = [];
-let userCountry = "UNKNOWN";
+let userCountry = "CY"; // ברירת מחדל נקייה מראש לקפריסין (אירופה) במקום ישראל!
 
 const fallbackCasinoData = [
     {
@@ -65,7 +65,7 @@ const fallbackCasinoData = [
     }
 ];
 
-// 2. מנגנון אימות גיל והפעלה ראשונית
+// 2. מנגנון אימות גיל (18+) והפעלה ראשונית של האתר
 document.addEventListener("DOMContentLoaded", () => {
     const ageGate = document.getElementById("age-gate");
     const ageAccept = document.getElementById("age-accept");
@@ -92,23 +92,43 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
     
-    // אתחול כפתור ה-SPIN ENGINE
+    // אתחול והפעלת כפתור ה-SPIN ENGINE
     initSlotMachineEngine();
 });
 
-// 3. פונקציית סינון המותגים לפי המדינה שזוהתה
-window.updateCasinoDataByCountry = function(detectedCountry) {
-    userCountry = detectedCountry || "UNKNOWN";
+// 3. פונקציית הצינור המרכזית (ה-Filter) - מטוהרת ונקייה מערכים קשיחים
+window.triggerFilter = function() {
+    // קורא את המדינה מחלון ה-Global של הדף (שה-fetch_data.js מזהה בלייב)
+    if (window.userCountry && window.userCountry !== "UNKNOWN") {
+        userCountry = window.userCountry;
+    }
+    
+    console.log(`📊 [Core App Engine] Synchronizing layouts for country: ${userCountry}`);
+
     const sourceData = (casinoData && casinoData.length > 0) ? casinoData : fallbackCasinoData;
     
+    // סינון אחיד ומקצועי של המותגים המורשים למדינה
     filteredData = sourceData.filter(casino => {
-        return casino.allowed_countries.includes(userCountry) || casino.allowed_countries.includes("ALL");
+        return casino.allowed_countries.includes(userCountry) || 
+               casino.allowed_countries.includes("ALL");
     });
 
     if (filteredData.length === 0) {
-        filteredData = sourceData.filter(casino => casino.allowed_countries.includes("DE") || casino.allowed_countries.includes("CY"));
+        filteredData = sourceData.filter(casino => 
+            casino.allowed_countries.includes("DE") || casino.allowed_countries.includes("CY")
+        );
     }
-    console.log(`📊 [Data Table Synced] User Country: ${userCountry}. Loaded Brands:`, filteredData);
+    
+    // במידה וקיימת פונקציית בניית טבלה בקוד שלך, היא תופעל כאן
+    if (typeof renderTable === "function") {
+        renderTable();
+    }
+};
+
+// הפעלת פונקציית הצינור כפונקציה גלובלית תואמת
+window.updateCasinoDataByCountry = function(detectedCountry) {
+    if (detectedCountry) window.userCountry = detectedCountry;
+    window.triggerFilter();
 };
 
 // 4. מנוע ה-SLOT MACHINE (הגלגלים, הריצה והסיבובים)
@@ -117,11 +137,10 @@ function initSlotMachineEngine() {
     if (!spinBtn) return;
 
     spinBtn.addEventListener("click", () => {
-        // מנגנון הריצה והאנימציה המקורית של הגלגלים שלך באתר
         console.log("⚡ [Slot Engine] Spinning...");
         spinBtn.disabled = true;
         
-        // כאן רץ קוד האנימציה של המטריצה שלך
+        // ריצה של שנתיים (אנימציית גלגלים וירטואלית)
         setTimeout(() => {
             spinBtn.disabled = false;
             triggerWinDisplayPanel();
@@ -136,13 +155,13 @@ function triggerWinDisplayPanel() {
     const panelLink = document.getElementById('slots-panel-link');
     
     const activeList = (filteredData && filteredData.length > 0) ? filteredData : fallbackCasinoData;
-    // בחירה רנדומלית מתוך המותגים המורשים לגולש
+    // הגרלה רנדומלית מתוך המותגים המורשים למדינה
     const matchedCasino = activeList[Math.floor(Math.random() * activeList.length)];
     
     if (matchedCasino && winPanel) {
-        panelTitle.innerText = matchedCasino.casino_name;
-        panelDetail.innerText = matchedCasino.bonus_text;
-        panelLink.href = matchedCasino.affiliate_link;
+        panelTitle.innerText = matchedCasino.casino_name || matchedCasino.name;
+        panelDetail.innerText = matchedCasino.bonus_text || matchedCasino.bonus;
+        panelLink.href = matchedCasino.affiliate_link || "#";
         winPanel.style.setProperty('display', 'block', 'important');
     }
 }
