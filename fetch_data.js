@@ -1,8 +1,9 @@
 // ================================================================= 
-// FETCH_DATA.JS - INDEPENDENT GEO ENGINE WITH LIVE DATA SYNC         
+// FETCH_DATA.JS - FIXED VARIABLE SYNC & AUTOMATIC TABLE INJECTION 
 // ================================================================= 
 
-window.userCountry = "CY"; // ברירת מחדל נקייה לאירופה
+window.userCountry = "CY";
+window.casinoData = [];
 
 async function runGlobalDataSyncEngine() {
     console.log("🚀 [Data Sync] Initializing live geo-detection pipeline...");
@@ -16,7 +17,7 @@ async function runGlobalDataSyncEngine() {
             if (response.ok) {
                 const ipData = await response.json();
                 const code = (ipData.country_code || ipData.country || '').toString().trim().toUpperCase();
-                if (code && code !== 'IL') { // מונע תקלות קודמות
+                if (code && code !== 'IL') {
                     detectedCountry = code === 'GB' ? 'UK' : code;
                     break;
                 }
@@ -37,10 +38,13 @@ async function runGlobalDataSyncEngine() {
         const jsonResponse = await fetch('data.json');
         if (jsonResponse.ok) {
             const jsonData = await jsonResponse.json();
+            
+            // תיאום משתנים קריטי: מאכיל את כל מערכי הנתונים האפשריים שהאתר מחפש
             if (jsonData.top_brands) {
                 window.casinoData = jsonData.top_brands;
                 window.fallbackCasinoData = jsonData.top_brands;
                 if (typeof casinoData !== 'undefined') casinoData = jsonData.top_brands;
+                console.log("📥 [JSON] Live dynamic data injected into the application.");
             }
         }
     } catch (jsonErr) {}
@@ -60,12 +64,80 @@ async function runGlobalDataSyncEngine() {
             if (el.innerText === 'Loading Package...') el.innerText = 'Exclusive 150% Welcome Pack';
         });
 
-        // הפעלת פונקציית הצינור המשולבת שעדכנו בתוך app.js
+        // הפעלת פונקציות הסינון המשולבות בתוך app.js כדי לרנדר את הטבלה
         if (typeof window.updateCasinoDataByCountry === "function") {
             window.updateCasinoDataByCountry(detectedCountry);
         }
+        if (typeof window.triggerFilter === "function") {
+            window.triggerFilter();
+        }
+
+        // רשת ביטחון: בונה את שורות הטבלה ישירות מהנתונים אם הרינדור נתקע
+        renderLiveTableDirectly(detectedCountry);
     }, 300); 
+}
+
+// פונקציית רשת ביטחון שבונה את שורות הטבלה ישירות מה-JSON על המסך
+function renderLiveTableDirectly(country) {
+    const tableBody = document.getElementById('table-body') || document.querySelector('tbody');
+    const tableContainer = document.getElementById('table-container') || document.querySelector('.table-responsive') || document.body;
+    
+    if (!tableBody) return;
+
+    const sourceList = (window.casinoData && window.casinoData.length > 0) ? window.casinoData : [];
+    if (sourceList.length === 0) return;
+
+    let tableHTML = '';
+    sourceList.forEach(brand => {
+        const countries = brand.allowed_countries || [];
+        if (countries.includes(country) || countries.includes('ALL')) {
+            tableHTML += `
+                <tr style="background: #131926; border-bottom: 1px solid #222d42;">
+                    <td style="padding: 15px; color: #ffffff; font-weight: 700; text-align: left;">👑 ${brand.casino_name || brand.name}</td>
+                    <td style="padding: 15px; color: #00e676; font-weight: 700; text-align: left;">🎁 ${brand.bonus_text || brand.bonus}</td>
+                    <td style="padding: 15px; color: #ecc94b; text-align: left;">⭐⭐⭐⭐⭐ (${brand.rating || '4.9'})</td>
+                    <td style="padding: 15px; color: #00b0ff; font-weight: 700; text-align: left;">${brand.rtp_score || brand.rtp}</td>
+                    <td style="padding: 15px; text-align: right;">
+                        <a href="${brand.affiliate_link || '#'}" target="_blank" style="background: linear-gradient(135deg, #00e676 0%, #00b0ff 100%); color: #0b0e14; text-decoration: none; padding: 8px 16px; border-radius: 6px; font-weight: 800; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; display: inline-block;">PLAY NOW</a>
+                    </td>
+                </tr>
+            `;
+        }
+    });
+
+    if (tableHTML) {
+        tableBody.innerHTML = tableHTML;
+        
+        // העלמת טקסט הסטטוס של ה-Syncing ברגע שהנתונים נכנסים
+        const syncingText = Array.from(document.querySelectorAll('div, p, span')).find(el => el.innerText && el.innerText.includes('Syncing secure iGaming'));
+        if (syncingText) {
+            syncingText.style.display = 'none';
+        }
+        
+        const loadingText = document.getElementById('loading');
+        if (loadingText) loadingText.style.display = 'none';
+        const casinoTable = document.getElementById('casino-table');
+        if (casinoTable) casinoTable.style.display = 'table';
+    }
 }
 
 // הפעלת המערכת אוטומטית עם טעינת הדף
 document.addEventListener("DOMContentLoaded", runGlobalDataSyncEngine);
+
+// מאזין להחלפה ידנית ברשימה (משמר את זכות הבחירה של המשתמש באירופה)
+document.addEventListener("DOMContentLoaded", () => {
+    const countrySelect = document.getElementById('country-select');
+    if (countrySelect) {
+        countrySelect.addEventListener("change", (e) => {
+            let userSelected = e.target.value;
+            if (userSelected === 'GB') userSelected = 'UK';
+            
+            window.userCountry = userSelected;
+            if (typeof userCountry !== 'undefined') userCountry = userSelected;
+            
+            const tableBody = document.getElementById('table-body') || document.querySelector('tbody');
+            if (tableBody) tableBody.innerHTML = ''; 
+            renderLiveTableDirectly(userSelected); 
+        });
+    }
+});
