@@ -1,5 +1,5 @@
 // ================================================================= 
-// FETCH_DATA.JS - DIRECT TABLE INJECTION & TEXT CLEARING ENGINE    
+// FETCH_DATA.JS - ULTRA SAFE SINGLE-POINT DATA INJECTION ENGINE     
 // ================================================================= 
 
 window.userCountry = "CY";
@@ -38,61 +38,57 @@ async function runGlobalDataSyncEngine() {
         const jsonResponse = await fetch('data.json');
         if (jsonResponse.ok) {
             const jsonData = await jsonResponse.json();
-            
             if (jsonData.top_brands) {
                 window.casinoData = jsonData.top_brands;
                 window.fallbackCasinoData = jsonData.top_brands;
                 if (typeof casinoData !== 'undefined') casinoData = jsonData.top_brands;
-                console.log("📥 [JSON Loaded] Scraped data attached to global array.");
+                print("📥 [JSON] Live dynamic data injected into the application.");
             }
         }
-    } catch (jsonErr) {
-        console.warn("Could not load data.json, running simulation mode.");
-    }
+    } catch (jsonErr) {}
 
-    // 3. 🎯 ניקוי טקסטים חוסמים והזרקה ישירה של שורות הקזינו לטבלה
+    // 3. 🎯 עדכון תוויות UI ממוקד ובניית שורות הטבלה בבטחה
     setTimeout(() => {
-        // א. מציאת תיבת הטקסט התקועה של ה-Syncing secure ומחיקתה כדי לפנות מקום לטבלה
-        const allDivs = document.querySelectorAll('div, p, span, h3');
-        allDivs.forEach(el => {
-            if (el.innerText && el.innerText.includes('Syncing secure iGaming')) {
-                el.style.setProperty('display', 'none', 'important'); // מעלים את הטקסט החוסם
-            }
-            if (el.innerText === 'Loading Matrix...') el.innerText = 'Matrix Engine Active';
-            if (el.innerText === 'Detecting...') el.innerText = detectedCountry;
-            if (el.innerText === 'Loading Brand...') el.innerText = 'MyStake Casino';
-            if (el.innerText === 'Loading Package...') el.innerText = 'Exclusive 150% Welcome Pack';
-        });
-
-        // ב. עדכון שקט של תיבת הבחירה (Select) למדינה האמיתית של הגולש
+        // א. עדכון שקט של תיבת הבחירה (Select) למדינה האמיתית של הגולש
         const countrySelect = document.getElementById('country-select');
         if (countrySelect) {
             countrySelect.value = detectedCountry === 'UK' ? 'GB' : detectedCountry;
         }
 
-        // ג. בנייה ישירה בכפייה של שורות הטבלה על המסך מתוך ה-JSON של הפייתון
+        // ב. העלמת כיתובי טעינה ממוקדים בלבד (בלי לשנות innerHTML של דיבים גדולים!)
+        const uiLabels = document.querySelectorAll('h3, div, span, p');
+        uiLabels.forEach(el => {
+            if (el.innerText === 'Loading Matrix...') el.innerText = 'Matrix Engine Active';
+            if (el.innerText === 'Detecting...') el.innerText = detectedCountry;
+            if (el.innerText === 'Loading Brand...') el.innerText = 'MyStake Casino';
+            if (el.innerText === 'Loading Package...') el.innerText = 'Exclusive 150% Welcome Pack';
+            
+            // העלמת משפט הסטטוס התקוע בצורה בטוחה
+            if (el.innerText && el.innerText.includes('Syncing secure iGaming cryptographic matrix...')) {
+                el.style.setProperty('display', 'none', 'important');
+            }
+        });
+
+        // ג. הפעלת פונקציות הצינור המקוריות שרשומות אצלך ב-app.js
+        if (typeof window.updateCasinoDataByCountry === "function") {
+            window.updateCasinoDataByCountry(detectedCountry);
+        }
+        if (typeof window.triggerFilter === "function") {
+            window.triggerFilter();
+        }
+
+        // ד. בנייה ממוקדת של שורות הטבלה ישירות מתוך ה-JSON של הפייתון
         renderLiveTableRows(detectedCountry);
 
-    }, 400); 
+    }, 300); 
 }
 
-// פונקציה עצמאית שבונה את שורות המותגים ומזריקה אותן פיזית לתוך גוף הטבלה
+// פונקציה ממוקדת שבונה את שורות המותגים ומזריקה אותן אך ורק לתוך ה-tbody הקיים
 function renderLiveTableRows(country) {
-    // מאתר את גוף הטבלה הקיים באתר שלך (לפי id או לפי תגית tbody)
-    let tableBody = document.getElementById('table-body') || document.querySelector('tbody');
-    
-    // במידה והאלמנט לא נמצא, נחפש את התיבה הכהה הגדולה שבה מופיע טקסט הסנכרון
-    if (!tableBody) {
-        const tableContainer = Array.from(document.querySelectorAll('div')).find(el => el.innerText && el.innerText.includes('Syncing secure iGaming'));
-        if (tableContainer) {
-            tableContainer.innerHTML = '<table style="width:100%; border-collapse: collapse;"><tbody id="table-body"></tbody></table>';
-            tableBody = document.getElementById('table-body');
-        }
-    }
-
+    // מאתר את גוף הטבלה הקיים באתר שלך לפי ה-ID הרשמי שלו
+    const tableBody = document.getElementById('table-body') || document.querySelector('tbody');
     if (!tableBody) return;
 
-    // לקיחת הנתונים שנוצרו ב-Python
     const sourceList = (window.casinoData && window.casinoData.length > 0) ? window.casinoData : [];
     if (sourceList.length === 0) return;
 
@@ -100,14 +96,14 @@ function renderLiveTableRows(country) {
     sourceList.forEach(brand => {
         const countries = brand.allowed_countries || [];
         if (countries.includes(country) || countries.includes('ALL')) {
-            // יצירת מבנה שורה יוקרתי, רספונסיבי ומיושר לשמאל (LTR) התואם את עיצוב האתר שלך
+            // בניית מבנה שורות נקי שתואם בדיוק לעמודות המקוריות של האתר שלך
             tableHTML += `
-                <tr style="background: #131926; border-bottom: 1px solid #222d42; display: grid; grid-template-columns: 1.5fr 2fr 1.5fr 1fr 1.2fr; align-items: center; padding: 14px 20px; text-align: left; font-family: 'Segoe UI', sans-serif;">
-                    <td style="color: #ffffff; font-weight: 700; font-size: 15px; border: none; padding: 0;">👑 ${brand.casino_name || brand.name}</td>
-                    <td style="color: #00e676; font-weight: 700; font-size: 14px; border: none; padding: 0;">🎁 ${brand.bonus_text || brand.bonus}</td>
-                    <td style="color: #ecc94b; font-size: 13px; border: none; padding: 0;">⭐⭐⭐⭐⭐ (${brand.rating || '4.9'})</td>
-                    <td style="color: #00b0ff; font-weight: 700; font-size: 15px; border: none; padding: 0;">${brand.rtp_score || brand.rtp}</td>
-                    <td style="text-align: right; border: none; padding: 0;">
+                <tr style="background: #131926; border-bottom: 1px solid #222d42;">
+                    <td style="padding: 15px; color: #ffffff; font-weight: 700; text-align: left; border: none;">👑 ${brand.casino_name || brand.name}</td>
+                    <td style="padding: 15px; color: #00e676; font-weight: 700; text-align: left; border: none;">🎁 ${brand.bonus_text || brand.bonus}</td>
+                    <td style="padding: 15px; color: #ecc94b; text-align: left; border: none;">⭐⭐⭐⭐⭐ (${brand.rating || '4.9'})</td>
+                    <td style="padding: 15px; color: #00b0ff; font-weight: 700; text-align: left; border: none;">${brand.rtp_score || brand.rtp}</td>
+                    <td style="padding: 15px; text-align: right; border: none;">
                         <a href="${brand.affiliate_link || '#'}" target="_blank" style="background: linear-gradient(135deg, #00e676 0%, #00b0ff 100%); color: #0b0e14; text-decoration: none; padding: 8px 18px; border-radius: 6px; font-weight: 800; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; display: inline-block;">PLAY NOW</a>
                     </td>
                 </tr>
@@ -118,7 +114,7 @@ function renderLiveTableRows(country) {
     if (tableHTML) {
         tableBody.innerHTML = tableHTML;
         
-        // הצגת הטבלה והעלמת אלמנט הטעינה הישן
+        // חשיפת הטבלה והסרת מסך הטעינה
         const loadingText = document.getElementById('loading');
         if (loadingText) loadingText.style.display = 'none';
         const casinoTable = document.getElementById('casino-table');
@@ -139,10 +135,6 @@ document.addEventListener("DOMContentLoaded", () => {
             
             window.userCountry = userSelected;
             if (typeof userCountry !== 'undefined') userCountry = userSelected;
-            
-            // עדכון המדינה על המסך באופן ידני
-            const countryLabel = document.getElementById('display-country');
-            if (countryLabel) countryLabel.innerText = userSelected;
             
             const tableBody = document.getElementById('table-body') || document.querySelector('tbody');
             if (tableBody) tableBody.innerHTML = ''; 
