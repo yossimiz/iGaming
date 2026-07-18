@@ -1,5 +1,5 @@
 // ================================================================= 
-// FETCH_DATA.JS - ULTRA ENFORCED CASINO TABLE RENDER (FIXED LABELS) 
+// FETCH_DATA.JS - PREMIUM EU FULL-WIDTH TABLE INJECTION ENGINE    
 // ================================================================= 
 
 window.userCountry = "CY";
@@ -9,7 +9,6 @@ async function runGlobalDataSyncEngine() {
     console.log("🚀 [Data Sync] Initializing live geo-detection pipeline...");
     let detectedCountry = "CY"; 
     
-    // 1. זיהוי מיקום אמיתי בלייב לפי ה-IP של הגולש
     const geoSources = ['https://ipapi.co', 'https://ipwhois.app'];
     for (const url of geoSources) {
         try {
@@ -25,17 +24,12 @@ async function runGlobalDataSyncEngine() {
         } catch (err) {}
     }
 
-    // הגדרת משתנה המדינה בחלון הגלובלי
     window.userCountry = detectedCountry;
     if (typeof userCountry !== 'undefined') userCountry = detectedCountry;
 
-    // עדכון קוד המדינה בתיבת הסטטוס על המסך
     const countryLabel = document.getElementById('display-country');
-    if (countryLabel) {
-        countryLabel.innerText = detectedCountry;
-    }
+    if (countryLabel) countryLabel.innerText = detectedCountry;
 
-    // 2. משיכת קובץ ה-JSON הדינמי שנוצר על ידי שרת הפייתון
     try {
         const jsonResponse = await fetch('data.json');
         if (jsonResponse.ok) {
@@ -44,19 +38,17 @@ async function runGlobalDataSyncEngine() {
                 window.casinoData = jsonData.top_brands;
                 window.fallbackCasinoData = jsonData.top_brands;
                 if (typeof casinoData !== 'undefined') casinoData = jsonData.top_brands;
-                console.log("📥 [JSON Loaded] Scraped dynamic data attached successfully.");
             }
         }
     } catch (jsonErr) {}
 
-    // 3. 🎯 עדכון ממוקד של תוויות ה-UI לפי ID מדויק (מונע שיבוש משחקים!)
     setTimeout(() => {
         const countrySelect = document.getElementById('country-select');
         if (countrySelect) {
             countrySelect.value = detectedCountry === 'UK' ? 'GB' : detectedCountry;
         }
 
-        // עדכון ישיר ונקודתי אך ורק של רכיבי המטריצה לפי ה-ID הייחודי שלהם
+        // עדכון תוויות המטריצה הראשיות בלבד
         const matrixStatus = document.getElementById('matrix-status-text');
         if (matrixStatus) matrixStatus.innerText = 'Matrix Engine Active';
 
@@ -66,13 +58,11 @@ async function runGlobalDataSyncEngine() {
         const matrixPackage = document.getElementById('matrix-package-text');
         if (matrixPackage) matrixPackage.innerText = 'Exclusive 150% Welcome Pack';
 
-        // העלמת הודעת הסנכרון התקועה בצורה מאובטחת
         const loadingBox = document.getElementById('loading');
         if (loadingBox) {
             loadingBox.style.setProperty('display', 'none', 'important');
         }
 
-        // הפעלת פונקציות הסינון בתוך app.js
         if (typeof window.updateCasinoDataByCountry === "function") {
             window.updateCasinoDataByCountry(detectedCountry);
         }
@@ -80,12 +70,10 @@ async function runGlobalDataSyncEngine() {
             window.triggerFilter();
         }
 
-        // בנייה וחשיפה של שורות הטבלה על המסך
         renderLiveTableRows(detectedCountry);
     }, 300); 
 }
 
-// פונקציה ממוקדת שמזריקה את שורות המותגים ומציגה את הטבלה בכפייה
 function renderLiveTableRows(country) {
     const tableBody = document.getElementById('table-body') || document.querySelector('tbody');
     if (!tableBody) return;
@@ -97,14 +85,26 @@ function renderLiveTableRows(country) {
     sourceList.forEach(brand => {
         const countries = brand.allowed_countries || [];
         if (countries.includes(country) || countries.includes('ALL')) {
+            
+            // שחזור מדויק של הטקסט המשפטי והלוגו לפי העיצוב המקורי בתמונה שלך
+            const regText = brand.regulatory_text || "18+. T&Cs apply. Play responsibly. BeGambleAware.org";
+            const highlightText = brand.operator_highlights || "● Verified App";
+            const ratingStars = brand.rating || "96.45%";
+            
+            // בניית שורה רחבה ומקורית (מיושרת בול תחת 5 הכותרות המקוריות של האתר שלך)
             tableHTML += `
-                <tr style="background: #131926; border-bottom: 1px solid #222d42;">
-                    <td style="padding: 15px; color: #ffffff; font-weight: 700; text-align: left; border: none;">👑 ${brand.casino_name || brand.name}</td>
-                    <td style="padding: 15px; color: #00e676; font-weight: 700; text-align: left; border: none;">🎁 ${brand.bonus_text || brand.bonus}</td>
-                    <td style="padding: 15px; color: #ecc94b; text-align: left; border: none;">⭐⭐⭐⭐⭐ (${brand.rating || '4.9'})</td>
-                    <td style="padding: 15px; color: #00b0ff; font-weight: 700; text-align: left; border: none;">${brand.rtp_score || brand.rtp}</td>
-                    <td style="padding: 15px; text-align: right; border: none;">
-                        <a href="${brand.affiliate_link || '#'}" target="_blank" style="background: linear-gradient(135deg, #00e676 0%, #00b0ff 100%); color: #0b0e14; text-decoration: none; padding: 8px 18px; border-radius: 6px; font-weight: 800; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; display: inline-block;">PLAY NOW</a>
+                <tr style="border-bottom: 1px solid #1a2232; background: #0f1420; transition: background 0.2s;">
+                    <td style="padding: 20px 15px; color: #ffffff; font-weight: 700; font-size: 15px; text-align: left; border: none;">👑 ${brand.casino_name || brand.name}</td>
+                    <td style="padding: 20px 15px; color: #3b82f6; font-weight: 700; font-size: 14px; text-align: left; border: none;">${brand.bonus_text || brand.bonus}</td>
+                    <td style="padding: 20px 15px; color: #10b981; font-size: 13px; font-weight: 600; text-align: left; border: none;">
+                        <span style="display: inline-flex; align-items: center; gap: 4px; color: #10b981;">● Verified App</span>
+                    </td>
+                    <td style="padding: 20px 15px; color: #10b981; font-weight: 700; font-size: 15px; text-align: left; border: none;">${brand.rtp_score || brand.rtp}</td>
+                    <td style="padding: 20px 15px; text-align: right; border: none; vertical-align: top;">
+                        <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 6px;">
+                            <a href="${brand.affiliate_link || '#'}" target="_blank" style="background: #2563eb; color: #ffffff; text-decoration: none; padding: 10px 24px; border-radius: 6px; font-weight: 700; font-size: 13px; letter-spacing: 0.5px; text-transform: none; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2); display: inline-block; text-align: center;">Claim Access</a>
+                            <span style="color: #4a5568; font-size: 10px; font-weight: 500; text-align: right; max-width: 160px; line-height: 1.3; display: block;">${regText}</span>
+                        </div>
                     </td>
                 </tr>
             `;
@@ -114,30 +114,23 @@ function renderLiveTableRows(country) {
     if (tableHTML) {
         tableBody.innerHTML = tableHTML;
         
-        // כפיית חשיפת הטבלה כולה על המסך תוך ביטול ה-display: none הישן
         const casinoTable = document.getElementById('casino-table');
         if (casinoTable) {
             casinoTable.style.setProperty('display', 'table', 'important');
-            casinoTable.style.setProperty('visibility', 'visible', 'important');
             casinoTable.style.setProperty('width', '100%', 'important');
         }
     }
 }
 
-// הפעלת מנוע הנתונים מיד עם עליית הדף
 document.addEventListener("DOMContentLoaded", runGlobalDataSyncEngine);
 
-// מאזין להחלפה ידנית ברשימה
 document.addEventListener("DOMContentLoaded", () => {
     const countrySelect = document.getElementById('country-select');
     if (countrySelect) {
         countrySelect.addEventListener("change", (e) => {
             let userSelected = e.target.value;
             if (userSelected === 'GB') userSelected = 'UK';
-            
             window.userCountry = userSelected;
-            if (typeof userCountry !== 'undefined') userCountry = userSelected;
-            
             const tableBody = document.getElementById('table-body') || document.querySelector('tbody');
             if (tableBody) tableBody.innerHTML = ''; 
             renderLiveTableRows(userSelected); 
