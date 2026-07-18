@@ -794,534 +794,119 @@ onmousedown="
         </table>
     </div>
 <!-- ================================================================= -->
-<!-- START OF HOT REVIEWED GAMES GRID (FIXED IMAGES & DEMO LINKS)     -->
+<!-- START OF HOT REVIEWED GAMES & CASINO MATRIX HUB                  -->
 <!-- ================================================================= -->
-<style>
-    .slot-card_image {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        border-radius: 14px;
-        border: 1px solid #222d42;
-        background: #0b0e14;
-    }
-    .slot-card_image .slot-card_image-frontbox,
-    .slot-card_image .slot-card_image-backbox {
-        position: absolute;
-        inset: 0;
-        transition: opacity 0.35s ease, z-index 0.35s ease;
-    }
-    .slot-card_image .slot-card_image-frontbox {
-        z-index: 10;
-    }
-    .slot-card_image .slot-card_image-backbox {
-        z-index: 9;
-        opacity: 0;
-        background: rgba(0, 0, 0, 0.24);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    .slot-card_image:hover .slot-card_image-frontbox {
-        z-index: 9;
-    }
-    .slot-card_image:hover .slot-card_image-backbox {
-        z-index: 10;
-        opacity: 1;
-    }
-    .slot-card_image-backbox img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-    }
-    .slot-card_image-frontbox picture,
-    .slot-card_image-frontbox picture img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-    }
-    .slot-card_image-backbox::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(180deg, rgba(0,0,0,0.0), rgba(0,0,0,0.35));
-        pointer-events: none;
-        z-index: 11;
-    }
-    .slot-card:hover {
-        border-color: #3b82f6;
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.22);
-    }
+<div style="max-width: 1150px; margin: 40px auto 20px auto; padding: 0 15px; font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif; box-sizing: border-box; direction: ltr; text-align: left;">
+    
+    <!-- גריד 4 המשחקים היציב והעובד שלך -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; width: 100%; margin-bottom: 40px;">
 
-    .game-thumb { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transform-origin: center; transition: transform 0.25s ease, opacity 0.2s ease; }
-    .game-thumb:hover { transform: scale(1.03); }
-
-    /* Static game thumbnail only; no hover animation video. */
-    .thumb-static { opacity: 1; transition: opacity 0.18s ease; }
-    @keyframes float { 0% { transform: translateY(0); } 50% { transform: translateY(-6px); } 100% { transform: translateY(0); } }
-
-    /* Play button overlay */
-    .game-thumb-overlay { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); pointer-events: none; }
-    .game-play-btn { width: 72px; height: 72px; border-radius: 50%; background: rgba(0,0,0,0.45); display: flex; align-items: center; justify-content: center; font-size: 34px; color: #ffffff; box-shadow: 0 10px 30px rgba(0,0,0,0.6); pointer-events: none; }
-    .game-play-btn::after { content: ''; position: absolute; width: 100%; height: 100%; border-radius: 50%; left: 0; top: 0; box-shadow: 0 0 0 rgba(0,0,0,0.0); }
-    @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.08); opacity: 0.95; } 100% { transform: scale(1); opacity: 1; } }
-    .game-play-btn { animation: pulse 1.6s ease-in-out infinite; }
-</style>
-<section id="featured-games" aria-labelledby="featured-games-heading" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; width: 100%; max-width: 1150px; margin: 20px auto; padding: 0 15px; font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif; box-sizing: border-box; direction: ltr; text-align: left;">
-<h2 id="featured-games-heading" class="sr-only">Featured games</h2>
-
-    <!-- משחק 1: Berry Berry Bonanza -->
-    <div class="slot-card" style="background: #131926; border: 1px solid #222d42; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; height: 100%; transition: border-color 0.3s ease;">
-        <div class="slot-card_image" style="position: relative; width: 100%; padding-top: 65%; background: #0b0e14;">
-            <div class="slot-card_image-backbox">
-                <img src="https://free-slots.games/wp-content/uploads/2020/06/Berry-Berry-Bonanza.gif" alt="Berry Berry Bonanza hover preview" />
+        <!-- משחק 1 -->
+        <div style="background: #131926; border: 1px solid #222d42; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; height: 100%;">
+            <div style="position: relative; width: 100%; padding-top: 65%; background: #0b0e14;">
+                <iframe src="https://free-slots.games" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" scrolling="no" allowfullscreen="true" loading="lazy"></iframe>
             </div>
-            <div class="slot-card_image-frontbox">
-                <picture>
-                    <source srcset="https://free-slots.games/wp-content/uploads/2020/06/Berry-Berry-Bonanza.jpg" media="(max-width: 320px)">
-                    <source srcset="https://free-slots.games/wp-content/uploads/2020/06/Berry-Berry-Bonanza.jpg" media="(max-width: 768px)">
-                    <img class="game-thumb thumb-static" src="https://free-slots.games/wp-content/uploads/2020/06/Berry-Berry-Bonanza.jpg" alt="Berry Berry Bonanza thumbnail">
-                </picture>
-                <div class="game-thumb-overlay"><div class="game-play-btn">▶</div></div>
+            <div style="padding: 16px; display: flex; flex-direction: column; gap: 10px; flex-grow: 1;">
+                <h3 style="color: #ffffff; font-size: 16px; font-weight: 700; margin: 0;">Gates of Olympus</h3>
+                <div style="color: #ecc94b; font-size: 13px;">⭐⭐⭐⭐⭐ <span style="color: #718096; font-size: 11px;">(4.9)</span></div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px; font-size: 12px;">
+                    <span style="color: #718096;">RTP: <strong style="color: #48bb78; background: rgba(72, 187, 120, 0.1); padding: 2px 6px; border-radius: 4px;">96.50%</strong></span>
+                    <span style="color: #718096;">Risk: <strong style="color: #ef4444;">High</strong></span>
+                </div>
             </div>
         </div>
-        <div style="padding: 16px; display: flex; flex-direction: column; gap: 10px; flex-grow: 1;">
-            <h3 style="color: #ffffff; font-size: 16px; font-weight: 700; margin: 0;">Berry Berry Bonanza</h3>
-            <div style="color: #ecc94b; font-size: 13px;">⭐⭐⭐⭐⭐ <span style="color: #718096; font-size: 11px;">(4.8)</span></div>
-            <a href="#" style="color: #4299e1; font-size: 12px; text-decoration: none; font-weight: 600;">📖 Read Full Game Guide →</a>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px; font-size: 12px;">
-                <span style="color: #718096;">RTP: <strong style="color: #48bb78; background: rgba(72, 187, 120, 0.1); padding: 2px 6px; border-radius: 4px;">96.45%</strong></span>
-                <span style="color: #718096;">Volatility: <strong style="color: #38bdf8;">Medium</strong></span>
+
+        <!-- משחק 2 -->
+        <div style="background: #131926; border: 1px solid #222d42; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; height: 100%;">
+            <div style="position: relative; width: 100%; padding-top: 65%; background: #0b0e14;">
+                <iframe src="https://free-slots.games" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" scrolling="no" allowfullscreen="true" loading="lazy"></iframe>
             </div>
-            <a id="gate-play-btn" href="https://free-slots.games/playtechslots/BerryBerryBonanza/index.html" target="_blank" rel="noopener noreferrer" style="display: block; text-align: center; background: #00e676; color: #0b0e14; text-decoration: none; padding: 10px; border-radius: 6px; font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 8px;">
-                PLAY FREE DEMO
-            </a>
+            <div style="padding: 16px; display: flex; flex-direction: column; gap: 10px; flex-grow: 1;">
+                <h3 style="color: #ffffff; font-size: 16px; font-weight: 700; margin: 0;">Sweet Bonanza</h3>
+                <div style="color: #ecc94b; font-size: 13px;">⭐⭐⭐⭐⭐ <span style="color: #718096; font-size: 11px;">(4.8)</span></div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px; font-size: 12px;">
+                    <span style="color: #718096;">RTP: <strong style="color: #48bb78; background: rgba(72, 187, 120, 0.1); padding: 2px 6px; border-radius: 4px;">96.48%</strong></span>
+                    <span style="color: #718096;">Risk: <strong style="color: #ed8936;">Med-High</strong></span>
+                </div>
+            </div>
         </div>
+
+        <!-- משחק 3 -->
+        <div style="background: #131926; border: 1px solid #222d42; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; height: 100%;">
+            <div style="position: relative; width: 100%; padding-top: 65%; background: #0b0e14;">
+                <iframe src="https://free-slots.games" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" scrolling="no" allowfullscreen="true" loading="lazy"></iframe>
+            </div>
+            <div style="padding: 16px; display: flex; flex-direction: column; gap: 10px; flex-grow: 1;">
+                <h3 style="color: #ffffff; font-size: 16px; font-weight: 700; margin: 0;">Sugar Rush</h3>
+                <div style="color: #ecc94b; font-size: 13px;">⭐⭐⭐⭐⭐ <span style="color: #718096; font-size: 11px;">(4.7)</span></div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px; font-size: 12px;">
+                    <span style="color: #718096;">RTP: <strong style="color: #48bb78; background: rgba(72, 187, 120, 0.1); padding: 2px 6px; border-radius: 4px;">96.50%</strong></span>
+                    <span style="color: #718096;">Risk: <strong style="color: #ef4444;">High</strong></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- משחק 4 -->
+        <div style="background: #131926; border: 1px solid #222d42; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; height: 100%;">
+            <div style="position: relative; width: 100%; padding-top: 65%; background: #0b0e14;">
+                <iframe src="https://free-slots.games" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" scrolling="no" allowfullscreen="true" loading="lazy"></iframe>
+            </div>
+            <div style="padding: 16px; display: flex; flex-direction: column; gap: 10px; flex-grow: 1;">
+                <h3 style="color: #ffffff; font-size: 16px; font-weight: 700; margin: 0;">Big Bass Bonanza</h3>
+                <div style="color: #ecc94b; font-size: 13px;">⭐⭐⭐⭐⭐ <span style="color: #718096; font-size: 11px;">(4.8)</span></div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px; font-size: 12px;">
+                    <span style="color: #718096;">RTP: <strong style="color: #48bb78; background: rgba(72, 187, 120, 0.1); padding: 2px 6px; border-radius: 4px;">96.71%</strong></span>
+                    <span style="color: #718096;">Risk: <strong style="color: #3182ce;">Medium</strong></span>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <!-- משחק 2: All Bets BlackJack -->
-    <div class="slot-card" style="background: #131926; border: 1px solid #222d42; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; height: 100%; transition: border-color 0.3s ease;">
-        <div class="slot-card_image" style="position: relative; width: 100%; padding-top: 65%; background: #0b0e14;">
-            <div class="slot-card_image-backbox">
-                <img src="https://free-slots.games/wp-content/uploads/2020/12/all-bets-blackjack.gif" alt="All Bets BlackJack hover preview" />
-            </div>
-            <div class="slot-card_image-frontbox">
-                <picture>
-                    <source srcset="https://free-slots.games/wp-content/uploads/2020/12/all-bets-blackjack.jpg" media="(max-width: 320px)">
-                    <source srcset="https://free-slots.games/wp-content/uploads/2020/12/all-bets-blackjack.jpg" media="(max-width: 768px)">
-                    <img class="game-thumb thumb-static" src="https://free-slots.games/wp-content/uploads/2020/12/all-bets-blackjack.jpg" alt="All Bets BlackJack thumbnail">
-                </picture>
-                <div class="game-thumb-overlay"><div class="game-play-btn">▶</div></div>
-            </div>
+    <!-- תשתית טבלת המותגים המרכזית המחודשת - כאן יוזרקו הנתונים -->
+    <div id="table-container" style="background: #111622; border: 1px solid #222d42; border-radius: 12px; padding: 24px; width: 100%; box-sizing: border-box; margin-top: 20px;">
+        <div id="loading" style="color: #718096; text-align: center; padding: 20px; font-size: 14px;">
+            Syncing secure iGaming cryptographic matrix...
         </div>
-        <div style="padding: 16px; display: flex; flex-direction: column; gap: 10px; flex-grow: 1;">
-            <h3 style="color: #ffffff; font-size: 16px; font-weight: 700; margin: 0;">All Bets BlackJack</h3>
-            <div style="color: #ecc94b; font-size: 13px;">⭐⭐⭐⭐☆ <span style="color: #718096; font-size: 11px;">(4.7)</span></div>
-            <a href="#" style="color: #4299e1; font-size: 12px; text-decoration: none; font-weight: 600;">📖 Read Full Review →</a>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px; font-size: 12px;">
-                <span style="color: #718096;">RTP: <strong style="color: #48bb78; background: rgba(72, 187, 120, 0.1); padding: 2px 6px; border-radius: 4px;">98.50%</strong></span>
-                <span style="color: #718096;">Risk: <strong style="color: #38bdf8;">Low-Medium</strong></span>
-            </div>
-            <a href="https://free-slots.games/playtechslots/playtech1.php?s=AllBetsBlackJack/index.html" target="_blank" rel="noopener noreferrer" style="display: block; text-align: center; background: #00e676; color: #0b0e14; text-decoration: none; padding: 10px; border-radius: 6px; font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 8px;">
-                PLAY FREE DEMO
-            </a>
-        </div>
-    </div>
-
-    <!-- משחק 3: Gaelic Luck -->
-    <div class="slot-card" style="background: #131926; border: 1px solid #222d42; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; height: 100%; transition: border-color 0.3s ease;">
-        <div class="slot-card_image" style="position: relative; width: 100%; padding-top: 65%; background: #0b0e14;">
-            <div class="slot-card_image-backbox">
-                <img src="https://free-slots.games/wp-content/uploads/2020/10/Gaelic-Luck.gif" alt="Gaelic Luck hover preview" />
-            </div>
-            <div class="slot-card_image-frontbox">
-                <picture>
-                    <source srcset="https://free-slots.games/wp-content/uploads/2020/10/gaelic-luck.jpg" media="(max-width: 320px)">
-                    <source srcset="https://free-slots.games/wp-content/uploads/2020/10/gaelic-luck.jpg" media="(max-width: 768px)">
-                    <img class="game-thumb thumb-static" src="https://free-slots.games/wp-content/uploads/2020/10/gaelic-luck.jpg" alt="Gaelic Luck thumbnail">
-                </picture>
-                <div class="game-thumb-overlay"><div class="game-play-btn">▶</div></div>
-            </div>
-        </div>
-        <div style="padding: 16px; display: flex; flex-direction: column; gap: 10px; flex-grow: 1;">
-            <h3 style="color: #ffffff; font-size: 16px; font-weight: 700; margin: 0;">Gaelic Luck</h3>
-            <div style="color: #ecc94b; font-size: 13px;">⭐⭐⭐⭐☆ <span style="color: #718096; font-size: 11px;">(4.7)</span></div>
-            <a href="#" style="color: #4299e1; font-size: 12px; text-decoration: none; font-weight: 600;">📖 Read Full Review →</a>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px; font-size: 12px;">
-                <span style="color: #718096;">RTP: <strong style="color: #48bb78; background: rgba(72, 187, 120, 0.1); padding: 2px 6px; border-radius: 4px;">97.24%</strong></span>
-                <span style="color: #718096;">Risk: <strong style="color: #38bdf8;">Low-Medium</strong></span>
-            </div>
-            <a href="https://free-slots.games/playtechslots/playtech1.php?s=GaelicLuck/index.html" target="_blank" rel="noopener noreferrer" style="display: block; text-align: center; background: #00e676; color: #0b0e14; text-decoration: none; padding: 10px; border-radius: 6px; font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 8px;">
-                PLAY FREE DEMO
-            </a>
-        </div>
-    </div>
-
-    <!-- משחק 4: Lucky Lucky -->
-    <div class="slot-card" style="background: #131926; border: 1px solid #222d42; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; height: 100%; transition: border-color 0.3s ease;">
-        <div class="slot-card_image" style="position: relative; width: 100%; padding-top: 65%; background: #0b0e14;">
-            <div class="slot-card_image-backbox">
-                <img src="https://free-slots.games/wp-content/uploads/2020/06/Lucky-Lucky.gif" alt="Lucky Lucky hover preview" />
-            </div>
-            <div class="slot-card_image-frontbox">
-                <picture>
-                    <source srcset="https://free-slots.games/wp-content/uploads/2020/06/Lucky-Lucky.jpg" media="(max-width: 320px)">
-                    <source srcset="https://free-slots.games/wp-content/uploads/2020/06/Lucky-Lucky.jpg" media="(max-width: 768px)">
-                    <img class="game-thumb thumb-static" src="https://free-slots.games/wp-content/uploads/2020/06/Lucky-Lucky.jpg" alt="Lucky Lucky thumbnail">
-                </picture>
-                <div class="game-thumb-overlay"><div class="game-play-btn">▶</div></div>
-            </div>
-        </div>
-        <div style="padding: 16px; display: flex; flex-direction: column; gap: 10px; flex-grow: 1;">
-            <h3 style="color: #ffffff; font-size: 16px; font-weight: 700; margin: 0;">Lucky Lucky</h3>
-            <div style="color: #ecc94b; font-size: 13px;">⭐⭐⭐⭐☆ <span style="color: #718096; font-size: 11px;">(4.6)</span></div>
-            <a href="#" style="color: #4299e1; font-size: 12px; text-decoration: none; font-weight: 600;">📖 Read Full Review →</a>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px; font-size: 12px;">
-                <span style="color: #718096;">RTP: <strong style="color: #48bb78; background: rgba(72, 187, 120, 0.1); padding: 2px 6px; border-radius: 4px;">97.00%</strong></span>
-                <span style="color: #718096;">Risk: <strong style="color: #38bdf8;">Low-Medium</strong></span>
-            </div>
-            <a href="https://free-slots.games/playtechslots/playtech1.php?s=LuckyLucky/index.html" target="_blank" rel="noopener noreferrer" style="display: block; text-align: center; background: #00e676; color: #0b0e14; text-decoration: none; padding: 10px; border-radius: 6px; font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 8px;">
-                PLAY FREE DEMO
-            </a>
-        </div>
-    </div>
-
-    <!-- duplicate featured games set -->
-    <!-- משחק 5: Jacks Or Better -->
-    <div class="slot-card" style="background: #131926; border: 1px solid #222d42; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; height: 100%; transition: border-color 0.3s ease;">
-        <div class="slot-card_image" style="position: relative; width: 100%; padding-top: 65%; background: #0b0e14;">
-            <div class="slot-card_image-backbox">
-                <img src="https://free-slots.games/wp-content/uploads/2020/07/Jacks-Or-Better.gif" alt="Jacks Or Better hover preview" />
-            </div>
-            <div class="slot-card_image-frontbox">
-                <picture>
-                    <source srcset="https://free-slots.games/wp-content/uploads/2020/07/Jacks-Or-Better.jpg" media="(max-width: 320px)">
-                    <source srcset="https://free-slots.games/wp-content/uploads/2020/07/Jacks-Or-Better.jpg" media="(max-width: 768px)">
-                    <img class="game-thumb thumb-static" src="https://free-slots.games/wp-content/uploads/2020/07/Jacks-Or-Better.jpg" alt="Jacks Or Better thumbnail">
-                </picture>
-                <div class="game-thumb-overlay"><div class="game-play-btn">▶</div></div>
-            </div>
-        </div>
-        <div style="padding: 16px; display: flex; flex-direction: column; gap: 10px; flex-grow: 1;">
-            <h3 style="color: #ffffff; font-size: 16px; font-weight: 700; margin: 0;">Jacks Or Better</h3>
-            <div style="color: #ecc94b; font-size: 13px;">⭐⭐⭐⭐☆ <span style="color: #718096; font-size: 11px;">(4.6)</span></div>
-            <a href="#" style="color: #4299e1; font-size: 12px; text-decoration: none; font-weight: 600;">📖 Read Full Review →</a>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px; font-size: 12px;">
-                <span style="color: #718096;">RTP: <strong style="color: #48bb78; background: rgba(72, 187, 120, 0.1); padding: 2px 6px; border-radius: 4px;">98.00%</strong></span>
-                <span style="color: #718096;">Risk: <strong style="color: #38bdf8;">Low-Medium</strong></span>
-            </div>
-            <a href="https://free-slots.games/playtechslots/playtech1.php?s=JacksOrBetter/index.html" target="_blank" rel="noopener noreferrer" style="display: block; text-align: center; background: #00e676; color: #0b0e14; text-decoration: none; padding: 10px; border-radius: 6px; font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 8px;">
-                PLAY FREE DEMO
-            </a>
-        </div>
-    </div>
-
-    <!-- משחק 6: All Bets BlackJack -->
-    <div class="slot-card" style="background: #131926; border: 1px solid #222d42; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; height: 100%; transition: border-color 0.3s ease;">
-        <div class="slot-card_image" style="position: relative; width: 100%; padding-top: 65%; background: #0b0e14;">
-            <div class="slot-card_image-backbox">
-                <img src="https://free-slots.games/wp-content/uploads/2020/12/all-bets-blackjack.gif" alt="All Bets BlackJack hover preview" />
-            </div>
-            <div class="slot-card_image-frontbox">
-                <picture>
-                    <source srcset="https://free-slots.games/wp-content/uploads/2020/12/all-bets-blackjack.jpg" media="(max-width: 320px)">
-                    <source srcset="https://free-slots.games/wp-content/uploads/2020/12/all-bets-blackjack.jpg" media="(max-width: 768px)">
-                    <img class="game-thumb thumb-static" src="https://free-slots.games/wp-content/uploads/2020/12/all-bets-blackjack.jpg" alt="All Bets BlackJack thumbnail">
-                </picture>
-                <div class="game-thumb-overlay"><div class="game-play-btn">▶</div></div>
-            </div>
-        </div>
-        <div style="padding: 16px; display: flex; flex-direction: column; gap: 10px; flex-grow: 1;">
-            <h3 style="color: #ffffff; font-size: 16px; font-weight: 700; margin: 0;">All Bets BlackJack</h3>
-            <div style="color: #ecc94b; font-size: 13px;">⭐⭐⭐⭐☆ <span style="color: #718096; font-size: 11px;">(4.7)</span></div>
-            <a href="#" style="color: #4299e1; font-size: 12px; text-decoration: none; font-weight: 600;">📖 Read Full Review →</a>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px; font-size: 12px;">
-                <span style="color: #718096;">RTP: <strong style="color: #48bb78; background: rgba(72, 187, 120, 0.1); padding: 2px 6px; border-radius: 4px;">98.50%</strong></span>
-                <span style="color: #718096;">Risk: <strong style="color: #38bdf8;">Low-Medium</strong></span>
-            </div>
-            <a href="https://free-slots.games/playtechslots/playtech1.php?s=AllBetsBlackJack/index.html" target="_blank" rel="noopener noreferrer" style="display: block; text-align: center; background: #00e676; color: #0b0e14; text-decoration: none; padding: 10px; border-radius: 6px; font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 8px;">
-                PLAY FREE DEMO
-            </a>
-        </div>
-    </div>
-
-    <!-- משחק 7: Gaelic Luck -->
-    <div class="slot-card" style="background: #131926; border: 1px solid #222d42; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; height: 100%; transition: border-color 0.3s ease;">
-        <div class="slot-card_image" style="position: relative; width: 100%; padding-top: 65%; background: #0b0e14;">
-            <div class="slot-card_image-backbox">
-                <img src="https://free-slots.games/wp-content/uploads/2020/10/Gaelic-Luck.gif" alt="Gaelic Luck hover preview" />
-            </div>
-            <div class="slot-card_image-frontbox">
-                <picture>
-                    <source srcset="https://free-slots.games/wp-content/uploads/2020/10/gaelic-luck.jpg" media="(max-width: 320px)">
-                    <source srcset="https://free-slots.games/wp-content/uploads/2020/10/gaelic-luck.jpg" media="(max-width: 768px)">
-                    <img class="game-thumb thumb-static" src="https://free-slots.games/wp-content/uploads/2020/10/gaelic-luck.jpg" alt="Gaelic Luck thumbnail">
-                </picture>
-                <div class="game-thumb-overlay"><div class="game-play-btn">▶</div></div>
-            </div>
-        </div>
-        <div style="padding: 16px; display: flex; flex-direction: column; gap: 10px; flex-grow: 1;">
-            <h3 style="color: #ffffff; font-size: 16px; font-weight: 700; margin: 0;">Gaelic Luck</h3>
-            <div style="color: #ecc94b; font-size: 13px;">⭐⭐⭐⭐☆ <span style="color: #718096; font-size: 11px;">(4.7)</span></div>
-            <a href="#" style="color: #4299e1; font-size: 12px; text-decoration: none; font-weight: 600;">📖 Read Full Review →</a>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px; font-size: 12px;">
-                <span style="color: #718096;">RTP: <strong style="color: #48bb78; background: rgba(72, 187, 120, 0.1); padding: 2px 6px; border-radius: 4px;">97.24%</strong></span>
-                <span style="color: #718096;">Risk: <strong style="color: #38bdf8;">Low-Medium</strong></span>
-            </div>
-            <a href="https://free-slots.games/playtechslots/playtech1.php?s=GaelicLuck/index.html" target="_blank" rel="noopener noreferrer" style="display: block; text-align: center; background: #00e676; color: #0b0e14; text-decoration: none; padding: 10px; border-radius: 6px; font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 8px;">
-                PLAY FREE DEMO
-            </a>
-        </div>
-    </div>
-
-    <!-- משחק 8: Lucky Lucky -->
-    <div class="slot-card" style="background: #131926; border: 1px solid #222d42; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; height: 100%; transition: border-color 0.3s ease;">
-        <div class="slot-card_image" style="position: relative; width: 100%; padding-top: 65%; background: #0b0e14;">
-            <div class="slot-card_image-backbox">
-                <img src="https://free-slots.games/wp-content/uploads/2020/06/Lucky-Lucky.gif" alt="Lucky Lucky hover preview" />
-            </div>
-            <div class="slot-card_image-frontbox">
-                <picture>
-                    <source srcset="https://free-slots.games/wp-content/uploads/2020/06/Lucky-Lucky.jpg" media="(max-width: 320px)">
-                    <source srcset="https://free-slots.games/wp-content/uploads/2020/06/Lucky-Lucky.jpg" media="(max-width: 768px)">
-                    <img class="game-thumb thumb-static" src="https://free-slots.games/wp-content/uploads/2020/06/Lucky-Lucky.jpg" alt="Lucky Lucky thumbnail">
-                </picture>
-                <div class="game-thumb-overlay"><div class="game-play-btn">▶</div></div>
-            </div>
-        </div>
-        <div style="padding: 16px; display: flex; flex-direction: column; gap: 10px; flex-grow: 1;">
-            <h3 style="color: #ffffff; font-size: 16px; font-weight: 700; margin: 0;">Lucky Lucky</h3>
-            <div style="color: #ecc94b; font-size: 13px;">⭐⭐⭐⭐☆ <span style="color: #718096; font-size: 11px;">(4.6)</span></div>
-            <a href="#" style="color: #4299e1; font-size: 12px; text-decoration: none; font-weight: 600;">📖 Read Full Review →</a>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px; font-size: 12px;">
-                <span style="color: #718096;">RTP: <strong style="color: #48bb78; background: rgba(72, 187, 120, 0.1); padding: 2px 6px; border-radius: 4px;">97.00%</strong></span>
-                <span style="color: #718096;">Risk: <strong style="color: #38bdf8;">Low-Medium</strong></span>
-            </div>
-            <a href="https://free-slots.games/playtechslots/playtech1.php?s=LuckyLucky/index.html" target="_blank" rel="noopener noreferrer" style="display: block; text-align: center; background: #00e676; color: #0b0e14; text-decoration: none; padding: 10px; border-radius: 6px; font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 8px;">
-                PLAY FREE DEMO
-            </a>
-        </div>
+        <table id="casino-table" style="width: 100%; border-collapse: collapse; display: none;">
+            <thead>
+                <tr style="border-bottom: 2px solid #222d42; text-align: left; font-size: 12px; color: #718096; text-transform: uppercase; letter-spacing: 1px;">
+                    <th style="padding: 12px 10px;">Casino Operator</th>
+                    <th style="padding: 12px 10px;">Verified Welcome Package</th>
+                    <th style="padding: 12px 10px;">Rating</th>
+                    <th style="padding: 12px 10px;">Real-Time RTP</th>
+                    <th style="padding: 12px 10px; text-align: right;">Action</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+                <!-- השורות יוזרקו לכאן דינמית על ידי fetch_data.js -->
+            </tbody>
+        </table>
     </div>
 
 </div>
-<!-- ================================================================= -->
-<!-- END OF HOT REVIEWED GAMES GRID                                   -->
-<!-- ================================================================= -->
 
-
-<!-- SEO Informational Text Block -->
-<section aria-labelledby="about-slotmetric" style="max-width: 1000px; margin: 30px auto; padding: 0 20px; font-family: sans-serif; color: #64748b; font-size: 14px; line-height: 1.6;">
-    <h2 class="sr-only" id="about-slotmetric">About SlotMetric</h2>
-    <p>Welcome to <strong>SlotMetric</strong>, your ultimate dynamic data engine monitoring verified payouts and real-time RTP averages across leading regulated jurisdictions. Our platform tracks spinning activity and active jackpot pools every 60 minutes to deliver high-authority casino matrix metrics. Explore our hot reviewed games catalog to play free instant slot demos and find secure action links with verified premium match bonuses from trusted global casino operators.</p>
-</section>
-
-    <footer style="margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border-color); text-align: center; color: var(--secondary-text); font-size: 0.78rem; line-height: 1.6;">
-        <p style="max-width: 850px; margin: 0 auto 15px auto;"><strong>Regulatory Transparency Disclaimer:</strong> SlotMetric is an independent authority and comparison hub. The data and bonus details displayed are collected via API pipelines for educational purposes. Gambling involves significant financial risk. Never gamble with funds you cannot afford to lose.</p>
-        <p style="margin: 15px 0;">
-            <a href="https://begambleaware.org" target="_blank" rel="noopener nofollow" style="color: #60a5fa; text-decoration: none; margin: 0 10px; font-weight: 700;">BeGambleAware.org</a> | 
-            <a href="https://gamstop.co.uk" target="_blank" rel="noopener nofollow" style="color: #60a5fa; text-decoration: none; margin: 0 10px; font-weight: 700;">GAMSTOP UK</a> | 
-            <a href="https://gamblingtherapy.org" target="_blank" rel="noopener nofollow" style="color: #60a5fa; text-decoration: none; margin: 0 10px; font-weight: 700;">Gambling Therapy Global</a>
-        </p>
-        <p style="color: #64748b; font-size: 0.72rem;">© 2026 SlotMetric Hub. All global matrix structures are cryptographically monitored. Play Responsibly. 18+ Only.</p>
-    </footer>
+<!-- פוטר דיסקליימר משפטי מקורי מוגן -->
+<div style="background: #0b0e14; border-top: 1px solid #111622; padding: 40px 20px; margin-top: 60px; font-family: 'Segoe UI', sans-serif; direction: ltr; text-align: center;">
+    <div style="max-width: 900px; margin: 0 auto; color: #4a5568; font-size: 13px; line-height: 1.6; gap: 20px; display: flex; flex-direction: column;">
+        <p>Welcome to <strong>SlotMetric</strong>, your ultimate dynamic data engine monitoring verified payouts and real-time RTP averages across leading regulated jurisdictions. Our platform tracks spinning activity and active jackpot pools every 60 minutes to deliver high-authority casino matrix metrics. Explore our hot reviewed games catalog to play free instant slot demos and find secure action links with verified premium match bonuses from trusted global casino operators.</p>
+        <p style="border-top: 1px solid #1a202c; padding-top: 20px; font-size: 12px; color: #718096;"><strong>Regulatory Transparency Disclaimer:</strong> SlotMetric is an independent authority and comparison hub. The data and bonus details displayed are collected via API pipelines for educational purposes. Gambling involves significant financial risk. Never gamble with funds you cannot afford to lose.</p>
+        <div style="display: flex; justify-content: center; gap: 20px; font-size: 12px; font-weight: 700; margin-top: 10px;">
+            <a href="https://begambleaware.org" target="_blank" style="color: #3182ce; text-decoration: none;">BeGambleAware.org</a>
+            <span style="color: #2d3748;">|</span>
+            <a href="https://gamstop.co.uk" target="_blank" style="color: #3182ce; text-decoration: none;">GAMSTOP UK</a>
+            <span style="color: #2d3748;">|</span>
+            <a href="https://gamblingtherapy.org" target="_blank" style="color: #3182ce; text-decoration: none;">Gambling Therapy Global</a>
+        </div>
+        <p style="font-size: 11px; color: #2d3748; margin-top: 15px;">&copy; 2026 SlotMetric Hub. All global matrix structures are cryptographically monitored. Play Responsibly. 18+ Only.</p>
+    </div>
 </div>
-</main>
 
-<!-- קובץ שליפת הנתונים והמיקום הנפרד החדש -->
+    <!-- 1. חיבור קובץ שליפת הנתונים הנפרד (עם קו תחתון תקין!) -->
     <script src="fetch_data.js"></script>
 
-    <!-- קובץ ניהול המשחק והגלגלים המטוהר שלך -->
+    <!-- 2. קובץ ניהול המשחק והגלגלים המטוהר שלך -->
     <script src="app.js"></script>
-    
-<!-- JavaScript Physics Engine: Luxury 3-Reel Slots & Fixed Silver Coin Rain -->
-<!-- JavaScript Physics Engine: Anti-Crash Version -->
-<!-- JavaScript Physics Engine: Fullscreen Volcano Coins -->
-<!-- HTML & CSS Native Injection Physics: Guaranteed Volcano Coins -->
-<!-- Fully Fixed Slots Logic with Native CSS Coin Fountain -->
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-    const r1 = document.getElementById("s-reel1");
-    const r2 = document.getElementById("s-reel2");
-    const r3 = document.getElementById("s-reel3");
-    const trigger = document.getElementById("slots-action-trigger");
-    const winPanel = document.getElementById("slots-win-display");
-    
-    if (!trigger || !r1 || !r2 || !r3) return;
-    
-    let isSpinning = false;
-    let spinCount = 0;
-    let nextRequiredWin = Math.floor(Math.random() * 3) + 2; 
-
-    // פונקציה נקייה ליצירת מטבעות הר געש מסתובבים ואיטיים
-    function runVolcanoCoins() {
-        const icons = ["🪙", "🥈", "💰"];
-        
-        for (let i = 0; i < 80; i++) {
-            setTimeout(() => {
-                const coin = document.createElement("div");
-                coin.innerText = icons[Math.floor(Math.random() * icons.length)];
-                
-                // הגדרת מיקום התחלתי בתחתית המסך
-                coin.style.position = "fixed";
-                coin.style.bottom = "-50px";
-                coin.style.left = "50%";
-                coin.style.fontSize = "38px";
-                coin.style.pointerEvents = "none";
-                coin.style.zIndex = "99999999";
-                coin.style.transition = "transform 2.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 2.5s";
-                coin.style.opacity = "1";
-                
-                document.body.appendChild(coin);
-                
-                // חישוב מסלול פיזיקלי איטי ומסובב (אפקט הר געש ומזרקה)
-                const targetX = Math.random() * 800 - 400; // פיזור לצדדים
-                const targetY = -(Math.random() * 60 + 35); // גובה טיסה באחוזים
-                const rotation = Math.random() * 1440 - 720; // סיבוב מוגבר של המטבע סביב עצמו
-                
-                // הפעלת התנועה הדרגתית מיד לאחר היצירה
-                requestAnimationFrame(() => {
-                    coin.style.transform = `translate(${targetX}px, ${targetY}vh) rotate(${rotation}deg)`;
-                });
-                
-                // התפוגגות ומחיקה מהמסך לאחר 2.5 שניות של תעופה אצילית
-                setTimeout(() => {
-                    coin.style.opacity = "0";
-                    setTimeout(() => coin.remove(), 500);
-                }, 2000);
-                
-            }, i * 20); // קצב יציאה מהיר ליצירת אפקט התפרצות רציף
-        }
-    }
-
-    trigger.addEventListener("click", () => {
-        if (isSpinning) return;
-        
-        spinCount++; 
-        
-        let activeData = (window.filteredData && window.filteredData.length > 0) ? window.filteredData : window.casinoData;
-        
-        if (!activeData || activeData.length === 0) {
-            activeData = [
-                { "casino_name": "Bet365 Casino", "bonus_text": "Stake £10 and get 50 Free Spins", "affiliate_link": "https://bet365.link" },
-                { "casino_name": "Vulkan Vegas", "bonus_text": "100% Up to €1,500 + 150 Free Spins", "affiliate_link": "https://vpartners.link" }
-            ];
-        }
-
-        isSpinning = true;
-        trigger.disabled = true;
-        trigger.innerText = "SYNCHRONIZING Feeds...";
-        if (winPanel) winPanel.style.display = "none";
-
-        r1.classList.add("run-spin");
-        r2.classList.add("run-spin");
-        r3.classList.add("run-spin");
-
-        const randomIndex = Math.floor(Math.random() * activeData.length);
-        const selectedCasino = activeData[randomIndex];
-
-        const isWinRound = (spinCount >= nextRequiredWin);
-
-        let t1, t2, t3;
-        if (isWinRound) {
-            t1 = 1300;
-            t2 = 1900;
-            t3 = 2500;
-            spinCount = 0;
-            nextRequiredWin = Math.floor(Math.random() * 3) + 2;
-        } else {
-            t1 = 1000 + Math.floor(Math.random() * 200); 
-            t2 = 1500 + Math.floor(Math.random() * 300); 
-            t3 = 2100 + Math.floor(Math.random() * 300);
-        }
-
-        setTimeout(() => { r1.classList.remove("run-spin"); }, t1);
-        setTimeout(() => { r2.classList.remove("run-spin"); }, t2);
-        
-        setTimeout(() => { 
-            r3.classList.remove("run-spin");
-            
-            if (selectedCasino) {
-                if (document.getElementById("slots-panel-title")) {
-                    document.getElementById("slots-panel-title").innerText = selectedCasino.casino_name + (isWinRound ? " 🏆" : "");
-                }
-                if (document.getElementById("slots-panel-detail")) {
-                    document.getElementById("slots-panel-detail").innerText = selectedCasino.bonus_text || "Premium Bonus Link Verified";
-                }
-                if (document.getElementById("slots-panel-link")) {
-                    document.getElementById("slots-panel-link").href = selectedCasino.affiliate_link || "#";
-                }
-                
-                if (winPanel) winPanel.style.display = "block";
-                
-                // שחרור הר הגעש האיטי והמסתובב ברגע הניצחון המבוקר
-                if (isWinRound) {
-                    runVolcanoCoins();
-                }
-            }
-            
-            trigger.disabled = false;
-            trigger.innerText = "SPIN ENGINE";
-            isSpinning = false;
-        }, t3);
-    });
-});
-</script>
-
-<!-- Single-card lazy load for Berry Berry Bonanza -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const playBtn = document.getElementById('gate-play-btn');
-    const container = document.getElementById('gate-embed');
-
-    if (!playBtn || !container) return;
-    const src = container.getAttribute('data-src');
-    if (!src) return;
-
-    playBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        playBtn.disabled = true;
-        playBtn.innerText = 'Opening…';
-
-        window.open(src, '_blank', 'noopener,noreferrer');
-
-        setTimeout(function() {
-            playBtn.disabled = false;
-            playBtn.innerText = 'PLAY FREE DEMO';
-        }, 1000);
-    });
-});
-</script>
-
-<!-- קוד JavaScript לתיקון הפעלת תפריט המובייל -->
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    // 1. מציאת כפתור התפריט (ההמבורגר) ואלמנט התפריט עצמו
-    // שים לב: אם המחלקות אצלך בקוד שונות (למשל navbar-toggle או mobile-menu), שנה את השמות כאן בהתאם
-    const menuToggle = document.querySelector(".menu-toggle") || document.querySelector(".nav-toggle") || document.querySelector("#mobile-menu-btn");
-    const navMenu = document.querySelector(".nav-menu") || document.querySelector(".navbar-links") || document.querySelector("#nav-links");
-
-    // 2. הוספת אירוע לחיצה (Click) שיפתח ויסגור את התפריט
-    if (menuToggle && navMenu) {
-        menuToggle.addEventListener("click", function (e) {
-            e.stopPropagation(); // מונע באגים של לחיצות כפולות
-            navMenu.classList.toggle("active");
-            menuToggle.classList.toggle("is-active");
-        });
-
-        // 3. סגירת התפריט באופן אוטומטי אם הגולש לוחץ מחוץ לתפריט
-        document.addEventListener("click", function (e) {
-            if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
-                navMenu.classList.remove("active");
-                menuToggle.classList.remove("is-active");
-            }
-        });
-    }
-});
-</script>
-
-
 </body>
 </html>
+
