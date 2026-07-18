@@ -31,7 +31,9 @@ async function runGlobalDataSyncEngine() {
 
     // עדכון קוד המדינה בתיבת הסטטוס על המסך
     const countryLabel = document.getElementById('display-country');
-    if (countryLabel) countryLabel.innerText = detectedCountry;
+    if (countryLabel) {
+        countryLabel.innerText = detectedCountry;
+    }
 
     // 2. משיכת קובץ ה-JSON הדינמי שנוצר על ידי שרת הפייתון
     try {
