@@ -1,14 +1,14 @@
 // ================================================================= 
-// FETCH_DATA.JS - INDEPENDENT GEO ENGINE & AUTOMATIC UNLOCK        
+// FETCH_DATA.JS - SAFE TARGETED GEO & BACKGROUND UI INJECTION      
 // ================================================================= 
 
 window.userCountry = "UNKNOWN";
 
 async function runGlobalDataSyncEngine() {
-    console.log("🚀 [Data Sync] Initializing Emergency Unlocking Engine...");
+    console.log("🚀 [Data Sync] Running clean background data injector...");
     let detectedCountry = "UNKNOWN";
     
-    // 1. זיהוי מיקום מהיר ומאובטח שמתאים לפרוטוקול ה-HTTPS של GitHub
+    // 1. זיהוי מיקום מהיר ומאובטח
     const geoSources = ['https://ipapi.co', 'https://ipwhois.app'];
     for (const url of geoSources) {
         try {
@@ -31,15 +31,17 @@ async function runGlobalDataSyncEngine() {
         } catch (e) { detectedCountry = 'DE'; }
     }
 
-    // הגדרת המשתנים הגלובליים בכל השמות האפשריים שהאתר והטבלה שלך מחפשים
+    // הגדרת המשתנים הגלובליים
     window.userCountry = detectedCountry;
     if (typeof userCountry !== 'undefined') userCountry = detectedCountry;
 
-    // עדכון קוד המדינה על המסך (אם קיים רכיב display-country)
+    // 2. עדכון שקט של קוד המדינה על המסך
     const countryLabel = document.getElementById('display-country');
-    if (countryLabel) countryLabel.innerText = detectedCountry;
+    if (countryLabel) {
+        countryLabel.innerText = detectedCountry;
+    }
 
-    // 2. משיכת הנתונים הדינמיים מקובץ ה-JSON שהפייתון (fetch_data.py) מייצר
+    // 3. משיכת הנתונים הדינמיים מקובץ ה-JSON
     try {
         const jsonResponse = await fetch('data.json');
         if (jsonResponse.ok) {
@@ -48,33 +50,29 @@ async function runGlobalDataSyncEngine() {
                 window.casinoData = jsonData.top_brands;
                 window.fallbackCasinoData = jsonData.top_brands;
                 if (typeof casinoData !== 'undefined') casinoData = jsonData.top_brands;
-                console.log("📥 [JSON Loaded] Scraped dynamic data attached successfully.");
+                console.log("📥 [JSON Loaded] Scraped data attached to global array.");
             }
         }
-    } catch (jsonErr) {
-        console.log("Using internal fallback arrays due to json notice.");
-    }
+    } catch (jsonErr) {}
 
-    // 3. 🎯 שחרור בכפייה של תיבות הטעינה והמטריצה (Bypass UI Block)
+    // 4. 🎯 עדכון טקסטים ישיר וממוקד בלבד - ללא שליחת אירועים (No dispatchEvent!)
     setTimeout(() => {
-        // מציאת כל האלמנטים שמציגים טעינה והחלפתם באופן ידני כדי לשחרר את המסך מיד
-        const allElements = document.querySelectorAll('h3, div, span, p');
-        allElements.forEach(el => {
-            if (el.innerText && el.innerText.includes('Loading Matrix...')) {
-                el.innerText = 'Matrix Engine Active';
-            }
-            if (el.innerText && el.innerText.includes('Detecting...')) {
-                el.innerText = detectedCountry;
-            }
-            if (el.innerText && el.innerText.includes('Loading Brand...')) {
-                el.innerText = 'MyStake Casino';
-            }
-            if (el.innerText && el.innerText.includes('Loading Package...')) {
-                el.innerText = 'Exclusive 150% Welcome Pack';
-            }
+        // א. מעדכן ישירות את רכיבי הטעינה הישנים כדי שלא יתקעו במסך
+        const targets = document.querySelectorAll('h3, div, span, p');
+        targets.forEach(el => {
+            if (el.innerText === 'Loading Matrix...') el.innerText = 'Matrix Engine Active';
+            if (el.innerText === 'Detecting...') el.innerText = detectedCountry;
+            if (el.innerText === 'Loading Brand...') el.innerText = 'MyStake Casino';
+            if (el.innerText === 'Loading Package...') el.innerText = 'Exclusive 150% Welcome Pack';
         });
 
-        // הפעלת פונקציות הסינון והצינור המקוריות של האתר שלך במידה והן קיימות
+        // ב. משנה את הערך הנבחר בתיבת המדינות (Select) בצורה שקטה מבלי להפעיל את הלולאה
+        const countrySelect = document.getElementById('country-select');
+        if (countrySelect) {
+            countrySelect.value = detectedCountry === 'UK' ? 'GB' : detectedCountry;
+        }
+
+        // ג. מפעיל פונקציות פנימיות ב-app.js בצורה ישירה רק אם הן קיימות בבטחה
         if (typeof window.updateCasinoDataByCountry === "function") {
             window.updateCasinoDataByCountry(detectedCountry);
         }
@@ -82,16 +80,9 @@ async function runGlobalDataSyncEngine() {
             window.triggerFilter();
         }
 
-        // סיมולציה של שינוי מדינה בתיבת הבחירה כדי לאלץ את ה-app.js לרנדר את שורות הטבלה
-        const countrySelect = document.getElementById('country-select');
-        if (countrySelect) {
-            countrySelect.value = detectedCountry === 'UK' ? 'GB' : detectedCountry;
-            countrySelect.dispatchEvent(new Event('change'));
-        }
-
-        console.log("✅ [Data Engine] Forced unlock completely applied.");
-    }, 500); // חצי שנייה המתנה כדי לוודא שכל ה-HTML נטען לחלוטין ברקע
+        console.log("✅ [Data Engine] Background configuration injected successfully.");
+    }, 400); 
 }
 
-// הפעלת מנוע הנתונים והמיקום מיד עם עליית הדף
+// הפעלת המנוע מיד עם עליית הדף
 document.addEventListener("DOMContentLoaded", runGlobalDataSyncEngine);
