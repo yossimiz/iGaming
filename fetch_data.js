@@ -42,7 +42,7 @@ async function runGlobalDataSyncEngine() {
                 window.casinoData = jsonData.top_brands;
                 window.fallbackCasinoData = jsonData.top_brands;
                 if (typeof casinoData !== 'undefined') casinoData = jsonData.top_brands;
-                print("📥 [JSON] Live dynamic data injected into the application.");
+                console.log("📥 [JSON] Live dynamic data injected into the application.");
             }
         }
     } catch (jsonErr) {}
@@ -55,7 +55,7 @@ async function runGlobalDataSyncEngine() {
             countrySelect.value = detectedCountry === 'UK' ? 'GB' : detectedCountry;
         }
 
-        // ב. העלמת כיתובי טעינה ממוקדים בלבד (בלי לשנות innerHTML של דיבים גדולים!)
+        // ב. העלמת כיתובי טעינה ממוקדים בלבד
         const uiLabels = document.querySelectorAll('h3, div, span, p');
         uiLabels.forEach(el => {
             if (el.innerText === 'Loading Matrix...') el.innerText = 'Matrix Engine Active';
@@ -85,7 +85,6 @@ async function runGlobalDataSyncEngine() {
 
 // פונקציה ממוקדת שבונה את שורות המותגים ומזריקה אותן אך ורק לתוך ה-tbody הקיים
 function renderLiveTableRows(country) {
-    // מאתר את גוף הטבלה הקיים באתר שלך לפי ה-ID הרשמי שלו
     const tableBody = document.getElementById('table-body') || document.querySelector('tbody');
     if (!tableBody) return;
 
@@ -96,7 +95,6 @@ function renderLiveTableRows(country) {
     sourceList.forEach(brand => {
         const countries = brand.allowed_countries || [];
         if (countries.includes(country) || countries.includes('ALL')) {
-            // בניית מבנה שורות נקי שתואם בדיוק לעמודות המקוריות של האתר שלך
             tableHTML += `
                 <tr style="background: #131926; border-bottom: 1px solid #222d42;">
                     <td style="padding: 15px; color: #ffffff; font-weight: 700; text-align: left; border: none;">👑 ${brand.casino_name || brand.name}</td>
@@ -125,7 +123,7 @@ function renderLiveTableRows(country) {
 // הפעלת מנוע הנתונים והמיקום מיד עם עליית הדף
 document.addEventListener("DOMContentLoaded", runGlobalDataSyncEngine);
 
-// מאזין להחלפה ידנית ברשימה (משמר את זכות הבחירה של המשתמש ומעדכן את השורות בלייב)
+// מאזין להחלפה ידנית ברשימה
 document.addEventListener("DOMContentLoaded", () => {
     const countrySelect = document.getElementById('country-select');
     if (countrySelect) {
